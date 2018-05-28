@@ -4,9 +4,9 @@
 //
 //--------------------------------------------------
 
-import Base from '_MyLibs/Util/Base.es6';
+import Base from './Base.es6';
 
-import * as m from 'Util/Math/index.es6';
+import MouseMgr from './MouseMgr.es6';
 
 export default class Controller extends Base {
 
@@ -27,45 +27,24 @@ export default class Controller extends Base {
 
   setup() {
 
-    // layer setup
-    this.$layer.each(function(index, el) {
-
-      var w = gb.r.w / 2 + gb.r.w * (Math.random() - 0.5) * 0.5;
-      var h = gb.r.h / 2 + gb.r.h * (Math.random() - 0.5) * 0.5;
-      var x = gb.r.w / 2 + gb.r.w * (Math.random() - 0.5) - w / 2;
-      var y = 300 * index;
-      // var w = gb.r.w;
-      // var h = gb.r.h;
-      // var x = 0;
-      // var y = gb.r.h * index;
-
-      TweenMax.set($(this), {
-        x: x,
-        y: y,
-        width: w,
-        height: h,
-      });
-      
-      
-    });
-
-    // arrow move
-    this.chw = 15;
-    this.chh = 15;
+    this.hw = 15; // half width
+    this.hh = 15; // half height
     this.mx = 0;
     this.my = 0;
     this.easing = 1;
+
+    this.m = new MouseMgr();
 
   }
 
   update() {
     
-    var x = gb.m.x;
-    var y = gb.m.y;
+    var x = this.m.x;
+    var y = this.m.y;
 
     // pos
-    var gx = x - this.chw;
-    var gy = y - this.chh;
+    var gx = x - this.hw; 
+    var gy = y - this.hh;
     this.mx += (gx - this.mx) * this.easing;
     this.my += (gy - this.my) * this.easing;
 
@@ -89,6 +68,7 @@ export default class Controller extends Base {
           $('html,body').css('cursor', 'none');
         }
       }, 0.0)
+
       // color
       .set(this.$cursor, {backgroundColor: 'rgba(217,52,72,1)'}, 0.0)
       .to(this.$cursor, 0.0, {

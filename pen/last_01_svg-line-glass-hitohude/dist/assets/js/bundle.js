@@ -4428,9 +4428,9 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _SVGLineHover = __webpack_require__(31);
+	var _Controller = __webpack_require__(31);
 	
-	var _SVGLineHover2 = _interopRequireDefault(_SVGLineHover);
+	var _Controller2 = _interopRequireDefault(_Controller);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4484,7 +4484,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      // ------------------------------------------------------------
 	      //  ui
 	      // ------------------------------------------------------------
-	      new _SVGLineHover2.default($('.svg'));
+	      new _Controller2.default($('.svg'));
 	
 	      // ------------------------------------------------------------
 	      // timeline

@@ -4543,6 +4543,28 @@
 	    key: 'setup',
 	    value: function setup() {
 	
+	      this.$layer = $('.layer');
+	
+	      // layer setup
+	      this.$layer.each(function (index, el) {
+	
+	        var w = gb.r.w / 2 + gb.r.w * (Math.random() - 0.5) * 0.5;
+	        var h = gb.r.h / 2 + gb.r.h * (Math.random() - 0.5) * 0.5;
+	        var x = gb.r.w / 2 + gb.r.w * (Math.random() - 0.5) - w / 2;
+	        var y = 300 * index;
+	        // var w = gb.r.w;
+	        // var h = gb.r.h;
+	        // var x = 0;
+	        // var y = gb.r.h * index;
+	
+	        TweenMax.set($(this), {
+	          x: x,
+	          y: y,
+	          width: w,
+	          height: h
+	        });
+	      });
+	
 	      new _Controller2.default();
 	    }
 	  }, {
@@ -4633,15 +4655,13 @@
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-	var _Base2 = __webpack_require__(14);
+	var _Base2 = __webpack_require__(34);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _index = __webpack_require__(32);
+	var _MouseMgr = __webpack_require__(35);
 	
-	var m = _interopRequireWildcard(_index);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _MouseMgr2 = _interopRequireDefault(_MouseMgr);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4679,43 +4699,24 @@
 	    key: 'setup',
 	    value: function setup() {
 	
-	      // layer setup
-	      this.$layer.each(function (index, el) {
-	
-	        var w = gb.r.w / 2 + gb.r.w * (Math.random() - 0.5) * 0.5;
-	        var h = gb.r.h / 2 + gb.r.h * (Math.random() - 0.5) * 0.5;
-	        var x = gb.r.w / 2 + gb.r.w * (Math.random() - 0.5) - w / 2;
-	        var y = 300 * index;
-	        // var w = gb.r.w;
-	        // var h = gb.r.h;
-	        // var x = 0;
-	        // var y = gb.r.h * index;
-	
-	        TweenMax.set($(this), {
-	          x: x,
-	          y: y,
-	          width: w,
-	          height: h
-	        });
-	      });
-	
-	      // arrow move
-	      this.chw = 15;
-	      this.chh = 15;
+	      this.hw = 15; // half width
+	      this.hh = 15; // half height
 	      this.mx = 0;
 	      this.my = 0;
 	      this.easing = 1;
+	
+	      this.m = new _MouseMgr2.default();
 	    }
 	  }, {
 	    key: 'update',
 	    value: function update() {
 	
-	      var x = gb.m.x;
-	      var y = gb.m.y;
+	      var x = this.m.x;
+	      var y = this.m.y;
 	
 	      // pos
-	      var gx = x - this.chw;
-	      var gy = y - this.chh;
+	      var gx = x - this.hw;
+	      var gy = y - this.hh;
 	      this.mx += (gx - this.mx) * this.easing;
 	      this.my += (gy - this.my) * this.easing;
 	
@@ -4739,6 +4740,7 @@
 	          $('html,body').css('cursor', 'none');
 	        }
 	      }, 0.0)
+	
 	      // color
 	      .set(this.$cursor, { backgroundColor: 'rgba(217,52,72,1)' }, 0.0).to(this.$cursor, 0.0, {
 	        scaleX: 1.0,
@@ -4778,6 +4780,235 @@
 	}(_Base3.default);
 	
 	exports.default = Controller;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	// ------------------------------------------------------------
+	//
+	//  Base
+	//
+	// ------------------------------------------------------------
+	
+	var Base = function () {
+	  function Base() {
+	    _classCallCheck(this, Base);
+	
+	    this.name = 'Base';
+	
+	    this.isUEv = false; // update
+	    this.isREv = false; // resize
+	    this.isSEv = false; // scroll
+	    this.isMEv = false; // mouse
+	    this.prevent = true;
+	
+	    this.isloop = true;
+	  }
+	
+	  _createClass(Base, [{
+	    key: 'setup',
+	    value: function setup() {}
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'draw',
+	    value: function draw() {}
+	  }, {
+	    key: 'loop',
+	    value: function loop() {
+	
+	      if (this.isloop) {
+	
+	        this.update();
+	        this.draw();
+	
+	        this.Timer = requestAnimationFrame(this.loop.bind(this));
+	      }
+	    }
+	  }, {
+	    key: 'onResize',
+	    value: function onResize() {}
+	  }, {
+	    key: 'onScroll',
+	    value: function onScroll() {}
+	  }, {
+	    key: 'onMouseMove',
+	    value: function onMouseMove() {}
+	  }, {
+	    key: 'setEvents',
+	    value: function setEvents() {
+	
+	      var self = this;
+	
+	      if (this.isUEv) this.loop();
+	      if (this.isREv) $(window).on('resize' + '.' + this.name, this.onResize.bind(this));
+	      if (this.isSEv) $(window).on('scroll' + '.' + this.name, this.onScroll.bind(this));
+	      if (this.isMEv) $(window).on('touchmove' + '.' + this.name, function (e) {
+	        self.onMouseMove.call(self, e);
+	        if (self.prevent) e.preventDefault();
+	      });
+	    }
+	  }, {
+	    key: 'removeEvents',
+	    value: function removeEvents() {
+	
+	      if (this.isUEv) {
+	        this.isloop = false;
+	        cancelAnimationFrame(this.Timer);
+	      }
+	      if (this.isREv) $(window).off('resize' + '.' + this.name);
+	      if (this.isSEv) $(window).off('scroll' + '.' + this.name);
+	      if (this.isMEv) $(window).off('touchmove' + '.' + this.name);
+	    }
+	  }, {
+	    key: 'startU',
+	    value: function startU() {
+	
+	      this.isloop = true;
+	      this.loop();
+	    }
+	  }, {
+	    key: 'offU',
+	    value: function offU() {
+	
+	      this.isloop = false;
+	      if (this.isUEv) cancelAnimationFrame(this.Timer);
+	    }
+	  }, {
+	    key: 'offR',
+	    value: function offR() {
+	
+	      if (this.isREv) $(window).off('resize' + '.' + this.name);
+	    }
+	  }, {
+	    key: 'offS',
+	    value: function offS() {
+	
+	      if (this.isSEv) $(window).off('scroll' + '.' + this.name);
+	    }
+	  }, {
+	    key: 'offM',
+	    value: function offM() {
+	
+	      if (this.isMEv) $(window).off('touchmove' + '.' + this.name);
+	    }
+	  }]);
+	
+	  return Base;
+	}();
+	
+	exports.default = Base;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	//--------------------------------------------------
+	//
+	//  MouseMgr
+	//
+	//--------------------------------------------------
+	
+	var MouseMgr = function () {
+	  function MouseMgr() {
+	    var $wrap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $(document);
+	
+	    _classCallCheck(this, MouseMgr);
+	
+	    this.$wrap = $wrap;
+	
+	    this.x = 0;
+	    this.y = 0;
+	    this.px = 0; // previous
+	    this.py = 0; // previous
+	
+	    this.cx = 0;
+	    this.cy = 0;
+	
+	    this.setup();
+	    this.setEvents();
+	  }
+	
+	  _createClass(MouseMgr, [{
+	    key: "setup",
+	    value: function setup() {}
+	  }, {
+	    key: "onMousemove",
+	    value: function onMousemove(e) {
+	
+	      this.getPos(e);
+	    }
+	  }, {
+	    key: "onTouchmove",
+	    value: function onTouchmove(e) {
+	
+	      this.x = e.originalEvent.changedTouches[0].pageX;
+	      this.y = e.originalEvent.changedTouches[0].pageY;
+	    }
+	  }, {
+	    key: "getPos",
+	    value: function getPos(e) {
+	
+	      if (e.offsetX == undefined) {
+	        // this works for Firefox
+	        this.x = e.pageX - this.$wrap.offset().left;
+	        this.y = e.pageY - this.$wrap.offset().top;
+	      } else {
+	        // works in Google Chrome
+	        this.x = e.pageX - $(window).scrollLeft();
+	        this.y = e.pageY - $(window).scrollTop();
+	      }
+	
+	      this.cx = e.clientX - gb.r.hw;
+	      this.cy = e.clientY - gb.r.hh;
+	    }
+	  }, {
+	    key: "setEvents",
+	    value: function setEvents() {
+	      var _this = this;
+	
+	      this.$wrap.on("touchmove.MouseMgr", function (e) {
+	        _this.onTouchmove(e);
+	      });
+	      this.$wrap.on("mousemove.MouseMgr", function (e) {
+	        _this.onMousemove(e);
+	      });
+	    }
+	  }, {
+	    key: "removeEvents",
+	    value: function removeEvents() {
+	
+	      this.$wrap.off("touchmove.MouseMgr");
+	      this.$wrap.off("mousemove.MouseMgr");
+	    }
+	  }]);
+	
+	  return MouseMgr;
+	}();
+	
+	exports.default = MouseMgr;
 
 /***/ })
 /******/ ]);

@@ -5,7 +5,7 @@
 //--------------------------------------------------
 import Base from '_MyLibs/Util/Base.es6';
 
-import SVGLineHover from './UI/SVGLineHover.es6';
+import SVGLineHover from './UI/SVGLineHover/Controller.es6';
 
 export default class ViewCommon extends Base {
 
