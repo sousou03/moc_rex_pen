@@ -1,0 +1,63 @@
+<% var rootPATH = './', PATH = './', page = 'top'; %>
+<!DOCTYPE html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=no">
+<head>
+<%- include(rootPATH + 'inc/_style'); %>
+<link href="<%- PATH %>assets/css/style.css" rel="stylesheet">
+</head>
+<body id="<%- page %>" class="">
+
+<div id="wrapper" class="id_<%- page %>">
+<div id="inner">
+
+  <div class="slider">
+    <div class="sliderInner">
+      <div class="item">
+        <div class="date">Date</div>
+        <div class="img"><img src="./assets/resource/img/hero.jpg" alt=""></div>
+        <div class="category">category</div>
+        <div class="text">textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。</div>
+      </div>
+      <div class="item">
+        <div class="date">Date</div>
+        <div class="img"><img src="./assets/resource/img/hero.jpg" alt=""></div>
+        <div class="category">category</div>
+        <div class="text">textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。</div>
+      </div>
+      <div class="item">
+        <div class="date">Date</div>
+        <div class="img"><img src="./assets/resource/img/hero.jpg" alt=""></div>
+        <div class="category">category</div>
+        <div class="text">textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。</div>
+      </div>
+      <div class="item">
+        <div class="date">Date</div>
+        <div class="img"><img src="./assets/resource/img/hero.jpg" alt=""></div>
+        <div class="category">category</div>
+        <div class="text">textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。</div>
+      </div>
+      <div class="item">
+        <div class="date">Date</div>
+        <div class="img"><img src="./assets/resource/img/hero.jpg" alt=""></div>
+        <div class="category">category</div>
+        <div class="text">textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。</div>
+      </div>
+      <div class="item">
+        <div class="date">Date</div>
+        <div class="img"><img src="./assets/resource/img/hero.jpg" alt=""></div>
+        <div class="category">category</div>
+        <div class="text">textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。textが入ります。</div>
+      </div>
+    </div>
+    <div class="arrow arrowL"></div>
+    <div class="arrow arrowR"></div>
+  </div>
+
+</div>
+</div>
+
+<%- include(rootPATH + 'inc/_script', {PATH: PATH}); %>
+</body>
+</html>
