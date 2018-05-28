@@ -4,24 +4,7 @@
 //
 //--------------------------------------------------
 
-import Base from '_MyLibs/Util/Base.es6';
-
-// slider
-//    html layout
-//    1/5でパーセント
-//        box
-//           img
-//           text
-
-//    行ったりきたりか
-//        dis = sliderw - w
-//        x += 1
-
-//    slide
-//        x = iw (item width)
-
-   
-
+import Base from './Base.es6';
 
 export default class Controller extends Base {
 
@@ -156,8 +139,6 @@ export default class Controller extends Base {
     this.wrapw = gb.r.w - 50;
     this.innerw = this.w * len + margin * (len - 1)
     this.dis = this.innerw - this.wrapw + padding
-
-    log(this.dis);
 
   }
 
