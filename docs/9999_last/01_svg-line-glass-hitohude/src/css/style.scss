@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+/* --------------------------------------------------------------------------------
+*   common
+-------------------------------------------------------------------------------- */
+// @import "./_init/import";
+// @import "./_init/reset"; // リセットCSS、フォントサイズ sss
+
+/* --------------------------------------------------------------------------------
+*   parts
+-------------------------------------------------------------------------------- */
+// @import "./_parts/_common/**/*.scss";
+// @import "./_parts/_compornents/**/*.scss";
+
+/* --------------------------------------------------------------------------------
+*   page
+-------------------------------------------------------------------------------- */
+
+html {
+  background-color: #000;
+}
+
+#wrapper.id_top {
+
+  .svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50% ,-50%);
+    padding: 10px;
+    
+    cursor: pointer;
+    
+    svg {
+      width: 50px;
+      height: auto;
+      
+      line,circle {
+        stroke: '#fff';
+      }
+
+    }
+
+    .glass_base {
+      opacity: 0;
+    }
+
+    .glass_o {
+      transform: rotate(90deg);
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      width: 42px;
+      height: 42px;
+    }
+    .glass_bar {
+      position: absolute;
+      right: 12px;
+      bottom: 18px;
+      
+      width: 17px;
+      height: auto;
+    }
+
+  } 
+ 
+}

@@ -1,0 +1,55 @@
+/* --------------------------------------------------------------------------------
+*   common
+-------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------
+*   parts
+-------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------
+*   page
+-------------------------------------------------------------------------------- */
+html {
+  background-color: #000;
+}
+
+#wrapper.id_top .svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  padding: 10px;
+  cursor: pointer;
+}
+
+#wrapper.id_top .svg svg {
+  width: 50px;
+  height: auto;
+}
+
+#wrapper.id_top .svg svg line, #wrapper.id_top .svg svg circle {
+  stroke: '#fff';
+}
+
+#wrapper.id_top .svg .glass_base {
+  opacity: 0;
+}
+
+#wrapper.id_top .svg .glass_o {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 42px;
+  height: 42px;
+}
+
+#wrapper.id_top .svg .glass_bar {
+  position: absolute;
+  right: 12px;
+  bottom: 18px;
+  width: 17px;
+  height: auto;
+}

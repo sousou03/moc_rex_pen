@@ -1,0 +1,87 @@
+@charset "utf-8";
+
+/* --------------------------------------------------------------------------------
+*   common
+-------------------------------------------------------------------------------- */
+@import "./_init/import";
+@import "./_init/reset"; // リセットCSS、フォントサイズ sss
+
+/* --------------------------------------------------------------------------------
+*   parts
+-------------------------------------------------------------------------------- */
+@import "./_parts/_common/**/*.scss";
+@import "./_parts/_compornents/**/*.scss";
+
+/* --------------------------------------------------------------------------------
+*   page
+-------------------------------------------------------------------------------- */
+
+html {
+  background-color: #fff;
+}
+
+#wrapper.id_top {
+
+  .text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50% ,-50%);
+    
+    font-size: 50px;
+    // display: flex;
+    // align-items: center;
+    
+    white-space: nowrap;
+    
+    opacity: 0;
+    
+    .oh {
+      display: inline-block;
+      position: relative;
+      line-height: 1.3;
+      overflow: visible;
+      transform: translated3(0,0,0);
+      
+      .t {
+        opacity: 0;
+        
+        transform: translated3(0,0,0);
+        
+        // text-shadow: 0 0 15px rgba(0, 0, 0, .5),
+        //              0 0 30px rgba(0, 0, 0, .5),
+        //              0 0 40px rgba(0, 0, 0, .5);
+        text-shadow: 0 0 15px rgba(0, 0, 0, .5);
+        transition: text-shadow 1.2s $easeInOutQuad 0s, opacity 1.2s $easeInOutQuad 0s;
+      }
+      .t.glow {
+        // text-shadow: 0 0 0px rgba(0, 0, 0, .5),
+        //              0 0 0px rgba(0, 0, 0, .5),
+        //              0 0 0px rgba(0, 0, 0, .5);
+        text-shadow: 0 0 0px rgba(0, 0, 0, .5);
+        // text-shadow: 0 0 15px rgba(0, 0, 0, .0);
+        opacity: 1;
+      }
+
+    }
+  }
+
+  .typing{
+    border-right: 1px solid #000;
+    animation: caret 1s steps(1) infinite;
+    
+    // width: 1px;
+    // height: 50px;
+    // padding-left: 3px;
+    // display: inline-block;
+    
+    display: inline-block;
+    height: 50px;
+    position: relative;
+    top: 4px;
+    padding-left: 7px;
+    border-right: 2px solid #000;
+
+  }
+
+}
