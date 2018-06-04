@@ -69,7 +69,14 @@ export default class SpanText {
       
     });
 
-    log(this.ls)
+    // true, false
+    this.bools = [];
+    this.$span.each((index, el)=>{
+
+      var bool = (Math.random()<0.5)? true: false;
+      this.bools.push(bool);
+      
+    });
 
   }
 
@@ -79,24 +86,26 @@ export default class SpanText {
 
     this.$spant.each((index, el)=>{
 
-      var dur = 0.7;
+      var dur = 0.02;
+      var times = 7;
 
-      var tl = new TimelineMax({delay: index * 0.03});
+      var tl = new TimelineMax({delay: index * 0.01});
       // var tl = new TimelineMax({delay: index * 0.0});
 
       tl
         .add(()=>{
 
-          this.ls[arr[index]].show();
+          log(this.bools[index]);
+          if (this.bools[index]) this.ls[arr[index]].show();
+          this.$spant.eq(arr[index]).addClass('flashD');
 
         }, 0.0)
         .add(()=>{
 
-          TweenMax.set(this.$spant.eq(arr[index]), {opacity: 1});
+          if (this.bools[index]) this.ls[arr[index]].hide();
+          this.$spant.eq(arr[index]).css('opacity', 1);
 
-          this.ls[arr[index]].hide();
-
-        }, dur)
+        }, dur * times)
       
     });
     

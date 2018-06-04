@@ -1,0 +1,21 @@
+<svg id="グループ化_698" data-name="グループ化 698" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.041 15.04">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <line id="線_154" data-name="線 154" class="cls-1" x2="3.833" y2="3.833" transform="translate(0.707 0.707)"/>
+  <ellipse id="楕円形_25" data-name="楕円形 25" class="cls-2" cx="5.5" cy="5.508" rx="5.5" ry="5.508" transform="translate(1 1)"/>
+</svg>

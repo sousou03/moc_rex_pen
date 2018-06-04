@@ -77,20 +77,20 @@ export default class LineBox {
     var tl = new TimelineMax();
 
     tl
-      .to(this.$lt, 0.7, {
+      .to(this.$lt, 0.5, {
           width: '100%',
           ease : Power4.easeOut,
       }, 0.0)
-      .to(this.$lr, 0.7, {
+      .to(this.$lr, 0.5, {
           height: '100%',
           ease : Power4.easeOut,
       }, 0.0)
-      .to(this.$lb, 0.7, {
+      .to(this.$lb, 0.5, {
           width: '100%',
           left: 0,
           ease : Power4.easeOut,
       }, 0.0)
-      .to(this.$ll, 0.7, {
+      .to(this.$ll, 0.5, {
           height: '100%',
           top: 0,
           ease : Power4.easeOut,

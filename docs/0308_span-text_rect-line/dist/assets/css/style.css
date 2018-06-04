@@ -568,8 +568,8 @@ body {
 }
 
 .flashD {
-  -webkit-animation: kf_flash 0.02s 7;
-          animation: kf_flash 0.02s 7;
+  -webkit-animation: kf_flash 0.02s 7 normal forwards;
+          animation: kf_flash 0.02s 7 normal forwards;
 }
 
 @-webkit-keyframes kf_flash {

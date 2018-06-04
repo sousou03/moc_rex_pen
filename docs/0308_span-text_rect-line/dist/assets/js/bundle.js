@@ -4562,14 +4562,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _Controller2 = _interopRequireDefault(_Controller);
 	
-	var _Controller3 = __webpack_require__(37);
-	
-	var _Controller4 = _interopRequireDefault(_Controller3);
-	
-	var _Controller5 = __webpack_require__(39);
-	
-	var _Controller6 = _interopRequireDefault(_Controller5);
-	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -4605,12 +4597,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      switch (gb.urlp.motion) {
 	        case 'random':
 	          new _Controller2.default($('.text1'));
-	          break;
-	        case 'LeftRandom':
-	          new _Controller4.default($('.text1'));
-	          break;
-	        case 'LeftRandomWide':
-	          new _Controller6.default($('.text1'));
 	          break;
 	        default:
 	          new _Controller2.default($('.text1'));
@@ -4791,7 +4777,13 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        _this.ls.push(l);
 	      });
 	
-	      log(this.ls);
+	      // true, false
+	      this.bools = [];
+	      this.$span.each(function (index, el) {
+	
+	        var bool = Math.random() < 0.5 ? true : false;
+	        _this.bools.push(bool);
+	      });
 	    }
 	  }, {
 	    key: 'show',
@@ -4802,20 +4794,22 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      this.$spant.each(function (index, el) {
 	
-	        var dur = 0.7;
+	        var dur = 0.02;
+	        var times = 7;
 	
-	        var tl = new TimelineMax({ delay: index * 0.03 });
+	        var tl = new TimelineMax({ delay: index * 0.01 });
 	        // var tl = new TimelineMax({delay: index * 0.0});
 	
 	        tl.add(function () {
 	
-	          _this2.ls[arr[index]].show();
+	          log(_this2.bools[index]);
+	          if (_this2.bools[index]) _this2.ls[arr[index]].show();
+	          _this2.$spant.eq(arr[index]).addClass('flashD');
 	        }, 0.0).add(function () {
 	
-	          TweenMax.set(_this2.$spant.eq(arr[index]), { opacity: 1 });
-	
-	          _this2.ls[arr[index]].hide();
-	        }, dur);
+	          if (_this2.bools[index]) _this2.ls[arr[index]].hide();
+	          _this2.$spant.eq(arr[index]).css('opacity', 1);
+	        }, dur * times);
 	      });
 	    }
 	  }, {
@@ -5063,17 +5057,17 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	            var tl = new TimelineMax();
 	
-	            tl.to(this.$lt, 0.7, {
+	            tl.to(this.$lt, 0.5, {
 	                width: '100%',
 	                ease: Power4.easeOut
-	            }, 0.0).to(this.$lr, 0.7, {
+	            }, 0.0).to(this.$lr, 0.5, {
 	                height: '100%',
 	                ease: Power4.easeOut
-	            }, 0.0).to(this.$lb, 0.7, {
+	            }, 0.0).to(this.$lb, 0.5, {
 	                width: '100%',
 	                left: 0,
 	                ease: Power4.easeOut
-	            }, 0.0).to(this.$ll, 0.7, {
+	            }, 0.0).to(this.$ll, 0.5, {
 	                height: '100%',
 	                top: 0,
 	                ease: Power4.easeOut
@@ -5123,487 +5117,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	}();
 	
 	exports.default = LineBox;
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //--------------------------------------------------
-	//
-	//  SpanText
-	//
-	//--------------------------------------------------
-	
-	var _SetSpan = __webpack_require__(38);
-	
-	var _SetSpan2 = _interopRequireDefault(_SetSpan);
-	
-	var _index = __webpack_require__(35);
-	
-	var a = _interopRequireWildcard(_index);
-	
-	var _index2 = __webpack_require__(32);
-	
-	var m = _interopRequireWildcard(_index2);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var SpanText = function () {
-	  function SpanText($wrap) {
-	    _classCallCheck(this, SpanText);
-	
-	    this.$wrap = $wrap;
-	    this.$target = $wrap.find('div');
-	
-	    this.setup();
-	    this.setEvents();
-	  }
-	
-	  _createClass(SpanText, [{
-	    key: 'setup',
-	    value: function setup() {
-	
-	      this.$wrap.css({
-	        // overflow: 'hidden',
-	        cursor: 'pointer'
-	      });
-	
-	      this.w = this.$wrap.innerWidth();
-	      this.h = this.$wrap.innerHeight();
-	
-	      // spanで1文字1文字囲む
-	      this.s = new _SetSpan2.default(this.$target);
-	
-	      // // 各spanを取得
-	      this.$span = this.$target.find('.oh');
-	      this.$span.css('display', 'inline-block'); // spanはinline-blockかblockじゃないとtnraslateが効かないので、styleつける
-	      this.$spant = this.$target.find('.t');
-	      this.$spano = this.$target.find('.overlay');
-	      this.len = this.$span.length;
-	      this.$wrap.css('opacity', 1);
-	
-	      this.ready();
-	      this.timeline();
-	    }
-	  }, {
-	    key: 'ready',
-	    value: function ready() {
-	      var _this = this;
-	
-	      var w = this.$span.eq(0).width();
-	      var h = this.$span.eq(0).height();
-	
-	      // text
-	      this.$spant.each(function (index, el) {
-	
-	        // TweenMax.set(this.$spant.eq(index), {x: w});
-	
-	      });
-	
-	      // overlay
-	      this.$span.each(function (index, el) {
-	
-	        var w = $(el).width();
-	        var h = $(el).height();
-	
-	        TweenMax.set(_this.$spano.eq(index), { width: w, height: h });
-	      });
-	    }
-	  }, {
-	    key: 'show',
-	    value: function show() {
-	      var _this2 = this;
-	
-	      var arr = a.randomArr(this.len);
-	
-	      this.$spano.each(function (index, el) {
-	
-	        var dur = 0.02;
-	        var times = 7;
-	        var rate = index / _this2.len;
-	
-	        // 左から順番にdelay すこしrandom
-	        var rater = m.clamp(rate, 0, 0.3);
-	        var delay = rater * Math.random() * 0.65 + rate * 0.8;
-	
-	        var tl = new TimelineMax({ delay: delay });
-	
-	        tl.add(function () {
-	          _this2.$spano.eq(index).addClass('flashD');
-	        }, 0.0).add(function () {
-	          TweenMax.set(_this2.$spant.eq(index), { opacity: 1 });
-	        }, dur * times);
-	      });
-	    }
-	  }, {
-	    key: 'hide',
-	    value: function hide() {}
-	  }, {
-	    key: 'timeline',
-	    value: function timeline() {
-	      var _this3 = this;
-	
-	      var tl = new TimelineMax();
-	
-	      tl.add(function () {
-	
-	        _this3.show();
-	      }, 3.0);
-	    }
-	  }, {
-	    key: 'setEvents',
-	    value: function setEvents() {}
-	  }]);
-	
-	  return SpanText;
-	}();
-	
-	exports.default = SpanText;
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	//--------------------------------------------------
-	//
-	//  SpanText
-	//
-	//--------------------------------------------------
-	
-	var SpanText = function () {
-	  function SpanText($target) {
-	    _classCallCheck(this, SpanText);
-	
-	    this.$target = $target;
-	
-	    this.setup();
-	    this.setEvents();
-	  }
-	
-	  _createClass(SpanText, [{
-	    key: 'setup',
-	    value: function setup() {
-	
-	      this.set();
-	    }
-	  }, {
-	    key: 'reset',
-	    value: function reset() {}
-	  }, {
-	    key: 'set',
-	    value: function set($target) {
-	
-	      // \s  空白文字:[ \t\n\x0B\f\r]
-	      // \S  非空白文字:[^\s]
-	      // \w  単語構成文字:[a-zA-Z_0-9]
-	      // \W  非単語文字:[^\w]
-	
-	      // var span = $target.text().replace(/(\S)/g, '<span>$1</span>');
-	      // // var span = $target.text().replace(/(\w|\s)/g, '<span>$1</span>');
-	      // $target.html(span);
-	
-	
-	      // brタグがあっても問題がないように
-	      // brで区切る
-	      var text = this.$target.html();
-	      var split = /<br>/g;
-	      // var split = /\r\n|\r|\n/g; // 改行コードなど
-	      var span = text.split(split);
-	
-	      // trim
-	      for (var i = 0; i < span.length; i++) {
-	        span[i] = span[i].trim();
-	      }
-	
-	      // span化
-	      for (var i = 0; i < span.length; i++) {
-	        span[i] = span[i].replace(/(\S)/g, '<span class="oh"><span class="t">$1</span><span class="overlay"></span></span>');
-	      }
-	
-	      // br追加して連結
-	      var append = span.join('<br>');
-	
-	      // append
-	      this.$target.html(append);
-	
-	      // log
-	      log(text);
-	      log(span);
-	      log(append);
-	    }
-	  }, {
-	    key: 'setEvents',
-	    value: function setEvents() {}
-	  }]);
-	
-	  return SpanText;
-	}();
-	
-	exports.default = SpanText;
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //--------------------------------------------------
-	//
-	//  SpanText
-	//
-	//--------------------------------------------------
-	
-	var _SetSpan = __webpack_require__(40);
-	
-	var _SetSpan2 = _interopRequireDefault(_SetSpan);
-	
-	var _index = __webpack_require__(35);
-	
-	var a = _interopRequireWildcard(_index);
-	
-	var _index2 = __webpack_require__(32);
-	
-	var m = _interopRequireWildcard(_index2);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var SpanText = function () {
-	  function SpanText($wrap) {
-	    _classCallCheck(this, SpanText);
-	
-	    this.$wrap = $wrap;
-	    this.$target = $wrap.find('div');
-	
-	    this.setup();
-	    this.setEvents();
-	  }
-	
-	  _createClass(SpanText, [{
-	    key: 'setup',
-	    value: function setup() {
-	
-	      this.$wrap.css({
-	        // overflow: 'hidden',
-	        cursor: 'pointer'
-	      });
-	
-	      this.w = this.$wrap.innerWidth();
-	      this.h = this.$wrap.innerHeight();
-	
-	      // spanで1文字1文字囲む
-	      this.s = new _SetSpan2.default(this.$target);
-	
-	      // // 各spanを取得
-	      this.$span = this.$target.find('.oh');
-	      this.$span.css('display', 'inline-block'); // spanはinline-blockかblockじゃないとtnraslateが効かないので、styleつける
-	      this.$spant = this.$target.find('.t');
-	      this.$spano = this.$target.find('.overlay');
-	      this.len = this.$span.length;
-	      this.$wrap.css('opacity', 1);
-	
-	      this.ready();
-	      this.timeline();
-	    }
-	  }, {
-	    key: 'ready',
-	    value: function ready() {
-	      var _this = this;
-	
-	      var w = this.$span.eq(0).width();
-	      var h = this.$span.eq(0).height();
-	
-	      // text
-	      this.$spant.each(function (index, el) {
-	
-	        // TweenMax.set(this.$spant.eq(index), {x: w});
-	
-	      });
-	
-	      // overlay
-	      this.$span.each(function (index, el) {
-	
-	        var w = $(el).width();
-	        var h = $(el).height();
-	
-	        TweenMax.set(_this.$spano.eq(index), { width: w, height: h });
-	      });
-	    }
-	  }, {
-	    key: 'show',
-	    value: function show() {
-	      var _this2 = this;
-	
-	      var arr = a.randomArr(this.len);
-	
-	      this.$spano.each(function (index, el) {
-	
-	        var dur = 0.02;
-	        var times = 7;
-	        var rate = index / _this2.len;
-	
-	        // 左からじょじょにdelay
-	        // var rater = rate;
-	        var rater = Power1.easeOut.getRatio(rate);
-	        var target = 0.8;
-	        var delay = Math.random() * (target - rater) + rate;
-	        delay *= 1.0;
-	        delay = Math.max(0, delay);
-	
-	        // easeを使ってdelay
-	        // var delay = (Power1.easeOut).getRatio(rate);
-	
-	        var tl = new TimelineMax({ delay: delay });
-	
-	        tl.add(function () {
-	          _this2.$spano.eq(index).addClass('flashD');
-	        }, 0.0).add(function () {
-	          TweenMax.set(_this2.$spant.eq(index), { opacity: 1 });
-	        }, dur * times);
-	      });
-	    }
-	  }, {
-	    key: 'hide',
-	    value: function hide() {}
-	  }, {
-	    key: 'timeline',
-	    value: function timeline() {
-	      var _this3 = this;
-	
-	      var tl = new TimelineMax();
-	
-	      tl.add(function () {
-	
-	        _this3.show();
-	      }, 3.0);
-	    }
-	  }, {
-	    key: 'setEvents',
-	    value: function setEvents() {}
-	  }]);
-	
-	  return SpanText;
-	}();
-	
-	exports.default = SpanText;
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	//--------------------------------------------------
-	//
-	//  SpanText
-	//
-	//--------------------------------------------------
-	
-	var SpanText = function () {
-	  function SpanText($target) {
-	    _classCallCheck(this, SpanText);
-	
-	    this.$target = $target;
-	
-	    this.setup();
-	    this.setEvents();
-	  }
-	
-	  _createClass(SpanText, [{
-	    key: 'setup',
-	    value: function setup() {
-	
-	      this.set();
-	    }
-	  }, {
-	    key: 'reset',
-	    value: function reset() {}
-	  }, {
-	    key: 'set',
-	    value: function set($target) {
-	
-	      // \s  空白文字:[ \t\n\x0B\f\r]
-	      // \S  非空白文字:[^\s]
-	      // \w  単語構成文字:[a-zA-Z_0-9]
-	      // \W  非単語文字:[^\w]
-	
-	      // var span = $target.text().replace(/(\S)/g, '<span>$1</span>');
-	      // // var span = $target.text().replace(/(\w|\s)/g, '<span>$1</span>');
-	      // $target.html(span);
-	
-	
-	      // brタグがあっても問題がないように
-	      // brで区切る
-	      var text = this.$target.html();
-	      var split = /<br>/g;
-	      // var split = /\r\n|\r|\n/g; // 改行コードなど
-	      var span = text.split(split);
-	
-	      // trim
-	      for (var i = 0; i < span.length; i++) {
-	        span[i] = span[i].trim();
-	      }
-	
-	      // span化
-	      for (var i = 0; i < span.length; i++) {
-	        span[i] = span[i].replace(/(\S)/g, '<span class="oh"><span class="t">$1</span><span class="overlay"></span></span>');
-	      }
-	
-	      // br追加して連結
-	      var append = span.join('<br>');
-	
-	      // append
-	      this.$target.html(append);
-	
-	      // log
-	      log(text);
-	      log(span);
-	      log(append);
-	    }
-	  }, {
-	    key: 'setEvents',
-	    value: function setEvents() {}
-	  }]);
-	
-	  return SpanText;
-	}();
-	
-	exports.default = SpanText;
 
 /***/ })
 /******/ ]);
