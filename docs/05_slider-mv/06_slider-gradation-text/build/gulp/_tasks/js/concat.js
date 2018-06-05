@@ -14,6 +14,8 @@ gulp.task('concatJSLibs', ()=>{
                 PATH.src.js + 'libs/jquery/jquery.min.js',
                 PATH.src.js + 'libs/jquery/jquery.throttle-debounce.min.js',
 
+                PATH.src.js + 'libs/canvas/easeljs-0.8.1.min.js',
+
                 PATH.src.js + 'libs/tween/TweenMax.min.js',
               ]
 

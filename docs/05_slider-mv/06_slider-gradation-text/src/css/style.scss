@@ -89,5 +89,30 @@
     background: radial-gradient(circle at center, #fff, #fff);
     
     z-index: 9999;
+    
+    opacity: 0 !important;
   }
+
+  .text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50% ,-50%);
+    
+    font-size: 50px;
+    // display: flex;
+    // align-items: center;
+    
+    white-space: nowrap;
+    
+    opacity: 0;
+    
+    z-index: 9999;
+    
+    span {
+      opacity: 0;
+      color: #fff;
+    }
+  }
+
 }

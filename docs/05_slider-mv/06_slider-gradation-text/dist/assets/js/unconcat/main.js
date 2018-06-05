@@ -4507,9 +4507,13 @@
 	
 	var m = _interopRequireWildcard(_index);
 	
-	var _GradationOverlay = __webpack_require__(33);
+	var _Controller = __webpack_require__(33);
 	
-	var _GradationOverlay2 = _interopRequireDefault(_GradationOverlay);
+	var _Controller2 = _interopRequireDefault(_Controller);
+	
+	var _Controller3 = __webpack_require__(37);
+	
+	var _Controller4 = _interopRequireDefault(_Controller3);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -4546,7 +4550,9 @@
 	      this.isUEv = true;
 	      this.isREv = true;
 	
-	      this.ga = new _GradationOverlay2.default($('#wrapper'));
+	      this.ga = new _Controller2.default($('#inner'));
+	      this.gac = this.ga.c;
+	      this.st = new _Controller4.default($('.text1'));
 	
 	      this.timeline();
 	    }
@@ -4558,29 +4564,38 @@
 	    value: function timeline() {
 	      var _this2 = this;
 	
-	      var tl = new TimelineMax({ repeat: -1, delay: 2.0 });
-	      var dur = 1.0;
+	      var tl = new TimelineMax({ repeat: -1, delay: 2.0, repeatDelay: 1.0 });
+	      var dur = this.gac.dur;
 	      var divide = 10;
-	      var interval = dur / 12 * divide + dur + 0.1;
-	      log(dur, interval);
+	      var interval = dur / this.gac.divide * divide + dur + 0.1;
 	      var offset = 0.1;
 	      var cnt = 0;
 	      var len = $('.img').length;
 	
 	      tl.add(function () {
 	
-	        _this2.ga.show();
+	        _this2.gac.show();
+	        var tls = new TimelineMax();
+	        tls.add(function () {
+	          _this2.st.show();
+	        }, 0.2);
 	      }, 0.0).add(function () {
 	
-	        _this2.ga.hide();
-	      }, interval + offset).add(function () {
+	        _this2.st.hide();
+	        var tls = new TimelineMax();
+	        tls.add(function () {
+	          _this2.gac.hide();
+	        }, 0.7);
+	      }, interval + offset + 5.0).add(function () {
 	
 	        cnt++;
 	        cnt = cnt % len;
 	
 	        $('.img').removeClass('active');
 	        $('.img').eq(cnt).addClass('active');
-	      }, interval + offset + interval);
+	
+	        _this2.st.switch();
+	      }, interval + offset + 5.0 + interval + 0.7);
 	    }
 	  }, {
 	    key: 'onResize',
@@ -4647,21 +4662,13 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	var _Gradation = __webpack_require__(34);
+	
+	var _Gradation2 = _interopRequireDefault(_Gradation);
 	
 	var _Base2 = __webpack_require__(14);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
-	
-	var _index = __webpack_require__(32);
-	
-	var m = _interopRequireWildcard(_index);
-	
-	var _chromaJs = __webpack_require__(34);
-	
-	var _chromaJs2 = _interopRequireDefault(_chromaJs);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4671,19 +4678,20 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //--------------------------------------------------
 	//
-	//  Controller sss
+	//  Content
 	//
 	//--------------------------------------------------
 	
-	var Controller = function (_Base) {
-	  _inherits(Controller, _Base);
+	var Content = function (_Base) {
+	  _inherits(Content, _Base);
 	
-	  function Controller($wrap) {
-	    _classCallCheck(this, Controller);
+	  function Content($wrap, id) {
+	    _classCallCheck(this, Content);
 	
-	    var _this = _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this));
 	
 	    _this.$wrap = $wrap;
+	    _this.id = id;
 	
 	    _this.setup();
 	    _this.setEvents();
@@ -4691,193 +4699,281 @@
 	    return _this;
 	  }
 	
-	  _createClass(Controller, [{
+	  _createClass(Content, [{
 	    key: 'setup',
 	    value: function setup() {
 	
 	      this.isUEv = true;
 	      this.isREv = true;
 	
-	      this.$rad = this.$wrap.find('.radial');
-	
-	      this.cp01 = 0;
-	      this.cp02 = 10;
-	      this.cp03 = 20;
-	      this.cp04 = 30;
-	      this.cp05 = 40;
-	      this.cp06 = 50;
-	      this.cp07 = 60;
-	      this.cp08 = 70;
-	      this.cp09 = 80;
-	      this.cp10 = 90;
-	      this.cp11 = 100;
-	      this.op01 = 1;
-	      this.op02 = 1;
-	      this.op03 = 1;
-	      this.op04 = 1;
-	      this.op05 = 1;
-	      this.op06 = 1;
-	      this.op07 = 1;
-	      this.op08 = 1;
-	      this.op09 = 1;
-	      this.op10 = 1;
-	      this.op11 = 1;
-	      this.x = 0;
-	      this.y = 0;
 	      this.w = gb.r.w;
 	      this.h = gb.r.h;
-	      this.deg = 135;
 	
-	      // this.timeline();
+	      // canvas要素追加
+	      var dom = '<canvas id="' + this.id + '"></canvas>';
+	      this.$wrap.append(dom);
+	      // style, layout
+	      this.canvas = document.getElementById(this.id);
+	      this.stage = new createjs.Stage(this.canvas);
+	      $(this.canvas).css({ position: 'fixed', top: 0, left: 0, 'z-index': 9999, opcaity: 1 }).css({ 'pointer-events': 'none' });
+	
+	      this.onResize();
+	
+	      // obj生成
+	      this.add();
+	    }
+	  }, {
+	    key: 'add',
+	    value: function add() {
+	
+	      // obj生成
+	      this.c = new _Gradation2.default(this.stage);
 	    }
 	  }, {
 	    key: 'update',
 	    value: function update() {
 	
-	      // pos
-	      // var x = Math.round(this.x / this.w * 100);
-	      // var y = Math.round(this.y / this.h * 100);
+	      this.stage.update();
+	    }
+	  }, {
+	    key: 'timeline',
+	    value: function timeline() {}
+	  }, {
+	    key: 'onResize',
+	    value: function onResize() {
 	
-	      // color
-	      var color01 = (0, _chromaJs2.default)("#fff").alpha(this.op01).css();
-	      var color02 = (0, _chromaJs2.default)("#fff").alpha(this.op02).css();
-	      var color03 = (0, _chromaJs2.default)("#fff").alpha(this.op03).css();
-	      var color04 = (0, _chromaJs2.default)("#fff").alpha(this.op04).css();
-	      var color05 = (0, _chromaJs2.default)("#fff").alpha(this.op05).css();
-	      var color06 = (0, _chromaJs2.default)("#fff").alpha(this.op06).css();
-	      var color07 = (0, _chromaJs2.default)("#fff").alpha(this.op07).css();
-	      var color08 = (0, _chromaJs2.default)("#fff").alpha(this.op08).css();
-	      var color09 = (0, _chromaJs2.default)("#fff").alpha(this.op09).css();
+	      // attribute
+	      this.canvas.width = gb.r.w;
+	      this.canvas.height = gb.r.h;
+	
+	      // css
+	      // $(this.canvas).width(this.w/2);
+	      // $(this.canvas).height('auto');
+	    }
+	  }]);
+	
+	  return Content;
+	}(_Base3.default);
+	
+	exports.default = Content;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Base2 = __webpack_require__(14);
+	
+	var _Base3 = _interopRequireDefault(_Base2);
+	
+	var _chromaJs = __webpack_require__(35);
+	
+	var _chromaJs2 = _interopRequireDefault(_chromaJs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // ------------------------------------------------------------
+	//
+	//  Bubble
+	//
+	// ------------------------------------------------------------
+	
+	var Bubble = function (_Base) {
+	  _inherits(Bubble, _Base);
+	
+	  function Bubble(stage) {
+	    _classCallCheck(this, Bubble);
+	
+	    var _this = _possibleConstructorReturn(this, (Bubble.__proto__ || Object.getPrototypeOf(Bubble)).call(this));
+	
+	    _this.stage = stage;
+	    _this.c = _this.stage.canvas;
+	
+	    _this.setup();
+	    _this.setEvents();
+	
+	    return _this;
+	  }
+	
+	  _createClass(Bubble, [{
+	    key: 'setup',
+	    value: function setup() {
+	
+	      this.isUEv = true;
+	      this.isREv = true;
+	
+	      // ready
+	      this.ready();
+	
+	      // add
+	      this.add();
+	
+	      // this.timeline();
+	    }
+	  }, {
+	    key: 'ready',
+	    value: function ready() {
+	
+	      // deg
+	      this.deg = {
+	        start: { x: 0, y: 0 },
+	        end: { x: gb.r.w, y: gb.r.h }
+	
+	        // opacity
+	      };this.op1 = 1;
+	      this.op2 = 1;
+	      this.op3 = 1;
+	      this.op4 = 1;
+	      this.op5 = 1;
+	      this.op6 = 1;
+	      this.op7 = 1;
+	      this.op8 = 1;
+	      this.op9 = 1;
+	      this.op10 = 1;
+	      this.op11 = 1;
+	
+	      this.dur = 1.2;
+	      this.divide = 8;
+	    }
+	  }, {
+	    key: 'add',
+	    value: function add() {
+	
+	      this.s = new createjs.Shape();
+	      this.stage.addChild(this.s);
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {
+	
+	      // clear
+	      this.s.graphics.clear();
+	
+	      var color1 = (0, _chromaJs2.default)("#fff").alpha(this.op1).css();
+	      var color2 = (0, _chromaJs2.default)("#fff").alpha(this.op2).css();
+	      var color3 = (0, _chromaJs2.default)("#fff").alpha(this.op3).css();
+	      var color4 = (0, _chromaJs2.default)("#fff").alpha(this.op4).css();
+	      var color5 = (0, _chromaJs2.default)("#fff").alpha(this.op5).css();
+	      var color6 = (0, _chromaJs2.default)("#fff").alpha(this.op6).css();
+	      var color7 = (0, _chromaJs2.default)("#fff").alpha(this.op7).css();
+	      var color8 = (0, _chromaJs2.default)("#fff").alpha(this.op8).css();
+	      var color9 = (0, _chromaJs2.default)("#fff").alpha(this.op9).css();
 	      var color10 = (0, _chromaJs2.default)("#fff").alpha(this.op10).css();
 	      var color11 = (0, _chromaJs2.default)("#fff").alpha(this.op11).css();
 	
-	      // color pos
-	      var cp01 = this.cp01;
-	      var cp02 = this.cp02;
-	      var cp03 = this.cp03;
-	      var cp04 = this.cp04;
-	      var cp05 = this.cp05;
-	      var cp06 = this.cp06;
-	      var cp07 = this.cp07;
-	      var cp08 = this.cp08;
-	      var cp09 = this.cp09;
-	      var cp10 = this.cp10;
-	      var cp11 = this.cp11;
-	
-	      // draw
-	      var grad = 'linear-gradient(' + this.deg + 'deg,' + color01 + ' ' + cp01 + '%,' + color02 + ' ' + cp02 + '%,' + color03 + ' ' + cp03 + '%,' + color04 + ' ' + cp04 + '%,' + color05 + ' ' + cp05 + '%,' + color06 + ' ' + cp06 + '%,' + color07 + ' ' + cp07 + '%,' + color08 + ' ' + cp08 + '%,' + color09 + ' ' + cp09 + '%,' + color10 + ' ' + cp10 + '%,' + color11 + ' ' + cp11 + '%)';
-	
-	      TweenMax.set(this.$rad, { background: grad });
+	      this.s.graphics.beginLinearGradientFill([color1, color2, color3, color4, color5, color6, color7, color8, color9, color10, color11], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], this.deg.start.x, this.deg.start.y, this.deg.end.x, this.deg.end.y).drawRect(0, 0, gb.r.w, gb.r.h);
 	    }
 	  }, {
 	    key: 'show',
 	    value: function show() {
 	
-	      var dur = 1.0;
 	      var tl = new TimelineMax({});
 	
 	      tl
 	
 	      // show
-	      .to(this, dur, {
-	        op01: 0,
+	      .to(this, this.dur, {
+	        op1: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 0).to(this, dur, {
-	        op02: 0,
+	      }, this.dur / this.divide * 0).to(this, this.dur, {
+	        op2: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 1).to(this, dur, {
-	        op03: 0,
+	      }, this.dur / this.divide * 1).to(this, this.dur, {
+	        op3: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 2).to(this, dur, {
-	        op04: 0,
+	      }, this.dur / this.divide * 2).to(this, this.dur, {
+	        op4: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 3).to(this, dur, {
-	        op05: 0,
+	      }, this.dur / this.divide * 3).to(this, this.dur, {
+	        op5: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 4).to(this, dur, {
-	        op06: 0,
+	      }, this.dur / this.divide * 4).to(this, this.dur, {
+	        op6: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 5).to(this, dur, {
-	        op07: 0,
+	      }, this.dur / this.divide * 5).to(this, this.dur, {
+	        op7: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 6).to(this, dur, {
-	        op08: 0,
+	      }, this.dur / this.divide * 6).to(this, this.dur, {
+	        op8: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 7).to(this, dur, {
-	        op09: 0,
+	      }, this.dur / this.divide * 7).to(this, this.dur, {
+	        op9: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 8).to(this, dur, {
+	      }, this.dur / this.divide * 8).to(this, this.dur, {
 	        op10: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 9).to(this, dur, {
+	      }, this.dur / this.divide * 9).to(this, this.dur, {
 	        op11: 0,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 10);
+	      }, this.dur / this.divide * 10);
 	    }
 	  }, {
 	    key: 'hide',
 	    value: function hide() {
 	
-	      // this.deg = 135 + 180;
-	      var dur = 1.0;
 	      var tl = new TimelineMax({});
 	
 	      tl
 	
 	      // show
-	      .to(this, dur, {
-	        op01: 1,
+	      .to(this, this.dur, {
+	        op1: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 0).to(this, dur, {
-	        op02: 1,
+	      }, this.dur / this.divide * 0).to(this, this.dur, {
+	        op2: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 1).to(this, dur, {
-	        op03: 1,
+	      }, this.dur / this.divide * 1).to(this, this.dur, {
+	        op3: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 2).to(this, dur, {
-	        op04: 1,
+	      }, this.dur / this.divide * 2).to(this, this.dur, {
+	        op4: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 3).to(this, dur, {
-	        op05: 1,
+	      }, this.dur / this.divide * 3).to(this, this.dur, {
+	        op5: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 4).to(this, dur, {
-	        op06: 1,
+	      }, this.dur / this.divide * 4).to(this, this.dur, {
+	        op6: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 5).to(this, dur, {
-	        op07: 1,
+	      }, this.dur / this.divide * 5).to(this, this.dur, {
+	        op7: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 6).to(this, dur, {
-	        op08: 1,
+	      }, this.dur / this.divide * 6).to(this, this.dur, {
+	        op8: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 7).to(this, dur, {
-	        op09: 1,
+	      }, this.dur / this.divide * 7).to(this, this.dur, {
+	        op9: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 8).to(this, dur, {
+	      }, this.dur / this.divide * 8).to(this, this.dur, {
 	        op10: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 9).to(this, dur, {
+	      }, this.dur / this.divide * 9).to(this, this.dur, {
 	        op11: 1,
 	        ease: Power1.easeInOut
-	      }, dur / 12 * 10);
+	      }, this.dur / this.divide * 10);
 	    }
 	  }, {
 	    key: 'onResize',
 	    value: function onResize() {}
-	  }, {
-	    key: 'setEvents',
-	    value: function setEvents() {
-	
-	      _get(Controller.prototype.__proto__ || Object.getPrototypeOf(Controller.prototype), 'setEvents', this).call(this);
-	    }
 	  }]);
 	
-	  return Controller;
+	  return Bubble;
 	}(_Base3.default);
 	
-	exports.default = Controller;
+	exports.default = Bubble;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {
@@ -7643,10 +7739,10 @@
 	
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module)))
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -7660,6 +7756,273 @@
 		return module;
 	}
 
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //--------------------------------------------------
+	//
+	//  SpanText
+	//
+	//--------------------------------------------------
+	
+	var _SetSpan = __webpack_require__(38);
+	
+	var _SetSpan2 = _interopRequireDefault(_SetSpan);
+	
+	var _index = __webpack_require__(39);
+	
+	var a = _interopRequireWildcard(_index);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var SpanText = function () {
+	  function SpanText($wrap) {
+	    _classCallCheck(this, SpanText);
+	
+	    this.$wrap = $wrap;
+	    this.$target = $wrap.find('div');
+	
+	    this.index = 0;
+	    this.text = ['Shun Kawakami est classe et inclassable,<br>alors les marques l’ont remarqué', 'De Tokyo la mégalopole aux<br> paysages préservés de Kochi', 'seule une présence, le bruit des talons <br>hauts sur le bitume résonne à nos oreilles, le…', 'Les puissantes photographies d’Araki<br>ébranlent l’esprit, le corps, et tous'];
+	
+	    this.setup();
+	    this.setEvents();
+	  }
+	
+	  _createClass(SpanText, [{
+	    key: 'setup',
+	    value: function setup() {
+	
+	      this.$wrap.css({
+	        // overflow: 'hidden',
+	        cursor: 'pointer'
+	      });
+	
+	      this.w = this.$wrap.innerWidth();
+	      this.h = this.$wrap.innerHeight();
+	
+	      // spanで1文字1文字囲む
+	      this.s = new _SetSpan2.default(this.$target);
+	
+	      // // 各spanを取得
+	      this.$span = this.$target.find('span');
+	      this.$span.css('display', 'inline-block'); // spanはinline-blockかblockじゃないとtnraslateが効かないので、styleつける
+	      this.len = this.$span.length;
+	      this.$wrap.css('opacity', 1);
+	
+	      // this.timeline();
+	    }
+	  }, {
+	    key: 'reset',
+	    value: function reset() {}
+	  }, {
+	    key: 'show',
+	    value: function show() {
+	      var _this = this;
+	
+	      var arr = a.randomArr(this.len);
+	
+	      this.$span.each(function (index, el) {
+	
+	        TweenMax.to(_this.$span.eq(arr[index]), 1.5, {
+	          opacity: 1,
+	          ease: Power2.easeInOut,
+	          delay: index * 0.012
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'hide',
+	    value: function hide() {
+	      var _this2 = this;
+	
+	      var arr = a.randomArr(this.len);
+	
+	      this.$span.each(function (index, el) {
+	
+	        TweenMax.to(_this2.$span.eq(arr[index]), 1.5, {
+	          opacity: 0,
+	          ease: Power2.easeInOut,
+	          delay: index * 0.012
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'switch',
+	    value: function _switch() {
+	
+	      this.index++;
+	      this.index = this.index % this.text.length;
+	
+	      var text = this.text[this.index];
+	      this.$target.html(text);
+	      this.setup();
+	    }
+	  }, {
+	    key: 'timeline',
+	    value: function timeline() {
+	      var _this3 = this;
+	
+	      var tl = new TimelineMax();
+	
+	      tl.add(function () {
+	
+	        _this3.show();
+	      }, 1.0);
+	    }
+	  }, {
+	    key: 'setEvents',
+	    value: function setEvents() {}
+	  }]);
+	
+	  return SpanText;
+	}();
+	
+	exports.default = SpanText;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	//--------------------------------------------------
+	//
+	//  SpanText
+	//
+	//--------------------------------------------------
+	
+	var SpanText = function () {
+	  function SpanText($target) {
+	    _classCallCheck(this, SpanText);
+	
+	    this.$target = $target;
+	
+	    this.setup();
+	    this.setEvents();
+	  }
+	
+	  _createClass(SpanText, [{
+	    key: 'setup',
+	    value: function setup() {
+	
+	      this.set();
+	    }
+	  }, {
+	    key: 'reset',
+	    value: function reset() {}
+	  }, {
+	    key: 'set',
+	    value: function set($target) {
+	
+	      // \s  空白文字:[ \t\n\x0B\f\r]
+	      // \S  非空白文字:[^\s]
+	      // \w  単語構成文字:[a-zA-Z_0-9]
+	      // \W  非単語文字:[^\w]
+	
+	      // var span = $target.text().replace(/(\S)/g, '<span>$1</span>');
+	      // // var span = $target.text().replace(/(\w|\s)/g, '<span>$1</span>');
+	      // $target.html(span);
+	
+	
+	      // brタグがあっても問題がないように
+	      // brで区切る
+	      var text = this.$target.html();
+	      var split = /<br>/g;
+	      // var split = /\r\n|\r|\n/g; // 改行コードなど
+	      var span = text.split(split);
+	
+	      // trim
+	      for (var i = 0; i < span.length; i++) {
+	        span[i] = span[i].trim();
+	      }
+	
+	      // span化
+	      for (var i = 0; i < span.length; i++) {
+	        span[i] = span[i].replace(/(\S)/g, '<span>$1</span>');
+	      }
+	
+	      // br追加して連結
+	      var append = span.join('<br>');
+	
+	      // append
+	      this.$target.html(append);
+	
+	      // log
+	      log(text);
+	      log(span);
+	      log(append);
+	    }
+	  }, {
+	    key: 'setEvents',
+	    value: function setEvents() {}
+	  }]);
+	
+	  return SpanText;
+	}();
+	
+	exports.default = SpanText;
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.shuffle = shuffle;
+	exports.randomArr = randomArr;
+	// 配列をランダムに並べ替え
+	// -----------------------------------
+	// @arr : 配列(Array)
+	// -----------------------------------
+	function shuffle(ary) {
+	
+	  var arr = [];
+	  arr = ary.slice();
+	  var i = arr.length;
+	  while (i) {
+	    var j = Math.floor(Math.random() * i);
+	    var t = arr[--i];
+	    arr[i] = arr[j];
+	    arr[j] = t;
+	  }
+	  return arr;
+	}
+	
+	// ランダムな数値を作る
+	function randomArr(len) {
+	
+	  var arr = [];
+	
+	  for (var i = 0; i < len; i++) {
+	    arr.push(i);
+	  }arr = this.shuffle(arr);
+	
+	  return arr;
+	}
 
 /***/ })
 /******/ ]);

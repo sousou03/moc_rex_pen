@@ -29,17 +29,23 @@ export default class Controller extends Base {
 
     this.$rad = this.$wrap.find('.radial');
 
+    // this.cp01 = 0;
+    // this.cp02 = 10;
+    // this.cp03 = 20;
+    // this.cp04 = 30;
+    // this.cp05 = 40;
+    // this.cp06 = 50;
+    // this.cp07 = 60;
+    // this.cp08 = 70;
+    // this.cp09 = 80;
+    // this.cp10 = 90;
+    // this.cp11 = 100;
     this.cp01 = 0;
-    this.cp02 = 10;
-    this.cp03 = 20;
-    this.cp04 = 30;
-    this.cp05 = 40;
-    this.cp06 = 50;
-    this.cp07 = 60;
-    this.cp08 = 70;
-    this.cp09 = 80;
-    this.cp10 = 90;
-    this.cp11 = 100;
+    this.cp02 = 20;
+    this.cp03 = 40;
+    this.cp04 = 60;
+    this.cp05 = 80;
+    this.cp06 = 100;
     this.op01 = 1;
     this.op02 = 1;
     this.op03 = 1;
@@ -74,38 +80,25 @@ export default class Controller extends Base {
     var color04 = chroma("#fff").alpha(this.op04).css();
     var color05 = chroma("#fff").alpha(this.op05).css();
     var color06 = chroma("#fff").alpha(this.op06).css();
-    var color07 = chroma("#fff").alpha(this.op07).css();
-    var color08 = chroma("#fff").alpha(this.op08).css();
-    var color09 = chroma("#fff").alpha(this.op09).css();
-    var color10 = chroma("#fff").alpha(this.op10).css();
-    var color11 = chroma("#fff").alpha(this.op11).css();
-
-    // color pos
-    var cp01 = this.cp01;
-    var cp02 = this.cp02;
-    var cp03 = this.cp03;
-    var cp04 = this.cp04;
-    var cp05 = this.cp05;
-    var cp06 = this.cp06;
-    var cp07 = this.cp07;
-    var cp08 = this.cp08;
-    var cp09 = this.cp09;
-    var cp10 = this.cp10;
-    var cp11 = this.cp11;
+    // var color07 = chroma("#fff").alpha(this.op07).css();
+    // var color08 = chroma("#fff").alpha(this.op08).css();
+    // var color09 = chroma("#fff").alpha(this.op09).css();
+    // var color10 = chroma("#fff").alpha(this.op10).css();
+    // var color11 = chroma("#fff").alpha(this.op11).css();
 
     // draw
     var grad = 'linear-gradient(' + this.deg + 'deg,' + 
-                                 color01 + ' ' + cp01 + '%,' + 
-                                 color02 + ' ' + cp02 + '%,' +
-                                 color03 + ' ' + cp03 + '%,' + 
-                                 color04 + ' ' + cp04 + '%,' +
-                                 color05 + ' ' + cp05 + '%,' +
-                                 color06 + ' ' + cp06 + '%,' + 
-                                 color07 + ' ' + cp07 + '%,' +
-                                 color08 + ' ' + cp08 + '%,' + 
-                                 color09 + ' ' + cp09 + '%,' +
-                                 color10 + ' ' + cp10 + '%,' +
-                                 color11 + ' ' + cp11 + '%)';
+                                 color01 + ' ' + this.cp01 + '%,' + 
+                                 color02 + ' ' + this.cp02 + '%,' +
+                                 color03 + ' ' + this.cp03 + '%,' +
+                                 color04 + ' ' + this.cp04 + '%,' +
+                                 color05 + ' ' + this.cp05 + '%,' +
+                                 // color06 + ' ' + this.cp06 + '%,' +
+                                 // color07 + ' ' + this.cp07 + '%,' +
+                                 // color08 + ' ' + this.cp08 + '%,' + 
+                                 // color09 + ' ' + this.cp09 + '%,' +
+                                 // color10 + ' ' + cp10 + '%,' +
+                                 color06 + ' ' + this.cp06 + '%)';
 
 
     TweenMax.set(this.$rad, {background: grad});
@@ -144,26 +137,26 @@ export default class Controller extends Base {
         op06: 0,
         ease: Power1.easeInOut,
       }, dur / 12 * 5)
-      .to(this, dur, {
-        op07: 0,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 6)
-      .to(this, dur, {
-        op08: 0,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 7)
-      .to(this, dur, {
-        op09: 0,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 8)
-      .to(this, dur, {
-        op10: 0,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 9)
-      .to(this, dur, {
-        op11: 0,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 10)
+      // .to(this, dur, {
+      //   op07: 0,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 6)
+      // .to(this, dur, {
+      //   op08: 0,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 7)
+      // .to(this, dur, {
+      //   op09: 0,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 8)
+      // .to(this, dur, {
+      //   op10: 0,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 9)
+      // .to(this, dur, {
+      //   op11: 0,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 10)
 
 
   }
@@ -201,26 +194,26 @@ export default class Controller extends Base {
         op06: 1,
         ease: Power1.easeInOut,
       }, dur / 12 * 5)
-      .to(this, dur, {
-        op07: 1,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 6)
-      .to(this, dur, {
-        op08: 1,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 7)
-      .to(this, dur, {
-        op09: 1,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 8)
-      .to(this, dur, {
-        op10: 1,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 9)
-      .to(this, dur, {
-        op11: 1,
-        ease: Power1.easeInOut,
-      }, dur / 12 * 10)
+      // .to(this, dur, {
+      //   op07: 1,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 6)
+      // .to(this, dur, {
+      //   op08: 1,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 7)
+      // .to(this, dur, {
+      //   op09: 1,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 8)
+      // .to(this, dur, {
+      //   op10: 1,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 9)
+      // .to(this, dur, {
+      //   op11: 1,
+      //   ease: Power1.easeInOut,
+      // }, dur / 12 * 10)
 
 
   }
