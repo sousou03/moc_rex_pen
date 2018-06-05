@@ -40,7 +40,7 @@ export default class Controller extends Base {
 
   timeline() {
 
-    var tl = new TimelineMax({repeat: -1, delay: 2.0, repeatDelay: 1.0});
+    var tl = new TimelineMax({repeat: -1, delay: 2.0, repeatDelay: 0.0});
     var dur = this.gac.dur;
     var divide = 10;
     var interval = dur / this.gac.divide * divide + dur + 0.1;
@@ -66,9 +66,9 @@ export default class Controller extends Base {
         tls
           .add(()=>{
             this.gac.hide();
-          }, 0.7)        
+          }, 0.3)        
 
-      }, interval + offset + 5.0)
+      }, interval + offset + 1.0)
       .add(()=>{
 
         cnt++;
@@ -79,7 +79,7 @@ export default class Controller extends Base {
 
         this.st.switch();
 
-      }, interval + offset  + 5.0 + interval + 0.7)
+      }, interval + offset  + 1.0 + interval + 0.3)
 
   }
 

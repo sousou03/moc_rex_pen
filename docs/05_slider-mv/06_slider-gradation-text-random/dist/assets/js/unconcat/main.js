@@ -4564,7 +4564,7 @@
 	    value: function timeline() {
 	      var _this2 = this;
 	
-	      var tl = new TimelineMax({ repeat: -1, delay: 2.0, repeatDelay: 1.0 });
+	      var tl = new TimelineMax({ repeat: -1, delay: 2.0, repeatDelay: 0.0 });
 	      var dur = this.gac.dur;
 	      var divide = 10;
 	      var interval = dur / this.gac.divide * divide + dur + 0.1;
@@ -4585,8 +4585,8 @@
 	        var tls = new TimelineMax();
 	        tls.add(function () {
 	          _this2.gac.hide();
-	        }, 0.7);
-	      }, interval + offset + 5.0).add(function () {
+	        }, 0.3);
+	      }, interval + offset + 1.0).add(function () {
 	
 	        cnt++;
 	        cnt = cnt % len;
@@ -4595,7 +4595,7 @@
 	        $('.img').eq(cnt).addClass('active');
 	
 	        _this2.st.switch();
-	      }, interval + offset + 5.0 + interval + 0.7);
+	      }, interval + offset + 1.0 + interval + 0.3);
 	    }
 	  }, {
 	    key: 'onResize',
