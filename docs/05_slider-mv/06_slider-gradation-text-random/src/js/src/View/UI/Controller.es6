@@ -43,43 +43,41 @@ export default class Controller extends Base {
     var tl = new TimelineMax({repeat: -1, delay: 2.0, repeatDelay: 0.0});
     var dur = this.gac.dur;
     var divide = 10;
-    var interval = dur / this.gac.divide * divide + dur + 0.1;
     var offset = 0.1
+    var delay = this.gac.delay * divide + dur + offset;
+    var interval = 1.0;
     var cnt = 0;
     var len = $('.img').length;
 
     tl
+      // show
       .add(()=>{
 
         this.gac.show();
         var tls = new TimelineMax();
-        tls
-          .add(()=>{
-            this.st.show();
-          }, 0.2)
+        tls.add(()=>{this.st.show();}, 0.2)
         
       }, 0.0)
+      // hide
       .add(()=>{
 
         this.st.hide();
         var tls = new TimelineMax();
-        tls
-          .add(()=>{
-            this.gac.hide();
-          }, 0.3)        
+        tls.add(()=>{this.gac.hide();}, 0.3)        
 
-      }, interval + offset + 1.0)
+      }, delay + interval)
       .add(()=>{
 
+        // change img
         cnt++;
         cnt = cnt%len;
-
         $('.img').removeClass('active');
         $('.img').eq(cnt).addClass('active');
 
+        // change text
         this.st.switch();
 
-      }, interval + offset  + 1.0 + interval + 0.3)
+      }, delay + interval + delay + 0.3)
 
   }
 

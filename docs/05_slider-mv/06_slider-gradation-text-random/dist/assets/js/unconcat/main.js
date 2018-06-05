@@ -4567,35 +4567,41 @@
 	      var tl = new TimelineMax({ repeat: -1, delay: 2.0, repeatDelay: 0.0 });
 	      var dur = this.gac.dur;
 	      var divide = 10;
-	      var interval = dur / this.gac.divide * divide + dur + 0.1;
 	      var offset = 0.1;
+	      var delay = this.gac.delay * divide + dur + offset;
+	      var interval = 1.0;
 	      var cnt = 0;
 	      var len = $('.img').length;
 	
-	      tl.add(function () {
+	      tl
+	      // show
+	      .add(function () {
 	
 	        _this2.gac.show();
 	        var tls = new TimelineMax();
 	        tls.add(function () {
 	          _this2.st.show();
 	        }, 0.2);
-	      }, 0.0).add(function () {
+	      }, 0.0)
+	      // hide
+	      .add(function () {
 	
 	        _this2.st.hide();
 	        var tls = new TimelineMax();
 	        tls.add(function () {
 	          _this2.gac.hide();
 	        }, 0.3);
-	      }, interval + offset + 1.0).add(function () {
+	      }, delay + interval).add(function () {
 	
+	        // change img
 	        cnt++;
 	        cnt = cnt % len;
-	
 	        $('.img').removeClass('active');
 	        $('.img').eq(cnt).addClass('active');
 	
+	        // change text
 	        _this2.st.switch();
-	      }, interval + offset + 1.0 + interval + 0.3);
+	      }, delay + interval + delay + 0.3);
 	    }
 	  }, {
 	    key: 'onResize',
@@ -4844,7 +4850,7 @@
 	      this.op11 = 1;
 	
 	      this.dur = 1.2;
-	      this.divide = 8;
+	      this.delay = 0.15;
 	    }
 	  }, {
 	    key: 'add',
@@ -4886,37 +4892,37 @@
 	      .to(this, this.dur, {
 	        op1: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 0).to(this, this.dur, {
+	      }, this.delay * 0).to(this, this.dur, {
 	        op2: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 1).to(this, this.dur, {
+	      }, this.delay * 1).to(this, this.dur, {
 	        op3: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 2).to(this, this.dur, {
+	      }, this.delay * 2).to(this, this.dur, {
 	        op4: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 3).to(this, this.dur, {
+	      }, this.delay * 3).to(this, this.dur, {
 	        op5: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 4).to(this, this.dur, {
+	      }, this.delay * 4).to(this, this.dur, {
 	        op6: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 5).to(this, this.dur, {
+	      }, this.delay * 5).to(this, this.dur, {
 	        op7: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 6).to(this, this.dur, {
+	      }, this.delay * 6).to(this, this.dur, {
 	        op8: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 7).to(this, this.dur, {
+	      }, this.delay * 7).to(this, this.dur, {
 	        op9: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 8).to(this, this.dur, {
+	      }, this.delay * 8).to(this, this.dur, {
 	        op10: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 9).to(this, this.dur, {
+	      }, this.delay * 9).to(this, this.dur, {
 	        op11: 0,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 10);
+	      }, this.delay * 10);
 	    }
 	  }, {
 	    key: 'hide',
@@ -4930,37 +4936,37 @@
 	      .to(this, this.dur, {
 	        op1: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 0).to(this, this.dur, {
+	      }, this.delay * 0).to(this, this.dur, {
 	        op2: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 1).to(this, this.dur, {
+	      }, this.delay * 1).to(this, this.dur, {
 	        op3: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 2).to(this, this.dur, {
+	      }, this.delay * 2).to(this, this.dur, {
 	        op4: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 3).to(this, this.dur, {
+	      }, this.delay * 3).to(this, this.dur, {
 	        op5: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 4).to(this, this.dur, {
+	      }, this.delay * 4).to(this, this.dur, {
 	        op6: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 5).to(this, this.dur, {
+	      }, this.delay * 5).to(this, this.dur, {
 	        op7: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 6).to(this, this.dur, {
+	      }, this.delay * 6).to(this, this.dur, {
 	        op8: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 7).to(this, this.dur, {
+	      }, this.delay * 7).to(this, this.dur, {
 	        op9: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 8).to(this, this.dur, {
+	      }, this.delay * 8).to(this, this.dur, {
 	        op10: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 9).to(this, this.dur, {
+	      }, this.delay * 9).to(this, this.dur, {
 	        op11: 1,
 	        ease: Power1.easeInOut
-	      }, this.dur / this.divide * 10);
+	      }, this.delay * 10);
 	    }
 	  }, {
 	    key: 'onResize',
