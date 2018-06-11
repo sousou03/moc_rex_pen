@@ -25,6 +25,12 @@ html {
   .layer {
     background-color: #000;
   }
+
+  .bg {
+    background: url(../resource/img/img.jpg);
+    background-size: cover;
+    background-position: center center;
+  }
  
 }
 

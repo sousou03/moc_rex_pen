@@ -4697,6 +4697,7 @@
 	          width: w,
 	          height: h
 	        });
+	        $(this).addClass('bg');
 	      });
 	
 	      // arrow move
@@ -4736,7 +4737,7 @@
 	        opacity: 1,
 	        ease: Power2.easeInOut,
 	        onStart: function onStart() {
-	          $('html,body').css('cursor', 'none');
+	          $('html,body').css('cursor', 'pointer');
 	        }
 	      }, 0.0)
 	      // color
@@ -4756,9 +4757,12 @@
 	      TweenMax.killTweensOf(this.$cursor);
 	
 	      TweenMax.to(this.$cursor, 0.4, { opacity: 0, scaleX: 0.2, scaleY: 0.2, ease: Power2.easeInOut,
-	        onComplete: function onComplete() {
+	        onStart: function onStart() {
 	          $('html,body').css('cursor', 'default');
 	        }
+	        // onComplete: ()=>{
+	        //   $('html,body').css('cursor', 'default');
+	        // }
 	      });
 	    }
 	  }, {

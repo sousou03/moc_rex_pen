@@ -45,6 +45,7 @@ export default class Controller extends Base {
         width: w,
         height: h,
       });
+      $(this).addClass('bg')
       
       
     });
@@ -86,7 +87,7 @@ export default class Controller extends Base {
         opacity: 1, 
         ease: Power2.easeInOut,
         onStart: ()=>{
-          $('html,body').css('cursor', 'none');
+          $('html,body').css('cursor', 'pointer');
         }
       }, 0.0)
       // color
@@ -108,9 +109,12 @@ export default class Controller extends Base {
     TweenMax.killTweensOf(this.$cursor);
 
     TweenMax.to(this.$cursor, 0.4, {opacity: 0, scaleX: 0.2, scaleY: 0.2, ease: Power2.easeInOut,
-      onComplete: ()=>{
+      onStart: ()=>{
         $('html,body').css('cursor', 'default');
-      }
+      },
+      // onComplete: ()=>{
+      //   $('html,body').css('cursor', 'default');
+      // }
     })      
 
   }  　

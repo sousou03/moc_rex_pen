@@ -951,6 +951,12 @@ html {
   background-color: #000;
 }
 
+#wrapper.id_top .bg {
+  background: url(../resource/img/img.jpg);
+  background-size: cover;
+  background-position: center center;
+}
+
 .cursor {
   background-color: rgba(217, 52, 72, 0);
   border: 2px solid #d93448;
