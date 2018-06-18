@@ -1,0 +1,60 @@
+<% var rootPATH = '../', contentsPATH = './top/', PATH = './', page = 'top'; %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<%- include(rootPATH + 'inc/_style'); %>
+<link href="<%- PATH %>assets/css/style.css" rel="stylesheet">
+</head>
+<body id="<%- page %>" class="">
+
+<div id="wrapper" class="id_<%- page %>">
+<div id="inner">
+
+<!-- 
+  <div class="img img01"></div>
+  <div class="img img02"></div>
+  <div class="img img03"></div>
+  <div class="img img04"></div>
+  <div class="img img05"></div>
+  <div class="img img06"></div>
+
+  <div class="radial"></div>
+ -->
+
+  <div class="tag">TRAVEL</div>
+
+  <div class="text text1 text01">
+    <div>
+      Shun Kawakami est classe et inclassable,<br>alors les marques l’ont remarqué
+    </div>
+  </div>
+  <div class="text text1 text02">
+    <div>
+      De Tokyo la mégalopole aux<br> paysages préservés de Kochi,
+    </div>
+  </div>
+  <div class="text text1 text03">
+    <div>
+      seule une présence, le bruit des talons <br>hauts sur le bitume résonne à nos oreilles, le…,
+    </div>
+  </div>
+  <div class="text text1 text04">
+    <div>
+      Les puissantes photographies d’Araki<br>ébranlent l’esprit, le corps, et tous,
+    </div>
+  </div>
+
+  <div class="indicator flex">
+    <div class="item active"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+  </div>
+
+
+</div>
+</div>
+
+<%- include(rootPATH + 'inc/_script', {PATH: PATH}); %>
+</body>
+</html>

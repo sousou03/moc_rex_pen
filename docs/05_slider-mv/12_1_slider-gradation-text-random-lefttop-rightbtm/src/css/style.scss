@@ -1,0 +1,156 @@
+@charset "utf-8";
+
+/* --------------------------------------------------------------------------------
+*   common
+-------------------------------------------------------------------------------- */
+@import "./_init/import";
+@import "./_init/reset"; // リセットCSS、フォントサイズ sss
+
+/* --------------------------------------------------------------------------------
+*   parts
+-------------------------------------------------------------------------------- */
+@import "./_parts/_common/**/*.scss";
+@import "./_parts/_compornents/**/*.scss";
+
+/* --------------------------------------------------------------------------------
+*   page
+-------------------------------------------------------------------------------- */
+#wrapper.id_top {
+
+  height: 100vh;
+  width: 100vw;
+  // background: url(../resource/img/hero.jpg);
+  // background-size: cover;
+  // background-position: center center;
+
+  @import "./_page/top/**/*.scss";
+  
+  .img {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .img.active {
+    z-index: 2;
+  }
+  
+  .img01 {
+    height: 100vh;
+    width: 100vw;
+    background: url(../resource/img/img04.jpeg);
+    background-size: cover;
+    background-position: center center;
+    
+    z-index: 2;
+  }
+  .img02 {
+    height: 100vh;
+    width: 100vw;
+    background: url(../resource/img/img05.jpeg);
+    background-size: cover;
+    background-position: center center;
+  }
+  .img03 {
+    height: 100vh;
+    width: 100vw;
+    background: url(../resource/img/img06.jpeg);
+    background-size: cover;
+    background-position: center center;
+  }
+  .img04 {
+    height: 100vh;
+    width: 100vw;
+    background: url(../resource/img/img01.jpeg);
+    background-size: cover;
+    background-position: center center;
+  }
+  .img05 {
+    height: 100vh;
+    width: 100vw;
+    background: url(../resource/img/img02.jpeg);
+    background-size: cover;
+    background-position: center center;
+  }
+  .img06 {
+    height: 100vh;
+    width: 100vw;
+    background: url(../resource/img/img03.jpeg);
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .radial {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    // background: radial-gradient(circle at center, #3498db, #9b59b6);
+    background: radial-gradient(circle at center, #fff, #fff);
+    
+    z-index: 9999;
+    
+    opacity: 0 !important;
+  }
+
+  .text {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    font-size: 50px;
+    // display: flex;
+    // align-items: center;
+    
+    white-space: nowrap;
+    
+    opacity: 0;
+    
+    z-index: 9999;
+    
+    span {
+      opacity: 0;
+      color: #fff;
+    }
+  }
+  .text01 {
+    span {
+      opacity: 1;
+    }
+  }
+
+  .tag {
+    position: absolute;
+    left: calc(5% + 3px);
+    top: calc(50% - 65px);
+    transform: translateY(-50%);
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    z-index: 9999;
+    color: #fff;
+  }
+
+  .indicator {
+    position: absolute;
+    left: calc(5% + 3px);
+    top: calc(50% + 75px);
+    transform: translateY(-50%);
+    z-index: 9999;
+    color: #fff;
+    .item {
+      width: 8px;
+      height: 8px;
+      border: 1px solid #fff;
+      border-radius: 100%;
+      margin-right: 8px;
+      box-sizing: border-box;
+      
+      transition: background-color .7s $easeInOutQuad 0s;
+    }
+    .item.active {
+      background-color: #fff;
+    }
+  }
+
+}
