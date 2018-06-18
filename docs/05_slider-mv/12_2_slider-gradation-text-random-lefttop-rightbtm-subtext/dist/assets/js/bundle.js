@@ -5762,8 +5762,11 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    value: function reset() {}
 	  }, {
 	    key: 'show',
-	    value: function show(dir) {
+	    value: function show() {
 	      var _this = this;
+	
+	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
+	
 	
 	      var w = this.$target.width();
 	      var h = this.$target.height();
@@ -5808,8 +5811,11 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    }
 	  }, {
 	    key: 'hide',
-	    value: function hide(dir) {
+	    value: function hide() {
 	      var _this2 = this;
+	
+	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
+	
 	
 	      var w = this.$target.width();
 	      var h = this.$target.height();

@@ -59,7 +59,7 @@ export default class SpanText {
 
   }
 
-  show (dir) {
+  show (dir='next') {
 
     var w = this.$target.width();
     var h = this.$target.height();
@@ -106,7 +106,7 @@ export default class SpanText {
     
   }
 
-  hide (dir) {
+  hide (dir='next') {
 
     var w = this.$target.width();
     var h = this.$target.height();

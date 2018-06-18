@@ -29,6 +29,12 @@
 
   @import "./_page/top/**/*.scss";
   
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  
   .img {
     position: absolute;
     left: 0;
