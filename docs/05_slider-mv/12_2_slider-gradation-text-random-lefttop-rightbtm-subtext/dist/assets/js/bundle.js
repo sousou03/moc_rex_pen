@@ -4714,8 +4714,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      if (gb.u.dv.isSP) this.s = new _Swipe2.default($(window));else this.s = new _MouseDrag2.default($(window));
 	
-	      log(this.s, gb.u.dv);
-	
 	      this.isTimeline = false;
 	      this.isLock = false;
 	
@@ -4803,7 +4801,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        }, 0.3).add(function () {
 	          _this4.isTimeline = false;
 	          _this4.timeline();
-	        }, 2.0);
+	        }, 1.0);
 	      }, 0.35);
 	    }
 	  }, {
@@ -4835,7 +4833,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        }, 0.3).add(function () {
 	          _this5.isTimeline = false;
 	          _this5.timeline();
-	        }, 2.0);
+	        }, 1.0);
 	      }, 0.35);
 	    }
 	  }, {

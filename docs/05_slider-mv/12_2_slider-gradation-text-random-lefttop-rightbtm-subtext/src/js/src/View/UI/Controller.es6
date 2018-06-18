@@ -45,8 +45,6 @@ export default class Controller extends Base {
     if (gb.u.dv.isSP) this.s = new Swipe($(window));
     else this.s = new MouseDrag($(window));
 
-    log(this.s, gb.u.dv);
-
     this.isTimeline = false;
     this.isLock = false;
 
@@ -148,7 +146,7 @@ export default class Controller extends Base {
           .add(()=>{
             this.isTimeline = false;
             this.timeline();
-          }, 2.0)
+          }, 1.0)
 
       }, 0.35)
     
@@ -185,7 +183,7 @@ export default class Controller extends Base {
           .add(()=>{
             this.isTimeline = false;
             this.timeline();
-          }, 2.0)
+          }, 1.0)
 
       }, 0.35)
 
