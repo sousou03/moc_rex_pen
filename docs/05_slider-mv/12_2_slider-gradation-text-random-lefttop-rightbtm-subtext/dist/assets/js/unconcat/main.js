@@ -4675,16 +4675,13 @@
 	      };
 	      this.s.onMove = function (sign, val) {
 	
-	        log(val);
 	        if (!_this2.isDrag || val < 10) return;
 	        if (_this2.isTimeline) return;
 	        _this2.isTimeline = true;
 	
 	        if (sign > 0) {
-	          _this2.tl.kill();
 	          _this2.next();
 	        } else {
-	          _this2.tl.kill();
 	          _this2.prev();
 	        }
 	      };
@@ -4717,6 +4714,7 @@
 	    value: function timeline() {
 	      var _this3 = this;
 	
+	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax({ repeat: -1, delay: 3.0, repeatDelay: 3.0 });
 	
 	      this.tl
@@ -4738,8 +4736,8 @@
 	        var tl = new TimelineMax();
 	        tl.add(function () {
 	          _this3.slider.next();
-	        }, 0.3);
-	      }, 1.0).add(function () {
+	        }, 0.0);
+	      }, 0.6).add(function () {
 	
 	        _this3.isTimeline = false;
 	      }, 4.0);
@@ -4749,72 +4747,62 @@
 	    value: function next() {
 	      var _this4 = this;
 	
-	      var tl = new TimelineMax();
+	      if (this.tl) this.tl.kill();
+	      this.tl = new TimelineMax();
 	
-	      tl.add(function () {
+	      this.tl.add(function () {
 	
 	        // text
-	        _this4.sts[_this4.index].hide('next');
-	      }, 0.0).add(function () {
+	        _this4.sts[_this4.index].hide_op('next');
 	
+	        // index
 	        _this4.index++;
 	        _this4.index = _this4.index % _this4.sts.length;
-	      }, 0.0).add(function () {
 	
 	        // indicator
 	        _this4.$item.removeClass('active');
 	        _this4.$item.eq(_this4.index).addClass('active');
-	        // img
-	        _this4.tl = new TimelineMax();
-	        _this4.tl
+	
 	        // text
-	        .add(function () {
-	          _this4.sts[_this4.index].show('next');
-	        }, 0.6)
+	        _this4.sts[_this4.index].show_op('next');
 	        // img
-	        .add(function () {
-	          _this4.slider.next();
-	        }, 0.3).add(function () {
-	          _this4.isTimeline = false;
-	          _this4.timeline();
-	        }, 1.0);
-	      }, 0.0);
+	        _this4.slider.next();
+	      }, 0.0).add(function () {
+	
+	        _this4.isTimeline = false;
+	        _this4.timeline();
+	      }, 0.2);
 	    }
 	  }, {
 	    key: 'prev',
 	    value: function prev() {
 	      var _this5 = this;
 	
-	      var tl = new TimelineMax();
+	      if (this.tl) this.tl.kill();
+	      this.tl = new TimelineMax();
 	
-	      tl.add(function () {
+	      this.tl.add(function () {
 	
 	        // text
-	        _this5.sts[_this5.index].hide('prev');
-	      }, 0.0).add(function () {
+	        _this5.sts[_this5.index].hide_op('prev');
 	
+	        // index
 	        _this5.index--;
 	        if (_this5.index < 0) _this5.index = _this5.sts.length - 1;
-	      }, 0.0).add(function () {
 	
 	        // indicator
 	        _this5.$item.removeClass('active');
 	        _this5.$item.eq(_this5.index).addClass('active');
-	        // img
-	        _this5.tl = new TimelineMax();
-	        _this5.tl
+	
 	        // text
-	        .add(function () {
-	          _this5.sts[_this5.index].show('prev');
-	        }, 0.6)
+	        _this5.sts[_this5.index].show_op('prev');
 	        // img
-	        .add(function () {
-	          _this5.slider.prev();
-	        }, 0.3).add(function () {
-	          _this5.isTimeline = false;
-	          _this5.timeline();
-	        }, 1.0);
-	      }, 0.0);
+	        _this5.slider.prev();
+	      }, 0.0).add(function () {
+	
+	        _this5.isTimeline = false;
+	        _this5.timeline();
+	      }, 0.2);
 	    }
 	  }, {
 	    key: 'onResize',
@@ -5749,6 +5737,8 @@
 	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
 	
 	
+	      log(111);
+	
 	      var w = this.$target.width();
 	      var h = this.$target.height();
 	
@@ -5825,6 +5815,60 @@
 	      });
 	    }
 	  }, {
+	    key: 'show_op',
+	    value: function show_op() {
+	      var _this3 = this;
+	
+	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
+	
+	
+	      if (dir == 'next') var x = 5;else var x = -5;
+	
+	      TweenMax.set(this.$span, { x: x });
+	      this.$span.each(function (index, el) {
+	
+	        TweenMax.to(_this3.$span.eq(index), 0.7, {
+	          x: 0,
+	          opacity: 1,
+	          ease: Power2.easeInOut
+	        });
+	      });
+	
+	      TweenMax.set(this.$sub.add(this.$tag).add(this.$more), { x: x });
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.7, {
+	        opacity: 1,
+	        x: 0,
+	        z: 0,
+	        ease: Power2.easeInOut
+	      });
+	    }
+	  }, {
+	    key: 'hide_op',
+	    value: function hide_op() {
+	      var _this4 = this;
+	
+	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
+	
+	
+	      if (dir == 'next') var x = -5;else var x = 5;
+	
+	      this.$span.each(function (index, el) {
+	
+	        TweenMax.to(_this4.$span.eq(index), 0.7, {
+	          x: x,
+	          opacity: 0,
+	          ease: Power2.easeInOut
+	        });
+	      });
+	
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.7, {
+	        opacity: 0,
+	        x: x,
+	        z: 0,
+	        ease: Power2.easeInOut
+	      });
+	    }
+	  }, {
 	    key: 'switch',
 	    value: function _switch() {
 	
@@ -5838,13 +5882,13 @@
 	  }, {
 	    key: 'timeline',
 	    value: function timeline() {
-	      var _this3 = this;
+	      var _this5 = this;
 	
 	      var tl = new TimelineMax();
 	
 	      tl.add(function () {
 	
-	        _this3.show();
+	        _this5.show();
 	      }, 1.0);
 	    }
 	  }, {

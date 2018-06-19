@@ -62,6 +62,8 @@ export default class SpanText {
 
   show (dir='next') {
 
+    log(111);
+
     var w = this.$target.width();
     var h = this.$target.height();
 
@@ -131,6 +133,56 @@ export default class SpanText {
     else var x = 5;
 
     TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.5, {
+      opacity: 0,
+      x: x,
+      z: 0,
+      ease: Power2.easeInOut,
+    });
+    
+  }
+
+  show_op (dir='next') {
+
+    if (dir=='next') var x = 5;
+    else var x = -5;
+
+    TweenMax.set(this.$span, {x: x});
+    this.$span.each((index, el)=>{
+
+      TweenMax.to(this.$span.eq(index), 0.7, {
+        x: 0,
+        opacity: 1,
+        ease: Power2.easeInOut,
+      });
+      
+    });
+
+    TweenMax.set(this.$sub.add(this.$tag).add(this.$more), {x: x,});
+    TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.7, {
+      opacity: 1,
+      x: 0,
+      z: 0,
+      ease: Power2.easeInOut,
+    });
+    
+  }
+
+  hide_op (dir='next') {
+
+    if (dir=='next') var x = -5;
+    else var x = 5;
+
+    this.$span.each((index, el)=>{
+
+      TweenMax.to(this.$span.eq(index), 0.7, {
+        x: x,
+        opacity: 0,
+        ease: Power2.easeInOut,
+      });
+      
+    });
+
+    TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.7, {
       opacity: 0,
       x: x,
       z: 0,

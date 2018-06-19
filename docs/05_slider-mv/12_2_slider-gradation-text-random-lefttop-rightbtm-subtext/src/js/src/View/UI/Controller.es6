@@ -57,16 +57,13 @@ export default class Controller extends Base {
     }
     this.s.onMove = (sign, val)=>{
 
-      log(val);
       if (!this.isDrag||val<10) return;
       if (this.isTimeline) return;
       this.isTimeline = true;
 
       if (sign>0) {
-        this.tl.kill();
         this.next();
       } else {
-        this.tl.kill();
         this.prev();
       }
 
@@ -101,6 +98,7 @@ export default class Controller extends Base {
 
   timeline() {
 
+    if (this.tl) this.tl.kill();
     this.tl = new TimelineMax({repeat: -1, delay: 3.0, repeatDelay: 3.0});
 
     this.tl
@@ -121,10 +119,10 @@ export default class Controller extends Base {
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
         var tl = new TimelineMax();
-        tl.add(()=>{this.slider.next();}, 0.3)
+        tl.add(()=>{this.slider.next();}, 0.0)
 
 
-      }, 1.0)
+      }, 0.6)
       .add(()=>{
 
         this.isTimeline = false;
@@ -135,77 +133,69 @@ export default class Controller extends Base {
 
   next() {
 
-    var tl = new TimelineMax();
+    if (this.tl) this.tl.kill();
+    this.tl = new TimelineMax();
 
-    tl
+    this.tl
       .add(()=>{
 
         // text
-        this.sts[this.index].hide('next');
-        
-      }, 0.0)
-      .add(()=>{
+        this.sts[this.index].hide_op('next');
 
+        // index
         this.index++;
         this.index = this.index % this.sts.length;      
-
-      }, 0.0)
-      .add(()=>{
 
         // indicator
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
-        // img
-        this.tl = new TimelineMax();
-        this.tl
-          // text
-          .add(()=>{this.sts[this.index].show('next');}, 0.6)
+        
+        // text
+        this.sts[this.index].show_op('next');
           // img
-          .add(()=>{this.slider.next();}, 0.3)
-          .add(()=>{
-            this.isTimeline = false;
-            this.timeline();
-          }, 1.0)
+        this.slider.next();
 
       }, 0.0)
+      .add(()=>{
+            
+        this.isTimeline = false;
+        this.timeline();
+
+      }, 0.2)
     
   }
 
   prev() {
 
-    var tl = new TimelineMax();
+    if (this.tl) this.tl.kill();
+    this.tl = new TimelineMax();
 
-    tl
+    this.tl
       .add(()=>{
 
         // text
-        this.sts[this.index].hide('prev');
+        this.sts[this.index].hide_op('prev');
 
-      }, 0.0)
-      .add(()=>{
-
+        // index
         this.index--;
         if (this.index<0) this.index = this.sts.length - 1;
-
-      }, 0.0)
-      .add(()=>{
 
         // indicator
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
-        // img
-        this.tl = new TimelineMax();
-        this.tl
-          // text
-          .add(()=>{this.sts[this.index].show('prev');}, 0.6)
+
+        // text
+        this.sts[this.index].show_op('prev');
           // img
-          .add(()=>{this.slider.prev();}, 0.3)
-          .add(()=>{
-            this.isTimeline = false;
-            this.timeline();
-          }, 1.0)
+        this.slider.prev();
 
       }, 0.0)
+      .add(()=>{
+          
+        this.isTimeline = false;
+        this.timeline();
+
+      }, 0.2)
 
   }
 
