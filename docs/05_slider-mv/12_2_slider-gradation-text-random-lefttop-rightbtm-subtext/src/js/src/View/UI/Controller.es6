@@ -75,16 +75,6 @@ export default class Controller extends Base {
     }
     this.s.onSwipe = (sign)=>{
 
-      // if (this.isTimeline) return;
-      // this.isTimeline = true;
-
-      // if (sign>0) {
-      //   this.tl.kill();
-      //   this.next();
-      // } else {
-      //   this.tl.kill();
-      //   this.prev();
-      // }
 
     }
 
@@ -98,6 +88,7 @@ export default class Controller extends Base {
 
   timeline() {
 
+    log(11);
     if (this.tl) this.tl.kill();
     this.tl = new TimelineMax({repeat: -1, delay: 3.0, repeatDelay: 3.0});
 
@@ -127,7 +118,7 @@ export default class Controller extends Base {
 
         this.isTimeline = false;
 
-      }, 3.0)
+      }, 1.0)
 
   }
 

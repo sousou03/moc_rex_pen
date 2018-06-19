@@ -27,7 +27,7 @@ export default class Bubble extends Base {
     this.isUEv = true;
     this.isREv = true;
 
-    this.len = 5;
+    this.len = 4;
 
     // ready
     this.ready();

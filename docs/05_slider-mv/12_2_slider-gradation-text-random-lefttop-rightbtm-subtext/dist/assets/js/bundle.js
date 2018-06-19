@@ -4743,20 +4743,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	        _this2.isDrag = false;
 	      };
-	      this.s.onSwipe = function (sign) {
-	
-	        // if (this.isTimeline) return;
-	        // this.isTimeline = true;
-	
-	        // if (sign>0) {
-	        //   this.tl.kill();
-	        //   this.next();
-	        // } else {
-	        //   this.tl.kill();
-	        //   this.prev();
-	        // }
-	
-	      };
+	      this.s.onSwipe = function (sign) {};
 	
 	      this.timeline();
 	    }
@@ -4768,6 +4755,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    value: function timeline() {
 	      var _this3 = this;
 	
+	      log(11);
 	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax({ repeat: -1, delay: 3.0, repeatDelay: 3.0 });
 	
@@ -4794,7 +4782,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      }, 0.6).add(function () {
 	
 	        _this3.isTimeline = false;
-	      }, 3.0);
+	      }, 1.0);
 	    }
 	  }, {
 	    key: 'next',
@@ -5098,9 +5086,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    value: function setup() {
 	      var _this2 = this;
 	
-	      this.isUEv = true;
-	      this.isUpdate = true;
-	
 	      this.obj = new _Controller2.default(this.stage);
 	      this.o = new _Order2.default(this.obj.len);
 	
@@ -5380,7 +5365,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.isUEv = true;
 	      this.isREv = true;
 	
-	      this.len = 5;
+	      this.len = 4;
 	
 	      // ready
 	      this.ready();
@@ -5472,7 +5457,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    key: 'setup',
 	    value: function setup() {
 	
-	      this.isUEv = true;
+	      // this.isUEv = true;
 	      this.isREv = true;
 	      this.isLoad = false;
 	
@@ -5534,11 +5519,12 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    key: 'update',
 	    value: function update() {
 	
-	      if (!this.isLoad) return;
+	      // if (!this.isLoad) return;
 	
 	      // pos
 	      // this.container.x = gb.r.w/2 - this.imgw / 2;
 	      // this.container.y = gb.r.h/2 - this.imgh / 2;
+	
 	    }
 	  }, {
 	    key: 'draw',
@@ -5794,8 +5780,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
 	
 	
-	      log(111);
-	
 	      var w = this.$target.width();
 	      var h = this.$target.height();
 	
@@ -5924,17 +5908,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        z: 0,
 	        ease: Power2.easeInOut
 	      });
-	    }
-	  }, {
-	    key: 'switch',
-	    value: function _switch() {
-	
-	      this.index++;
-	      this.index = this.index % this.text.length;
-	
-	      var text = this.text[this.index];
-	      this.$target.html(text);
-	      this.setup();
 	    }
 	  }, {
 	    key: 'timeline',

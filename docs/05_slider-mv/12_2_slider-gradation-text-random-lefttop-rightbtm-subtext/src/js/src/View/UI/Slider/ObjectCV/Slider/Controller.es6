@@ -27,10 +27,6 @@ export default class Controller extends Base {
 
   setup() {
 
-
-    this.isUEv = true;
-    this.isUpdate = true;
-
     this.obj = new Objects(this.stage);
     this.o = new Order(this.obj.len);
 

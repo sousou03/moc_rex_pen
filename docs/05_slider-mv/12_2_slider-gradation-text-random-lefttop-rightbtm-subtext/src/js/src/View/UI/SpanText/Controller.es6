@@ -62,8 +62,6 @@ export default class SpanText {
 
   show (dir='next') {
 
-    log(111);
-
     var w = this.$target.width();
     var h = this.$target.height();
 
@@ -191,16 +189,6 @@ export default class SpanText {
     
   }
 
-  switch() {
-
-    this.index++;
-    this.index = this.index%this.text.length;
-
-    var text = this.text[this.index];
-    this.$target.html(text);
-    this.setup();
-
-  }
 
   timeline() {
 

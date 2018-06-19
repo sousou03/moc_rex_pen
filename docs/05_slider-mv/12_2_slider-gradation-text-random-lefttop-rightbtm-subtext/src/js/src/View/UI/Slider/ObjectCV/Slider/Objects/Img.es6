@@ -25,7 +25,7 @@ export default class Line extends Base {
 
   setup() {
 
-    this.isUEv = true;
+    // this.isUEv = true;
     this.isREv = true;
     this.isLoad = false;
 
@@ -88,7 +88,7 @@ export default class Line extends Base {
 
   update() {
 
-    if (!this.isLoad) return;
+    // if (!this.isLoad) return;
 
     // pos
     // this.container.x = gb.r.w/2 - this.imgw / 2;
