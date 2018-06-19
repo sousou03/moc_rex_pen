@@ -4740,7 +4740,7 @@
 	      }, 0.6).add(function () {
 	
 	        _this3.isTimeline = false;
-	      }, 4.0);
+	      }, 3.0);
 	    }
 	  }, {
 	    key: 'next',
@@ -4762,12 +4762,13 @@
 	        // indicator
 	        _this4.$item.removeClass('active');
 	        _this4.$item.eq(_this4.index).addClass('active');
+	      }, 0.0).add(function () {
 	
 	        // text
 	        _this4.sts[_this4.index].show_op('next');
 	        // img
 	        _this4.slider.next();
-	      }, 0.0).add(function () {
+	      }, 0.1).add(function () {
 	
 	        _this4.isTimeline = false;
 	        _this4.timeline();
@@ -4793,12 +4794,13 @@
 	        // indicator
 	        _this5.$item.removeClass('active');
 	        _this5.$item.eq(_this5.index).addClass('active');
+	      }, 0.0).add(function () {
 	
 	        // text
 	        _this5.sts[_this5.index].show_op('prev');
 	        // img
 	        _this5.slider.prev();
-	      }, 0.0).add(function () {
+	      }, 0.1).add(function () {
 	
 	        _this5.isTimeline = false;
 	        _this5.timeline();
@@ -4922,7 +4924,8 @@
 	
 	      this.isUEv = true;
 	      this.isREv = true;
-	      this.isRetina = window.devicePixelRatio >= 2 ? true : false;
+	      // this.isRetina = (window.devicePixelRatio>=2)? true: false;
+	      this.isRetina = false;
 	
 	      this.w = gb.r.w;
 	      this.h = gb.r.h;

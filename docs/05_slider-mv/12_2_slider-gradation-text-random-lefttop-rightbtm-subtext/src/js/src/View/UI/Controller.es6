@@ -127,7 +127,7 @@ export default class Controller extends Base {
 
         this.isTimeline = false;
 
-      }, 4.0)
+      }, 3.0)
 
   }
 
@@ -150,12 +150,16 @@ export default class Controller extends Base {
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
         
+
+      }, 0.0)
+      .add(()=>{
+            
         // text
         this.sts[this.index].show_op('next');
           // img
         this.slider.next();
 
-      }, 0.0)
+      }, 0.1)
       .add(()=>{
             
         this.isTimeline = false;
@@ -184,12 +188,16 @@ export default class Controller extends Base {
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
 
+
+      }, 0.0)
+      .add(()=>{
+          
         // text
         this.sts[this.index].show_op('prev');
           // img
         this.slider.prev();
 
-      }, 0.0)
+      }, 0.1)
       .add(()=>{
           
         this.isTimeline = false;
