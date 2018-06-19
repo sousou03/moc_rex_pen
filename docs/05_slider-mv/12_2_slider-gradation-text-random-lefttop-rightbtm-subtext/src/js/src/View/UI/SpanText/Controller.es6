@@ -11,12 +11,13 @@ import * as m from 'Util/Math/index.es6';
 
 export default class SpanText {
 
-  constructor($wrap, $sub, $tag) {
+  constructor($wrap, $sub, $tag, $more) {
 
     this.$wrap = $wrap
     this.$target = $wrap.find('div');
     this.$sub = $sub;
     this.$tag = $tag;
+    this.$more = $more;
 
     this.index = 0;
     this.text = [
@@ -81,7 +82,7 @@ export default class SpanText {
       TweenMax.to(this.$span.eq(index), 1.5, {
         opacity: 1,
         ease: Power2.easeInOut,
-        delay: delay
+        delay: delay + Math.random() * gb.urlp.random
       });
       
     });
@@ -89,15 +90,8 @@ export default class SpanText {
     if (dir=='next') var x = 5;
     else var x = -5;
 
-    TweenMax.set(this.$sub, {x: x,});
-    TweenMax.set(this.$tag, {x: x,});
-    TweenMax.to(this.$sub, 1.5, {
-      opacity: 1,
-      x: 0,
-      z: 0,
-      ease: Power2.easeInOut,
-    });
-    TweenMax.to(this.$tag, 1.5, {
+    TweenMax.set(this.$sub.add(this.$tag).add(this.$more), {x: x,});
+    TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.5, {
       opacity: 1,
       x: 0,
       z: 0,
@@ -128,7 +122,7 @@ export default class SpanText {
       TweenMax.to(this.$span.eq(index), 1.0, {
         opacity: 0,
         ease: Power2.easeInOut,
-        delay: delay
+        delay: delay + Math.random() * gb.urlp.random
       });
       
     });
@@ -136,13 +130,7 @@ export default class SpanText {
     if (dir=='next') var x = -5;
     else var x = 5;
 
-    TweenMax.to(this.$sub, 1.5, {
-      opacity: 0,
-      x: x,
-      z: 0,
-      ease: Power2.easeInOut,
-    });
-    TweenMax.to(this.$tag, 1.5, {
+    TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.5, {
       opacity: 0,
       x: x,
       z: 0,

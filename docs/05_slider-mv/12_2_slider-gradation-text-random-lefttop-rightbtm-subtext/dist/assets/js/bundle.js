@@ -4424,6 +4424,10 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    'key': 'param03',
 	    'def': '3',
 	    'value': ['any']
+	  }, {
+	    'key': 'random',
+	    'def': '0.4',
+	    'value': ['any']
 	  }];
 	};
 	
@@ -4702,10 +4706,10 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      this.s = new _Controller2.default($('body'), 'cv');
 	      this.slider = this.s.slider;
-	      this.st1 = new _Controller4.default($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'));
-	      this.st2 = new _Controller4.default($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'));
-	      this.st3 = new _Controller4.default($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'));
-	      this.st4 = new _Controller4.default($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'));
+	      this.st1 = new _Controller4.default($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'), $('.more01 .inner'));
+	      this.st2 = new _Controller4.default($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'), $('.more02 .inner'));
+	      this.st3 = new _Controller4.default($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'), $('.more03 .inner'));
+	      this.st4 = new _Controller4.default($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'), $('.more04 .inner'));
 	      this.sts = [];
 	      this.sts.push(this.st1, this.st2, this.st3, this.st4);
 	      this.$item = $('.indicator .item');
@@ -4716,13 +4720,17 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      this.isTimeline = false;
 	      this.isLock = false;
+	      this.isDrag = false;
 	
 	      // swipe event
-	      this.s.onStart = function () {};
-	      this.s.onMove = function (sign, val) {};
-	      this.s.onEnd = function () {};
-	      this.s.onSwipe = function (sign) {
+	      this.s.onStart = function () {
 	
+	        _this2.isDrag = true;
+	      };
+	      this.s.onMove = function (sign, val) {
+	
+	        log(val);
+	        if (!_this2.isDrag || val < 10) return;
 	        if (_this2.isTimeline) return;
 	        _this2.isTimeline = true;
 	
@@ -4733,6 +4741,24 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	          _this2.tl.kill();
 	          _this2.prev();
 	        }
+	      };
+	      this.s.onEnd = function () {
+	
+	        _this2.isDrag = false;
+	      };
+	      this.s.onSwipe = function (sign) {
+	
+	        // if (this.isTimeline) return;
+	        // this.isTimeline = true;
+	
+	        // if (sign>0) {
+	        //   this.tl.kill();
+	        //   this.next();
+	        // } else {
+	        //   this.tl.kill();
+	        //   this.prev();
+	        // }
+	
 	      };
 	
 	      this.timeline();
@@ -4789,20 +4815,24 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        _this4.index = _this4.index % _this4.sts.length;
 	      }, 0.0).add(function () {
 	
-	        // text
-	        _this4.sts[_this4.index].show('next');
 	        // indicator
 	        _this4.$item.removeClass('active');
 	        _this4.$item.eq(_this4.index).addClass('active');
 	        // img
 	        _this4.tl = new TimelineMax();
-	        _this4.tl.add(function () {
+	        _this4.tl
+	        // text
+	        .add(function () {
+	          _this4.sts[_this4.index].show('next');
+	        }, 0.6)
+	        // img
+	        .add(function () {
 	          _this4.slider.next();
 	        }, 0.3).add(function () {
 	          _this4.isTimeline = false;
 	          _this4.timeline();
 	        }, 1.0);
-	      }, 0.35);
+	      }, 0.0);
 	    }
 	  }, {
 	    key: 'prev',
@@ -4821,20 +4851,24 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        if (_this5.index < 0) _this5.index = _this5.sts.length - 1;
 	      }, 0.0).add(function () {
 	
-	        // text
-	        _this5.sts[_this5.index].show('prev');
 	        // indicator
 	        _this5.$item.removeClass('active');
 	        _this5.$item.eq(_this5.index).addClass('active');
 	        // img
 	        _this5.tl = new TimelineMax();
-	        _this5.tl.add(function () {
+	        _this5.tl
+	        // text
+	        .add(function () {
+	          _this5.sts[_this5.index].show('prev');
+	        }, 0.6)
+	        // img
+	        .add(function () {
 	          _this5.slider.prev();
 	        }, 0.3).add(function () {
 	          _this5.isTimeline = false;
 	          _this5.timeline();
 	        }, 1.0);
-	      }, 0.35);
+	      }, 0.0);
 	    }
 	  }, {
 	    key: 'onResize',
@@ -5719,13 +5753,14 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var SpanText = function () {
-	  function SpanText($wrap, $sub, $tag) {
+	  function SpanText($wrap, $sub, $tag, $more) {
 	    _classCallCheck(this, SpanText);
 	
 	    this.$wrap = $wrap;
 	    this.$target = $wrap.find('div');
 	    this.$sub = $sub;
 	    this.$tag = $tag;
+	    this.$more = $more;
 	
 	    this.index = 0;
 	    this.text = ['Shun Kawakami est classe et inclassable,<br>alors les marques l’ont remarqué', 'De Tokyo la mégalopole aux<br> paysages préservés de Kochi', 'seule une présence, le bruit des talons <br>hauts sur le bitume résonne à nos oreilles, le…', 'Les puissantes photographies d’Araki<br>ébranlent l’esprit, le corps, et tous'];
@@ -5788,21 +5823,14 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        TweenMax.to(_this.$span.eq(index), 1.5, {
 	          opacity: 1,
 	          ease: Power2.easeInOut,
-	          delay: delay
+	          delay: delay + Math.random() * gb.urlp.random
 	        });
 	      });
 	
 	      if (dir == 'next') var x = 5;else var x = -5;
 	
-	      TweenMax.set(this.$sub, { x: x });
-	      TweenMax.set(this.$tag, { x: x });
-	      TweenMax.to(this.$sub, 1.5, {
-	        opacity: 1,
-	        x: 0,
-	        z: 0,
-	        ease: Power2.easeInOut
-	      });
-	      TweenMax.to(this.$tag, 1.5, {
+	      TweenMax.set(this.$sub.add(this.$tag).add(this.$more), { x: x });
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.5, {
 	        opacity: 1,
 	        x: 0,
 	        z: 0,
@@ -5837,19 +5865,13 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	        TweenMax.to(_this2.$span.eq(index), 1.0, {
 	          opacity: 0,
 	          ease: Power2.easeInOut,
-	          delay: delay
+	          delay: delay + Math.random() * gb.urlp.random
 	        });
 	      });
 	
 	      if (dir == 'next') var x = -5;else var x = 5;
 	
-	      TweenMax.to(this.$sub, 1.5, {
-	        opacity: 0,
-	        x: x,
-	        z: 0,
-	        ease: Power2.easeInOut
-	      });
-	      TweenMax.to(this.$tag, 1.5, {
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.5, {
 	        opacity: 0,
 	        x: x,
 	        z: 0,
@@ -5945,22 +5967,19 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      // brタグがあっても問題がないように
 	      // brで区切る
 	      var text = this.$target.html();
-	      var split = /<br>/g;
+	      var split = /\s/g;
 	      // var split = /\r\n|\r|\n/g; // 改行コードなど
 	      var span = text.split(split);
-	
-	      // trim
-	      for (var i = 0; i < span.length; i++) {
-	        span[i] = span[i].trim();
-	      }
 	
 	      // span化
 	      for (var i = 0; i < span.length; i++) {
 	        span[i] = span[i].replace(/(\S)/g, '<span>$1</span>');
 	      }
 	
-	      // br追加して連結
-	      var append = span.join('<br>');
+	      var append = '';
+	      for (var i = 0; i < span.length; i++) {
+	        append += '<div>' + span[i] + '</div> ';
+	      }
 	
 	      // append
 	      this.$target.html(append);

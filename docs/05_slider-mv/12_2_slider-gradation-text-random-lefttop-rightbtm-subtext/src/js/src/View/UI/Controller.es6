@@ -31,10 +31,10 @@ export default class Controller extends Base {
 
     this.s = new Slider($('body'), 'cv');
     this.slider = this.s.slider;
-    this.st1 = new SpanText($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'));
-    this.st2 = new SpanText($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'));
-    this.st3 = new SpanText($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'));
-    this.st4 = new SpanText($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'));
+    this.st1 = new SpanText($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'), $('.more01 .inner'));
+    this.st2 = new SpanText($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'), $('.more02 .inner'));
+    this.st3 = new SpanText($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'), $('.more03 .inner'));
+    this.st4 = new SpanText($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'), $('.more04 .inner'));
     this.sts = [];
     this.sts.push(this.st1,this.st2,this.st3,this.st4);
     this.$item = $('.indicator .item');
@@ -47,19 +47,18 @@ export default class Controller extends Base {
 
     this.isTimeline = false;
     this.isLock = false;
+    this.isDrag = false;
 
     // swipe event
     this.s.onStart = ()=>{
 
+      this.isDrag = true;
+
     }
     this.s.onMove = (sign, val)=>{
 
-    }
-    this.s.onEnd = ()=>{
-
-    }
-    this.s.onSwipe = (sign)=>{
-
+      log(val);
+      if (!this.isDrag||val<10) return;
       if (this.isTimeline) return;
       this.isTimeline = true;
 
@@ -70,6 +69,25 @@ export default class Controller extends Base {
         this.tl.kill();
         this.prev();
       }
+
+    }
+    this.s.onEnd = ()=>{
+
+      this.isDrag = false;
+
+    }
+    this.s.onSwipe = (sign)=>{
+
+      // if (this.isTimeline) return;
+      // this.isTimeline = true;
+
+      // if (sign>0) {
+      //   this.tl.kill();
+      //   this.next();
+      // } else {
+      //   this.tl.kill();
+      //   this.prev();
+      // }
 
     }
 
@@ -134,21 +152,22 @@ export default class Controller extends Base {
       }, 0.0)
       .add(()=>{
 
-        // text
-        this.sts[this.index].show('next');
         // indicator
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
         // img
         this.tl = new TimelineMax();
         this.tl
+          // text
+          .add(()=>{this.sts[this.index].show('next');}, 0.6)
+          // img
           .add(()=>{this.slider.next();}, 0.3)
           .add(()=>{
             this.isTimeline = false;
             this.timeline();
           }, 1.0)
 
-      }, 0.35)
+      }, 0.0)
     
   }
 
@@ -171,21 +190,22 @@ export default class Controller extends Base {
       }, 0.0)
       .add(()=>{
 
-        // text
-        this.sts[this.index].show('prev');
         // indicator
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
         // img
         this.tl = new TimelineMax();
         this.tl
+          // text
+          .add(()=>{this.sts[this.index].show('prev');}, 0.6)
+          // img
           .add(()=>{this.slider.prev();}, 0.3)
           .add(()=>{
             this.isTimeline = false;
             this.timeline();
           }, 1.0)
 
-      }, 0.35)
+      }, 0.0)
 
   }
 

@@ -43,6 +43,11 @@ var data = ()=>{
         'key': 'param03',
         'def': '3',
         'value': ['any'],
+      },
+      {
+        'key': 'random',
+        'def': '0.4',
+        'value': ['any'],
       }
   ]
 
