@@ -4760,7 +4760,7 @@
 	
 	        _this4.isTimeline = false;
 	        _this4.timeline();
-	      }, 0.2);
+	      }, 0.3);
 	    }
 	  }, {
 	    key: 'prev',
@@ -4792,7 +4792,7 @@
 	
 	        _this5.isTimeline = false;
 	        _this5.timeline();
-	      }, 0.2);
+	      }, 0.3);
 	    }
 	  }, {
 	    key: 'onResize',

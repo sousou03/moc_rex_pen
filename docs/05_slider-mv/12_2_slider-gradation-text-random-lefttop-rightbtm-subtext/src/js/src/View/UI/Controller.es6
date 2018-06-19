@@ -156,7 +156,7 @@ export default class Controller extends Base {
         this.isTimeline = false;
         this.timeline();
 
-      }, 0.2)
+      }, 0.3)
     
   }
 
@@ -194,7 +194,7 @@ export default class Controller extends Base {
         this.isTimeline = false;
         this.timeline();
 
-      }, 0.2)
+      }, 0.3)
 
   }
 
