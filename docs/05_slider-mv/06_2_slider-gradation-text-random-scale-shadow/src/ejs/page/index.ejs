@@ -1,0 +1,36 @@
+<% var rootPATH = '../', contentsPATH = './top/', PATH = './', page = 'top'; %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<%- include(rootPATH + 'inc/_style'); %>
+<link href="<%- PATH %>assets/css/style.css" rel="stylesheet">
+</head>
+<body id="<%- page %>" class="">
+
+<div id="wrapper" class="id_<%- page %>">
+<div id="inner">
+
+
+  <div class="img img01 active"></div>
+  <div class="img img02"></div>
+  <div class="img img03"></div>
+  <div class="img img04"></div>
+  <div class="img img05"></div>
+  <div class="img img06"></div>
+
+  <div class="radial"></div>
+
+
+  <div class="text text1">
+    <div>
+      Shun Kawakami est classe et inclassable,<br>alors les marques l’ont remarqué
+    </div>
+  </div>
+
+
+</div>
+</div>
+
+<%- include(rootPATH + 'inc/_script', {PATH: PATH}); %>
+</body>
+</html>
