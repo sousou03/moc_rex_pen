@@ -4669,6 +4669,10 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
+	var _Swipe = __webpack_require__(35);
+	
+	var _Swipe2 = _interopRequireDefault(_Swipe);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4708,6 +4712,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	  _createClass(Controller, [{
 	    key: 'setup',
 	    value: function setup() {
+	      var _this2 = this;
 	
 	      var padding = 50;
 	      var margin = 5;
@@ -4715,6 +4720,11 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      var len = this.$item.length;
 	
 	      this.wrapw = gb.r.w - 50;
+	      if (gb.r.w < 500) {
+	        this.wrapw = gb.r.w;
+	        padding = 0;
+	        margin = 0;
+	      }
 	      this.innerw = this.w * len + margin * (len - 1);
 	      this.dis = this.innerw - this.wrapw + padding;
 	
@@ -4724,6 +4734,28 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.isToRight = true;
 	      this.isStop = false;
 	      this.cnt = 0;
+	      this.isLock = false;
+	
+	      // swipe
+	      this.s = new _Swipe2.default($(window));
+	
+	      // swipe event
+	      this.s.onStart = function () {
+	
+	        _this2.isDrag = true;
+	      };
+	      this.s.onMove = function (sign, val) {
+	
+	        if (val < 10 || _this2.isLock) return;
+	        _this2.isLock = true;
+	        if (sign > 0) {
+	          _this2.next();
+	        } else {
+	          _this2.prev();
+	        }
+	      };
+	      this.s.onEnd = function () {};
+	      this.s.onSwipe = function (sign) {};
 	    }
 	  }, {
 	    key: 'update',
@@ -4791,19 +4823,27 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	  }, {
 	    key: 'next',
 	    value: function next() {
+	      var _this3 = this;
 	
-	      TweenMax.to(this, 1.0, {
+	      TweenMax.to(this, 0.4, {
 	        tarx: '+=' + -this.w,
-	        ease: Expo.easeOut
+	        ease: Expo.easeOut,
+	        onComplete: function onComplete() {
+	          _this3.isLock = false;
+	        }
 	      });
 	    }
 	  }, {
 	    key: 'prev',
 	    value: function prev() {
+	      var _this4 = this;
 	
-	      TweenMax.to(this, 1.0, {
+	      TweenMax.to(this, 0.4, {
 	        tarx: '+=' + this.w,
-	        ease: Expo.easeOut
+	        ease: Expo.easeOut,
+	        onComplete: function onComplete() {
+	          _this4.isLock = false;
+	        }
 	      });
 	    }
 	  }, {
@@ -4968,6 +5008,133 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	}();
 	
 	exports.default = Base;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	// ------------------------------------------------------------
+	//
+	//  Swipe
+	//
+	// ------------------------------------------------------------
+	
+	var Swipe = function () {
+	  function Swipe() {
+	    var $wrap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('#wrapper');
+	
+	    _classCallCheck(this, Swipe);
+	
+	    // ---------------
+	    //  dom
+	    // ---------------
+	    this.$wrap = $wrap;
+	
+	    // ---------------
+	    //  variable
+	    // ---------------
+	
+	    // position
+	    this.sX = 0;this.mX = 0;this.eX = 0; //startX,moveX,endX
+	    this.dis = 0;this.minDis = 50;
+	
+	    // time
+	    this.sT = 0;this.eT = 0;this.minT = 300; //startTime,ellapsedTime,
+	
+	
+	    this.onStart = function () {};
+	    this.onMove = function () {};
+	    this.onEnd = function () {};
+	    this.onSwipe = function () {};
+	
+	    this.setup();
+	    this.setEvents();
+	  }
+	
+	  _createClass(Swipe, [{
+	    key: 'setup',
+	    value: function setup() {}
+	  }, {
+	    key: 'onTouchStart',
+	    value: function onTouchStart(e) {
+	
+	      // time
+	      this.sT = new Date().getTime();
+	      // pos
+	      this.sX = e.originalEvent.changedTouches[0].pageX;
+	
+	      // コールバック
+	      this.onStart();
+	    }
+	  }, {
+	    key: 'onTouchMove',
+	    value: function onTouchMove(e) {
+	
+	      // pos
+	      this.mX = e.originalEvent.changedTouches[0].pageX;
+	      var dis = this.sX - this.mX;
+	      var sign = 1;
+	      if (dis < 0) sign = -1;
+	
+	      this.onMove(sign, Math.abs(dis));
+	    }
+	  }, {
+	    key: 'onTouchEnd',
+	    value: function onTouchEnd(e) {
+	
+	      // コールバック
+	      this.onEnd();
+	
+	      // time
+	      this.eT = new Date().getTime() - this.sT;
+	      var disT = this.sT - this.eT;
+	      // pos
+	      this.eX = e.originalEvent.changedTouches[0].pageX;;
+	      var dis = this.sX - this.eX;
+	      var sign = 1;
+	      if (dis < 0) sign = -1;
+	
+	      log(dis);
+	
+	      // 最小時間より長かったら、処理
+	      // if(this.minT < this.eT) this.onSwipe();
+	      // 最小距離より長かったら、処理
+	      // log(dis, this.minDis);
+	      if (Math.abs(dis) > this.minDis) this.onSwipe(sign);
+	    }
+	  }, {
+	    key: 'setEvents',
+	    value: function setEvents() {
+	      var _this = this;
+	
+	      var self = this;
+	
+	      this.$wrap.on('touchstart.Swipe', function (e) {
+	        _this.onTouchStart(e);
+	      });
+	      this.$wrap.on('touchmove.Swipe', function (e) {
+	        _this.onTouchMove(e);
+	      });
+	      this.$wrap.on('touchend.Swipe', function (e) {
+	        _this.onTouchEnd(e);
+	      });
+	    }
+	  }]);
+	
+	  return Swipe;
+	}();
+	
+	exports.default = Swipe;
 
 /***/ })
 /******/ ]);

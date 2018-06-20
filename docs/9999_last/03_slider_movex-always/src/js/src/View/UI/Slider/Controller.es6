@@ -5,6 +5,7 @@
 //--------------------------------------------------
 
 import Base from './Base.es6';
+import Swipe from './Swipe.es6';
 
 export default class Controller extends Base {
 
@@ -35,6 +36,11 @@ export default class Controller extends Base {
     var len = this.$item.length;
 
     this.wrapw = gb.r.w - 50;
+    if (gb.r.w<500) {
+      this.wrapw = gb.r.w;
+      padding = 0;
+      margin = 0;
+    }
     this.innerw = this.w * len + margin * (len - 1)
     this.dis = this.innerw - this.wrapw + padding
 
@@ -44,6 +50,37 @@ export default class Controller extends Base {
     this.isToRight = true;
     this.isStop = false;
     this.cnt = 0;
+    this.isLock = false;
+
+    // swipe
+    this.s = new Swipe($(window));
+
+    // swipe event
+    this.s.onStart = ()=>{
+
+      this.isDrag = true;
+
+    }
+    this.s.onMove = (sign, val)=>{
+
+      if (val<10||this.isLock) return;
+      this.isLock = true;
+      if (sign>0) {
+        this.next();
+      } else {
+        this.prev();
+      }
+
+    }
+    this.s.onEnd = ()=>{
+
+
+    }
+    this.s.onSwipe = (sign)=>{
+
+
+    }
+
 
   }
 
@@ -113,9 +150,12 @@ export default class Controller extends Base {
   next() {
 
     TweenMax
-      .to(this, 1.0, {
+      .to(this, 0.4, {
         tarx: '+=' + - this.w,
         ease: Expo.easeOut,
+        onComplete: ()=>{
+          this.isLock = false;
+        }
       })
 
   }
@@ -123,9 +163,12 @@ export default class Controller extends Base {
   prev() {
 
     TweenMax
-      .to(this, 1.0, {
+      .to(this, 0.4, {
         tarx: '+=' + this.w,
         ease: Expo.easeOut,
+        onComplete: ()=>{
+          this.isLock = false;
+        }
       })
 
   }  　
