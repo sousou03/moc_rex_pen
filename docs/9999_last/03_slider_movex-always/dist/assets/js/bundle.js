@@ -4729,27 +4729,29 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    key: 'update',
 	    value: function update() {
 	
-	      if (!this.isStop) {
-	        if (this.isToRight) this.tarx -= 0.5 * 1;else this.tarx += 0.5 * 1;
-	      }
+	      // update
+	      // if (!this.isStop) {
+	      //   if (this.isToRight) this.tarx -= 0.5 * 1;
+	      //   else this.tarx += 0.5 * 1;
+	      // }
 	
 	      // max
 	      // min
 	      if (this.tarx < -this.dis) {
 	        this.tarx = -this.dis;
-	        this.cnt++;
-	        if (this.cnt > 60) {
-	          this.isToRight = false;
-	          this.cnt = 0;
-	        }
+	        // this.cnt++;
+	        // if (this.cnt>60) {
+	        //   this.isToRight = false;
+	        //   this.cnt = 0;
+	        // }
 	      }
 	      if (this.tarx > 0) {
 	        this.tarx = 0;
-	        this.cnt++;
-	        if (this.cnt > 60) {
-	          this.isToRight = true;
-	          this.cnt = 0;
-	        }
+	        // this.cnt++;
+	        // if (this.cnt>60) {
+	        //   this.isToRight = true;
+	        //   this.cnt = 0;
+	        // }
 	      }
 	
 	      this.x += (this.tarx - this.x) * 0.12;
@@ -4792,7 +4794,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      TweenMax.to(this, 1.0, {
 	        tarx: '+=' + -this.w,
-	        ease: Expo.easeInOut
+	        ease: Expo.easeOut
 	      });
 	    }
 	  }, {
@@ -4801,7 +4803,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      TweenMax.to(this, 1.0, {
 	        tarx: '+=' + this.w,
-	        ease: Expo.easeInOut
+	        ease: Expo.easeOut
 	      });
 	    }
 	  }, {

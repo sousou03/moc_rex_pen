@@ -49,28 +49,29 @@ export default class Controller extends Base {
 
   update() {
 
-    if (!this.isStop) {
-      if (this.isToRight) this.tarx -= 0.5 * 1;
-      else this.tarx += 0.5 * 1;
-    }
+    // update
+    // if (!this.isStop) {
+    //   if (this.isToRight) this.tarx -= 0.5 * 1;
+    //   else this.tarx += 0.5 * 1;
+    // }
 
     // max
     // min
     if (this.tarx < - this.dis) {
       this.tarx = - this.dis;
-      this.cnt++;
-      if (this.cnt>60) {
-        this.isToRight = false;
-        this.cnt = 0;
-      }
+      // this.cnt++;
+      // if (this.cnt>60) {
+      //   this.isToRight = false;
+      //   this.cnt = 0;
+      // }
     }
     if (this.tarx > 0) {
       this.tarx = 0;
-      this.cnt++;
-      if (this.cnt>60) {
-        this.isToRight = true;
-        this.cnt = 0;
-      }
+      // this.cnt++;
+      // if (this.cnt>60) {
+      //   this.isToRight = true;
+      //   this.cnt = 0;
+      // }
     }
 
     this.x += (this.tarx - this.x) * 0.12;
@@ -114,7 +115,7 @@ export default class Controller extends Base {
     TweenMax
       .to(this, 1.0, {
         tarx: '+=' + - this.w,
-        ease: Expo.easeInOut,
+        ease: Expo.easeOut,
       })
 
   }
@@ -124,7 +125,7 @@ export default class Controller extends Base {
     TweenMax
       .to(this, 1.0, {
         tarx: '+=' + this.w,
-        ease: Expo.easeInOut,
+        ease: Expo.easeOut,
       })
 
   }  　

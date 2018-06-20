@@ -11,6 +11,11 @@ html {
   background-color: #fff;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #wrapper.id_top .slider {
   position: absolute;
   top: 50%;
@@ -20,6 +25,7 @@ html {
   padding: 0 50px;
   width: 100vw;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 #wrapper.id_top .slider .sliderInner {
