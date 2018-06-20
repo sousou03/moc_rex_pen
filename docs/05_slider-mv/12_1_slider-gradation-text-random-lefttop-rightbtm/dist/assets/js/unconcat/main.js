@@ -4283,6 +4283,10 @@
 	    'key': 'param03',
 	    'def': '3',
 	    'value': ['any']
+	  }, {
+	    'key': 'random',
+	    'def': '0.5',
+	    'value': ['any']
 	  }];
 	};
 	
@@ -5511,7 +5515,7 @@
 	        TweenMax.to(_this.$span.eq(index), 1.5, {
 	          opacity: 1,
 	          ease: Power2.easeInOut,
-	          delay: delay
+	          delay: delay + Math.random() * gb.urlp.random
 	        });
 	      });
 	    }
@@ -5540,7 +5544,7 @@
 	        TweenMax.to(_this2.$span.eq(index), 1.0, {
 	          opacity: 0,
 	          ease: Power2.easeInOut,
-	          delay: delay
+	          delay: delay + Math.random() * gb.urlp.random
 	        });
 	      });
 	    }

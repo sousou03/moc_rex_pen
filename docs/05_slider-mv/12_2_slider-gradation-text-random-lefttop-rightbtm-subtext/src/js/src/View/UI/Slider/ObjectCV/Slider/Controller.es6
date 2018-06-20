@@ -27,10 +27,6 @@ export default class Controller extends Base {
 
   setup() {
 
-
-    this.isUEv = true;
-    this.isUpdate = true;
-
     this.obj = new Objects(this.stage);
     this.o = new Order(this.obj.len);
 
@@ -59,6 +55,22 @@ export default class Controller extends Base {
     this.o.back();
 
     this.r.prev(this.o.current, this.o.next, this.o.prev);
+
+  }
+
+  next_op() {
+
+    this.o.go();
+
+    this.r.next_op(this.o.current, this.o.next, this.o.prev);
+
+  }
+
+  prev_op() {
+
+    this.o.back();
+
+    this.r.prev_op(this.o.current, this.o.next, this.o.prev);
 
   }
 

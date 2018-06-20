@@ -26,7 +26,8 @@ export default class Content extends Base {
 
     this.isUEv = true;
     this.isREv = true;
-    this.isRetina = (window.devicePixelRatio>=2)? true: false;
+    // this.isRetina = (window.devicePixelRatio>=2)? true: false;
+    this.isRetina = false;
 
     this.w = gb.r.w;
     this.h = gb.r.h;

@@ -4370,6 +4370,10 @@
 	    'key': 'param03',
 	    'def': '3',
 	    'value': ['any']
+	  }, {
+	    'key': 'random',
+	    'def': '0.4',
+	    'value': ['any']
 	  }];
 	};
 	
@@ -4648,10 +4652,10 @@
 	
 	      this.s = new _Controller2.default($('body'), 'cv');
 	      this.slider = this.s.slider;
-	      this.st1 = new _Controller4.default($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'));
-	      this.st2 = new _Controller4.default($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'));
-	      this.st3 = new _Controller4.default($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'));
-	      this.st4 = new _Controller4.default($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'));
+	      this.st1 = new _Controller4.default($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'), $('.more01 .inner'));
+	      this.st2 = new _Controller4.default($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'), $('.more02 .inner'));
+	      this.st3 = new _Controller4.default($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'), $('.more03 .inner'));
+	      this.st4 = new _Controller4.default($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'), $('.more04 .inner'));
 	      this.sts = [];
 	      this.sts.push(this.st1, this.st2, this.st3, this.st4);
 	      this.$item = $('.indicator .item');
@@ -4662,24 +4666,30 @@
 	
 	      this.isTimeline = false;
 	      this.isLock = false;
+	      this.isDrag = false;
 	
 	      // swipe event
-	      this.s.onStart = function () {};
-	      this.s.onMove = function (sign, val) {};
-	      this.s.onEnd = function () {};
-	      this.s.onSwipe = function (sign) {
+	      this.s.onStart = function () {
 	
+	        _this2.isDrag = true;
+	      };
+	      this.s.onMove = function (sign, val) {
+	
+	        if (!_this2.isDrag || val < 10) return;
 	        if (_this2.isTimeline) return;
 	        _this2.isTimeline = true;
 	
 	        if (sign > 0) {
-	          _this2.tl.kill();
 	          _this2.next();
 	        } else {
-	          _this2.tl.kill();
 	          _this2.prev();
 	        }
 	      };
+	      this.s.onEnd = function () {
+	
+	        _this2.isDrag = false;
+	      };
+	      this.s.onSwipe = function (sign) {};
 	
 	      this.timeline();
 	    }
@@ -4691,6 +4701,7 @@
 	    value: function timeline() {
 	      var _this3 = this;
 	
+	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax({ repeat: -1, delay: 3.0, repeatDelay: 3.0 });
 	
 	      this.tl
@@ -4712,75 +4723,75 @@
 	        var tl = new TimelineMax();
 	        tl.add(function () {
 	          _this3.slider.next();
-	        }, 0.3);
-	      }, 1.0).add(function () {
+	        }, 0.0);
+	      }, 0.6).add(function () {
 	
 	        _this3.isTimeline = false;
-	      }, 4.0);
+	      }, 1.0);
 	    }
 	  }, {
 	    key: 'next',
 	    value: function next() {
 	      var _this4 = this;
 	
-	      var tl = new TimelineMax();
+	      if (this.tl) this.tl.kill();
+	      this.tl = new TimelineMax();
 	
-	      tl.add(function () {
+	      this.tl.add(function () {
 	
 	        // text
-	        _this4.sts[_this4.index].hide('next');
-	      }, 0.0).add(function () {
+	        _this4.sts[_this4.index].hide_op('next');
 	
+	        // index
 	        _this4.index++;
 	        _this4.index = _this4.index % _this4.sts.length;
-	      }, 0.0).add(function () {
 	
-	        // text
-	        _this4.sts[_this4.index].show('next');
 	        // indicator
 	        _this4.$item.removeClass('active');
 	        _this4.$item.eq(_this4.index).addClass('active');
+	      }, 0.0).add(function () {
+	
+	        // text
+	        _this4.sts[_this4.index].show_op('next');
 	        // img
-	        _this4.tl = new TimelineMax();
-	        _this4.tl.add(function () {
-	          _this4.slider.next();
-	        }, 0.3).add(function () {
-	          _this4.isTimeline = false;
-	          _this4.timeline();
-	        }, 1.0);
-	      }, 0.35);
+	        _this4.slider.next_op();
+	      }, 0.1).add(function () {
+	
+	        _this4.isTimeline = false;
+	        _this4.timeline();
+	      }, 0.3);
 	    }
 	  }, {
 	    key: 'prev',
 	    value: function prev() {
 	      var _this5 = this;
 	
-	      var tl = new TimelineMax();
+	      if (this.tl) this.tl.kill();
+	      this.tl = new TimelineMax();
 	
-	      tl.add(function () {
+	      this.tl.add(function () {
 	
 	        // text
-	        _this5.sts[_this5.index].hide('prev');
-	      }, 0.0).add(function () {
+	        _this5.sts[_this5.index].hide_op('prev');
 	
+	        // index
 	        _this5.index--;
 	        if (_this5.index < 0) _this5.index = _this5.sts.length - 1;
-	      }, 0.0).add(function () {
 	
-	        // text
-	        _this5.sts[_this5.index].show('prev');
 	        // indicator
 	        _this5.$item.removeClass('active');
 	        _this5.$item.eq(_this5.index).addClass('active');
+	      }, 0.0).add(function () {
+	
+	        // text
+	        _this5.sts[_this5.index].show_op('prev');
 	        // img
-	        _this5.tl = new TimelineMax();
-	        _this5.tl.add(function () {
-	          _this5.slider.prev();
-	        }, 0.3).add(function () {
-	          _this5.isTimeline = false;
-	          _this5.timeline();
-	        }, 1.0);
-	      }, 0.35);
+	        _this5.slider.prev_op();
+	      }, 0.1).add(function () {
+	
+	        _this5.isTimeline = false;
+	        _this5.timeline();
+	      }, 0.3);
 	    }
 	  }, {
 	    key: 'onResize',
@@ -4900,7 +4911,8 @@
 	
 	      this.isUEv = true;
 	      this.isREv = true;
-	      this.isRetina = window.devicePixelRatio >= 2 ? true : false;
+	      // this.isRetina = (window.devicePixelRatio>=2)? true: false;
+	      this.isRetina = false;
 	
 	      this.w = gb.r.w;
 	      this.h = gb.r.h;
@@ -5019,9 +5031,6 @@
 	    value: function setup() {
 	      var _this2 = this;
 	
-	      this.isUEv = true;
-	      this.isUpdate = true;
-	
 	      this.obj = new _Controller2.default(this.stage);
 	      this.o = new _Order2.default(this.obj.len);
 	
@@ -5047,6 +5056,22 @@
 	      this.o.back();
 	
 	      this.r.prev(this.o.current, this.o.next, this.o.prev);
+	    }
+	  }, {
+	    key: 'next_op',
+	    value: function next_op() {
+	
+	      this.o.go();
+	
+	      this.r.next_op(this.o.current, this.o.next, this.o.prev);
+	    }
+	  }, {
+	    key: 'prev_op',
+	    value: function prev_op() {
+	
+	      this.o.back();
+	
+	      this.r.prev_op(this.o.current, this.o.next, this.o.prev);
 	    }
 	  }, {
 	    key: 'update',
@@ -5301,7 +5326,7 @@
 	      this.isUEv = true;
 	      this.isREv = true;
 	
-	      this.len = 5;
+	      this.len = 4;
 	
 	      // ready
 	      this.ready();
@@ -5393,7 +5418,7 @@
 	    key: 'setup',
 	    value: function setup() {
 	
-	      this.isUEv = true;
+	      // this.isUEv = true;
 	      this.isREv = true;
 	      this.isLoad = false;
 	
@@ -5455,11 +5480,12 @@
 	    key: 'update',
 	    value: function update() {
 	
-	      if (!this.isLoad) return;
+	      // if (!this.isLoad) return;
 	
 	      // pos
 	      // this.container.x = gb.r.w/2 - this.imgw / 2;
 	      // this.container.y = gb.r.h/2 - this.imgh / 2;
+	
 	    }
 	  }, {
 	    key: 'draw',
@@ -5557,6 +5583,81 @@
 	  }, {
 	    key: 'next',
 	    value: function next(current, _next, prev) {
+	      var cb = function cb() {};
+	
+	      var tl = new TimelineMax();
+	
+	      var x = 130;
+	      var cur = this.imgs[current].inner;
+	      var pre = this.imgs[prev].inner;
+	      var current_c = this.imgs[current].container;
+	      var prev_c = this.imgs[prev].container;
+	
+	      // zindex
+	      this.stage.setChildIndex(current_c, this.stage.getNumChildren() - 1);
+	
+	      tl.set(cur, {
+	        x: x,
+	        alpha: 0
+	        // zIndex: 2,
+	      }, 0.0).set(pre, {
+	        // zIndex: 1,
+	      }, 0.0).to(cur, 2.3, {
+	        alpha: 1,
+	        ease: Power2.easeInOut
+	      }, 0.0).to(cur, 2.3, {
+	        x: 0,
+	        ease: Power3.easeOut
+	      }, 0.0)
+	      // .to(pre, 2.3, {
+	      //   // x: -x,
+	      //   ease: Power2.easeOut,
+	      // }, 0.0)
+	      .to(pre, 2.3, {
+	        alpha: 0,
+	        ease: Power4.easeIn
+	      }, 0.0);
+	    }
+	  }, {
+	    key: 'prev',
+	    value: function prev(current, next, _prev) {
+	
+	      var tl = new TimelineMax();
+	
+	      var x = -130;
+	      var cur = this.imgs[current].inner;
+	      var pre = this.imgs[_prev].inner;
+	      var current_c = this.imgs[current].container;
+	      var prev_c = this.imgs[_prev].container;
+	
+	      // zindex
+	      this.stage.setChildIndex(current_c, this.stage.getNumChildren() - 1);
+	
+	      tl.set(cur, {
+	        x: x,
+	        alpha: 0
+	        // zIndex: 2,
+	      }, 0.0).set(pre, {
+	        // zIndex: 1,
+	      }, 0.0).to(cur, 2.3, {
+	        alpha: 1,
+	        ease: Power2.easeInOut
+	      }, 0.0).to(cur, 2.3, {
+	        x: 0,
+	        ease: Power3.easeOut
+	      }, 0.0)
+	      // .to(pre, 2.3, {
+	      //   // x: -x,
+	      //   ease: Power2.easeOut,
+	      // }, 0.0)
+	      .to(pre, 2.3, {
+	        alpha: 0,
+	        ease: Power4.easeIn
+	      }, 0.0);
+	    }
+	  }, {
+	    key: 'next_op',
+	    value: function next_op(current, next, prev) {
 	
 	      var tl = new TimelineMax();
 	
@@ -5576,28 +5677,25 @@
 	      }, 0.0).set(pre, {
 	        // zIndex: 1,
 	      }, 0.0).to(cur, 2.0, {
-	        x: 0,
 	        alpha: 1,
+	        x: 0,
 	        ease: Power4.easeOut
-	      }, 0.0).to(pre, 2.0, {
-	        // x: -x,
-	        ease: Power2.easeOut
 	      }, 0.0).to(pre, 2.0, {
 	        alpha: 0,
 	        ease: Power2.easeInOut
 	      }, 0.0);
 	    }
 	  }, {
-	    key: 'prev',
-	    value: function prev(current, next, _prev) {
+	    key: 'prev_op',
+	    value: function prev_op(current, next, prev) {
 	
 	      var tl = new TimelineMax();
 	
 	      var x = -100;
 	      var cur = this.imgs[current].inner;
-	      var pre = this.imgs[_prev].inner;
+	      var pre = this.imgs[prev].inner;
 	      var current_c = this.imgs[current].container;
-	      var prev_c = this.imgs[_prev].container;
+	      var prev_c = this.imgs[prev].container;
 	
 	      // zindex
 	      this.stage.setChildIndex(current_c, this.stage.getNumChildren() - 1);
@@ -5609,12 +5707,9 @@
 	      }, 0.0).set(pre, {
 	        // zIndex: 1,
 	      }, 0.0).to(cur, 2.0, {
-	        x: 0,
 	        alpha: 1,
+	        x: 0,
 	        ease: Power4.easeOut
-	      }, 0.0).to(pre, 2.0, {
-	        // x: -x,
-	        ease: Power2.easeOut
 	      }, 0.0).to(pre, 2.0, {
 	        alpha: 0,
 	        ease: Power2.easeInOut
@@ -5665,13 +5760,14 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var SpanText = function () {
-	  function SpanText($wrap, $sub, $tag) {
+	  function SpanText($wrap, $sub, $tag, $more) {
 	    _classCallCheck(this, SpanText);
 	
 	    this.$wrap = $wrap;
 	    this.$target = $wrap.find('div');
 	    this.$sub = $sub;
 	    this.$tag = $tag;
+	    this.$more = $more;
 	
 	    this.index = 0;
 	    this.text = ['Shun Kawakami est classe et inclassable,<br>alors les marques l’ont remarqué', 'De Tokyo la mégalopole aux<br> paysages préservés de Kochi', 'seule une présence, le bruit des talons <br>hauts sur le bitume résonne à nos oreilles, le…', 'Les puissantes photographies d’Araki<br>ébranlent l’esprit, le corps, et tous'];
@@ -5734,24 +5830,18 @@
 	        TweenMax.to(_this.$span.eq(index), 1.5, {
 	          opacity: 1,
 	          ease: Power2.easeInOut,
-	          delay: delay
+	          delay: delay + Math.random() * gb.urlp.random
 	        });
 	      });
 	
 	      if (dir == 'next') var x = 5;else var x = -5;
 	
-	      TweenMax.set(this.$sub, { x: x });
-	      TweenMax.set(this.$tag, { x: x });
-	      TweenMax.to(this.$sub, 1.5, {
+	      TweenMax.set(this.$sub.add(this.$tag).add(this.$more), { x: x });
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.5, {
 	        opacity: 1,
 	        x: 0,
 	        z: 0,
-	        ease: Power2.easeInOut
-	      });
-	      TweenMax.to(this.$tag, 1.5, {
-	        opacity: 1,
-	        x: 0,
-	        z: 0,
+	        delay: 0.5,
 	        ease: Power2.easeInOut
 	      });
 	    }
@@ -5780,49 +5870,87 @@
 	
 	        var delay = delayx + delayy / 3;
 	
-	        TweenMax.to(_this2.$span.eq(index), 1.0, {
+	        TweenMax.to(_this2.$span.eq(index), 0.7, {
 	          opacity: 0,
 	          ease: Power2.easeInOut,
-	          delay: delay
+	          delay: delay + Math.random() * gb.urlp.random
 	        });
 	      });
 	
 	      if (dir == 'next') var x = -5;else var x = 5;
 	
-	      TweenMax.to(this.$sub, 1.5, {
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.5, {
 	        opacity: 0,
 	        x: x,
 	        z: 0,
+	        delay: 0.0,
 	        ease: Power2.easeInOut
 	      });
-	      TweenMax.to(this.$tag, 1.5, {
-	        opacity: 0,
-	        x: x,
+	    }
+	  }, {
+	    key: 'show_op',
+	    value: function show_op() {
+	      var _this3 = this;
+	
+	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
+	
+	
+	      if (dir == 'next') var x = 5;else var x = -5;
+	
+	      TweenMax.set(this.$span, { x: x });
+	      this.$span.each(function (index, el) {
+	
+	        TweenMax.to(_this3.$span.eq(index), 0.7, {
+	          x: 0,
+	          opacity: 1,
+	          ease: Power2.easeInOut
+	        });
+	      });
+	
+	      TweenMax.set(this.$sub.add(this.$tag).add(this.$more), { x: x });
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.7, {
+	        opacity: 1,
+	        x: 0,
 	        z: 0,
 	        ease: Power2.easeInOut
 	      });
 	    }
 	  }, {
-	    key: 'switch',
-	    value: function _switch() {
+	    key: 'hide_op',
+	    value: function hide_op() {
+	      var _this4 = this;
 	
-	      this.index++;
-	      this.index = this.index % this.text.length;
+	      var dir = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'next';
 	
-	      var text = this.text[this.index];
-	      this.$target.html(text);
-	      this.setup();
+	
+	      if (dir == 'next') var x = -5;else var x = 5;
+	
+	      this.$span.each(function (index, el) {
+	
+	        TweenMax.to(_this4.$span.eq(index), 0.7, {
+	          x: x,
+	          opacity: 0,
+	          ease: Power2.easeInOut
+	        });
+	      });
+	
+	      TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.7, {
+	        opacity: 0,
+	        x: x,
+	        z: 0,
+	        ease: Power2.easeInOut
+	      });
 	    }
 	  }, {
 	    key: 'timeline',
 	    value: function timeline() {
-	      var _this3 = this;
+	      var _this5 = this;
 	
 	      var tl = new TimelineMax();
 	
 	      tl.add(function () {
 	
-	        _this3.show();
+	        _this5.show();
 	      }, 1.0);
 	    }
 	  }, {
@@ -5891,22 +6019,19 @@
 	      // brタグがあっても問題がないように
 	      // brで区切る
 	      var text = this.$target.html();
-	      var split = /<br>/g;
+	      var split = /\s/g;
 	      // var split = /\r\n|\r|\n/g; // 改行コードなど
 	      var span = text.split(split);
-	
-	      // trim
-	      for (var i = 0; i < span.length; i++) {
-	        span[i] = span[i].trim();
-	      }
 	
 	      // span化
 	      for (var i = 0; i < span.length; i++) {
 	        span[i] = span[i].replace(/(\S)/g, '<span>$1</span>');
 	      }
 	
-	      // br追加して連結
-	      var append = span.join('<br>');
+	      var append = '';
+	      for (var i = 0; i < span.length; i++) {
+	        append += '<div>' + span[i] + '</div> ';
+	      }
 	
 	      // append
 	      this.$target.html(append);

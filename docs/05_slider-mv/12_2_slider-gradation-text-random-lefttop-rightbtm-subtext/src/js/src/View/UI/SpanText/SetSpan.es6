@@ -41,22 +41,19 @@ export default class SpanText {
     // brタグがあっても問題がないように
     // brで区切る
     var text = this.$target.html();
-    var split = /<br>/g;
+    var split = /\s/g;
     // var split = /\r\n|\r|\n/g; // 改行コードなど
     var span = text.split(split);
-
-    // trim
-    for (var i = 0; i < span.length; i++) {
-      span[i] = span[i].trim();
-    }
 
     // span化
     for (var i = 0; i < span.length; i++) {
       span[i] = span[i].replace(/(\S)/g, '<span>$1</span>');
     }
-    
-    // br追加して連結
-    var append = span.join('<br>');
+
+    var append = '';
+    for (var i = 0; i < span.length; i++) {
+      append += '<div>' + span[i] + '</div> '
+    }
 
     // append
     this.$target.html(append);
