@@ -202,9 +202,26 @@ export default class Controller extends Base {
 
   }
 
+  onItem(that) {
+
+    var index = this.$item.index(that);
+
+    if (index>this.index) {
+      this.next();
+    }
+    if (index<this.index) {
+      this.prev();
+    }
+
+  }
+
   setEvents() {
 
     super.setEvents();
+
+    var self = this;
+
+    this.$item.on('click', function(){self.onItem.call(self, this)});
 
   }
 

@@ -4851,10 +4851,29 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    key: 'onResize',
 	    value: function onResize() {}
 	  }, {
+	    key: 'onItem',
+	    value: function onItem(that) {
+	
+	      var index = this.$item.index(that);
+	
+	      if (index > this.index) {
+	        this.next();
+	      }
+	      if (index < this.index) {
+	        this.prev();
+	      }
+	    }
+	  }, {
 	    key: 'setEvents',
 	    value: function setEvents() {
 	
 	      _get(Controller.prototype.__proto__ || Object.getPrototypeOf(Controller.prototype), 'setEvents', this).call(this);
+	
+	      var self = this;
+	
+	      this.$item.on('click', function () {
+	        self.onItem.call(self, this);
+	      });
 	    }
 	  }]);
 	

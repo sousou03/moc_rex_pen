@@ -85,11 +85,21 @@
     }
   }
 
-  .box {
+  .boxWrap {
+    padding-left: 5%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    
     position: absolute;
-    left: 5%;
-    top: calc(50%);
-    transform: translateY(-50%);
+    left: 0;
+    top: 0;
+  }
+
+  .box {
+    // position: absolute;
+    // left: 5%;
+    // transform: translateY(-50%);
   }
 
   .tag {
@@ -122,6 +132,7 @@
     z-index: 9999;
     
     width: 75%;
+    margin-left: -3px;
     
     span {
       opacity: 0;
@@ -191,6 +202,7 @@
       box-sizing: border-box;
       
       transition: background-color .7s $easeInOutQuad 0s;
+      cursor: pointer;
     }
     .item.active {
       background-color: #fff;

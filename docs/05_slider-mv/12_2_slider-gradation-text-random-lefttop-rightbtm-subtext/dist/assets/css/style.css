@@ -1014,13 +1014,18 @@ a:active {
   background-position: center center;
 }
 
-#wrapper.id_top .box {
+#wrapper.id_top .boxWrap {
+  padding-left: 5%;
+  height: 100vh;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: absolute;
-  left: 5%;
-  top: calc(50%);
-  -webkit-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
+  left: 0;
+  top: 0;
 }
 
 #wrapper.id_top .tag {
@@ -1045,6 +1050,7 @@ a:active {
   opacity: 0;
   z-index: 9999;
   width: 75%;
+  margin-left: -3px;
 }
 
 #wrapper.id_top .text span {
@@ -1114,6 +1120,7 @@ a:active {
   margin-right: 8px;
   box-sizing: border-box;
   transition: background-color 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
+  cursor: pointer;
 }
 
 #wrapper.id_top .indicator .item.active {
