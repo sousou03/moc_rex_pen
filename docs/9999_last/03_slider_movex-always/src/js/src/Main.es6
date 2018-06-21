@@ -12,7 +12,7 @@ import ResizeList from '_MyLibs/View/Events/EventMgr/ResizeList.es6';
 import ScrollList from '_MyLibs/View/Events/EventMgr/ScrollList.es6';
 import MouseList from '_MyLibs/View/Events/EventMgr/MouseList.es6';
 import ResourceMgr from 'Model/Resource/ResourceMgr.es6';
-// import JudgeEnvironment from '_MyLibs/Util/JudgeEnvironment.es6';
+import JudgeEnvironment from '_MyLibs/Util/JudgeEnvironment.es6';
 import UrlParamMgr from 'Model/Url/UrlParamMgr.es6';
 import Profiler from '_MyLibs/Util/Profiler.es6';
 
@@ -65,6 +65,7 @@ export default class Common {
     // ------------------------------------------------------------
     gb.urlp = new UrlParamMgr(); //  UrlParam パラメータ調整用
     if (gb.conf.Profiler) new Profiler(); // Profiler
+    gb.je = new JudgeEnvironment();
 
     // ------------------------------------------------------------
     //  Loading / Model

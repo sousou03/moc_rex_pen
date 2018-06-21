@@ -6,6 +6,7 @@
 
 import Base from './Base.es6';
 import Swipe from './Swipe.es6';
+import MouseDrag from './MouseDrag.es6';
 
 export default class Controller extends Base {
 
@@ -51,9 +52,12 @@ export default class Controller extends Base {
     this.isStop = false;
     this.cnt = 0;
     this.isLock = false;
+    this.isDrag = false;
 
     // swipe
-    this.s = new Swipe($(window));
+    if (gb.u.dv.isSP) this.s = new Swipe($(window));
+    else this.s = new MouseDrag($(window));
+
 
     // swipe event
     this.s.onStart = ()=>{
@@ -63,6 +67,7 @@ export default class Controller extends Base {
     }
     this.s.onMove = (sign, val)=>{
 
+      if (!this.isDrag) return;
       if (val<10||this.isLock) return;
       this.isLock = true;
       if (sign>0) {
@@ -74,6 +79,7 @@ export default class Controller extends Base {
     }
     this.s.onEnd = ()=>{
 
+      this.isDrag = false;
 
     }
     this.s.onSwipe = (sign)=>{

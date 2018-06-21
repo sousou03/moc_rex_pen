@@ -59,6 +59,12 @@ body {
         img {
           width: 300px;
           height: auto;
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          -o-user-select: none;
+          pointer-events: none;
         }
       }
       .category {

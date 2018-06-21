@@ -104,8 +104,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	// import JudgeEnvironment from '_MyLibs/Util/JudgeEnvironment.es6';
-	
 	
 	var _Conf = __webpack_require__(1);
 	
@@ -163,15 +161,19 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _ResourceMgr2 = _interopRequireDefault(_ResourceMgr);
 	
-	var _UrlParamMgr = __webpack_require__(27);
+	var _JudgeEnvironment = __webpack_require__(27);
+	
+	var _JudgeEnvironment2 = _interopRequireDefault(_JudgeEnvironment);
+	
+	var _UrlParamMgr = __webpack_require__(28);
 	
 	var _UrlParamMgr2 = _interopRequireDefault(_UrlParamMgr);
 	
-	var _Profiler = __webpack_require__(29);
+	var _Profiler = __webpack_require__(30);
 	
 	var _Profiler2 = _interopRequireDefault(_Profiler);
 	
-	var _View = __webpack_require__(30);
+	var _View = __webpack_require__(31);
 	
 	var _View2 = _interopRequireDefault(_View);
 	
@@ -227,6 +229,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      // ------------------------------------------------------------
 	      gb.urlp = new _UrlParamMgr2.default(); //  UrlParam パラメータ調整用
 	      if (gb.conf.Profiler) new _Profiler2.default(); // Profiler
+	      gb.je = new _JudgeEnvironment2.default();
 	
 	      // ------------------------------------------------------------
 	      //  Loading / Model
@@ -4202,7 +4205,91 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _Keys = __webpack_require__(28);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //--------------------------------------------------
+	//
+	//  JudgeEnvironment
+	//
+	//--------------------------------------------------
+	
+	var JudgeEnvironment = function (_Base) {
+	  _inherits(JudgeEnvironment, _Base);
+	
+	  function JudgeEnvironment() {
+	    _classCallCheck(this, JudgeEnvironment);
+	
+	    var _this = _possibleConstructorReturn(this, (JudgeEnvironment.__proto__ || Object.getPrototypeOf(JudgeEnvironment)).call(this));
+	
+	    _this.name = 'JudgeEnvironment';
+	
+	    _this.isUEv = false; // update
+	    _this.isREv = true; // resize
+	    _this.isSEv = false; // scroll
+	    _this.isMEv = false; // mouse
+	
+	    _this.setup();
+	    _this.setEvents();
+	
+	    return _this;
+	  }
+	
+	  _createClass(JudgeEnvironment, [{
+	    key: 'setup',
+	    value: function setup() {
+	
+	      // デバイス判定
+	      gb.u.dv.isDeviceSP();
+	      gb.u.dv.isDeviceTAB();
+	      gb.u.dv.isDeviceMB();
+	      gb.u.dv.isDevicePC();
+	      gb.u.dv.setEventString();
+	
+	      // ブラウザ判定
+	      gb.u.dv.isBrowserCheck();
+	
+	      // responsive / portrait / landscape
+	      gb.u.dv.isDirection();
+	      gb.u.dv.isResponsive(gb.conf.bp00, gb.conf.bp01, gb.conf.bp02, gb.conf.bp03);
+	    }
+	  }, {
+	    key: 'onResize',
+	    value: function onResize() {
+	
+	      gb.u.dv.isDirection.call(gb.u.dv);
+	      gb.u.dv.isResponsive.call(gb.u.dv, gb.conf.bp00, gb.conf.bp01, gb.conf.bp02, gb.conf.bp03);
+	    }
+	  }, {
+	    key: 'setEvents',
+	    value: function setEvents() {}
+	  }]);
+	
+	  return JudgeEnvironment;
+	}(_Base3.default);
+	
+	exports.default = JudgeEnvironment;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Base2 = __webpack_require__(14);
+	
+	var _Base3 = _interopRequireDefault(_Base2);
+	
+	var _Keys = __webpack_require__(29);
 	
 	var _Keys2 = _interopRequireDefault(_Keys);
 	
@@ -4302,7 +4389,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	exports.default = UrlParamMgr;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -4342,7 +4429,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	exports.default = data;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4411,7 +4498,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	exports.default = Profiler;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4428,7 +4515,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _Controller = __webpack_require__(31);
+	var _Controller = __webpack_require__(32);
 	
 	var _Controller2 = _interopRequireDefault(_Controller);
 	
@@ -4539,7 +4626,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	exports.default = ViewCommon;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4556,11 +4643,11 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _index = __webpack_require__(32);
+	var _index = __webpack_require__(33);
 	
 	var m = _interopRequireWildcard(_index);
 	
-	var _Controller = __webpack_require__(33);
+	var _Controller = __webpack_require__(34);
 	
 	var _Controller2 = _interopRequireDefault(_Controller);
 	
@@ -4615,7 +4702,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	exports.default = Controller;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4652,7 +4739,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	}
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4665,13 +4752,17 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-	var _Base2 = __webpack_require__(34);
+	var _Base2 = __webpack_require__(35);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _Swipe = __webpack_require__(35);
+	var _Swipe = __webpack_require__(36);
 	
 	var _Swipe2 = _interopRequireDefault(_Swipe);
+	
+	var _MouseDrag = __webpack_require__(37);
+	
+	var _MouseDrag2 = _interopRequireDefault(_MouseDrag);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4735,9 +4826,10 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.isStop = false;
 	      this.cnt = 0;
 	      this.isLock = false;
+	      this.isDrag = false;
 	
 	      // swipe
-	      this.s = new _Swipe2.default($(window));
+	      if (gb.u.dv.isSP) this.s = new _Swipe2.default($(window));else this.s = new _MouseDrag2.default($(window));
 	
 	      // swipe event
 	      this.s.onStart = function () {
@@ -4746,6 +4838,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      };
 	      this.s.onMove = function (sign, val) {
 	
+	        if (!_this2.isDrag) return;
 	        if (val < 10 || _this2.isLock) return;
 	        _this2.isLock = true;
 	        if (sign > 0) {
@@ -4754,7 +4847,10 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	          _this2.prev();
 	        }
 	      };
-	      this.s.onEnd = function () {};
+	      this.s.onEnd = function () {
+	
+	        _this2.isDrag = false;
+	      };
 	      this.s.onSwipe = function (sign) {};
 	    }
 	  }, {
@@ -4880,7 +4976,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	exports.default = Controller;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5010,7 +5106,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	exports.default = Base;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5135,6 +5231,133 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	}();
 	
 	exports.default = Swipe;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	// ------------------------------------------------------------
+	//
+	//  MouseDrag
+	//
+	// ------------------------------------------------------------
+	
+	var MouseDrag = function () {
+	  function MouseDrag() {
+	    var $wrap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('#wrapper');
+	
+	    _classCallCheck(this, MouseDrag);
+	
+	    // ---------------
+	    //  dom
+	    // ---------------
+	    this.$wrap = $wrap;
+	
+	    // ---------------
+	    //  variable
+	    // ---------------
+	
+	    // position
+	    this.sX = 0;this.mX = 0;this.eX = 0; //startX,moveX,endX
+	    this.dis = 0;this.minDis = 50;
+	
+	    // time
+	    this.sT = 0;this.eT = 0;this.minT = 300; //startTime,ellapsedTime,
+	
+	
+	    this.onStart = function () {};
+	    this.onMove = function () {};
+	    this.onEnd = function () {};
+	    this.onSwipe = function () {};
+	
+	    this.setup();
+	    this.setEvents();
+	  }
+	
+	  _createClass(MouseDrag, [{
+	    key: 'setup',
+	    value: function setup() {}
+	  }, {
+	    key: 'onTouchStart',
+	    value: function onTouchStart(e) {
+	
+	      // time
+	      this.sT = new Date().getTime();
+	      // pos
+	      this.sX = gb.m.x;
+	
+	      // コールバック
+	      this.onStart();
+	    }
+	  }, {
+	    key: 'onTouchMove',
+	    value: function onTouchMove(e) {
+	
+	      // pos
+	      this.mX = gb.m.x;
+	      var dis = this.sX - this.mX;
+	      var sign = 1;
+	      if (dis < 0) sign = -1;
+	
+	      this.onMove(sign, Math.abs(dis));
+	    }
+	  }, {
+	    key: 'onTouchEnd',
+	    value: function onTouchEnd(e) {
+	
+	      // コールバック
+	      this.onEnd();
+	
+	      // time
+	      this.eT = new Date().getTime() - this.sT;
+	      var disT = this.sT - this.eT;
+	      // pos
+	      this.eX = gb.m.x;;
+	      var dis = this.sX - this.eX;
+	      var sign = 1;
+	      if (dis < 0) sign = -1;
+	
+	      log(dis);
+	
+	      // 最小時間より長かったら、処理
+	      // if(this.minT < this.eT) this.onSwipe();
+	      // 最小距離より長かったら、処理
+	      // log(dis, this.minDis);
+	      if (Math.abs(dis) > this.minDis) this.onSwipe(sign);
+	    }
+	  }, {
+	    key: 'setEvents',
+	    value: function setEvents() {
+	      var _this = this;
+	
+	      var self = this;
+	
+	      this.$wrap.on('mousedown.MouseDrag', function (e) {
+	        _this.onTouchStart(e);
+	      });
+	      this.$wrap.on('mousemove.MouseDrag', function (e) {
+	        _this.onTouchMove(e);
+	      });
+	      this.$wrap.on('mouseup.MouseDrag', function (e) {
+	        _this.onTouchEnd(e);
+	      });
+	    }
+	  }]);
+	
+	  return MouseDrag;
+	}();
+	
+	exports.default = MouseDrag;
 
 /***/ })
 /******/ ]);
