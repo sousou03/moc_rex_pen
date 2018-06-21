@@ -121,7 +121,7 @@ export default class Controller extends Base {
 
   }
 
-  next() {
+  next(isItem=false, index) {
 
     if (this.tl) this.tl.kill();
     this.tl = new TimelineMax();
@@ -133,7 +133,8 @@ export default class Controller extends Base {
         this.sts[this.index].hide_op('next');
 
         // index
-        this.index++;
+        if (!isItem) this.index++;
+        else this.index = index;
         this.index = this.index % this.sts.length;      
 
         // indicator
@@ -147,7 +148,7 @@ export default class Controller extends Base {
         // text
         this.sts[this.index].show_op('next');
           // img
-        this.slider.next_op();
+        this.slider.next_op(isItem, this.index);
 
       }, 0.1)
       .add(()=>{
@@ -159,7 +160,7 @@ export default class Controller extends Base {
     
   }
 
-  prev() {
+  prev(isItem=false, index) {
 
     if (this.tl) this.tl.kill();
     this.tl = new TimelineMax();
@@ -171,7 +172,8 @@ export default class Controller extends Base {
         this.sts[this.index].hide_op('prev');
 
         // index
-        this.index--;
+        if (!isItem) this.index--;
+        else this.index = index;
         if (this.index<0) this.index = this.sts.length - 1;
 
         // indicator
@@ -185,7 +187,7 @@ export default class Controller extends Base {
         // text
         this.sts[this.index].show_op('prev');
           // img
-        this.slider.prev_op();
+        this.slider.prev_op(isItem, this.index);
 
       }, 0.1)
       .add(()=>{
@@ -207,10 +209,10 @@ export default class Controller extends Base {
     var index = this.$item.index(that);
 
     if (index>this.index) {
-      this.next();
+      this.next(true, index);
     }
     if (index<this.index) {
-      this.prev();
+      this.prev(true, index);
     }
 
   }

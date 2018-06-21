@@ -4734,6 +4734,10 @@
 	    value: function next() {
 	      var _this4 = this;
 	
+	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	      var index = arguments[1];
+	
+	
 	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax();
 	
@@ -4743,7 +4747,7 @@
 	        _this4.sts[_this4.index].hide_op('next');
 	
 	        // index
-	        _this4.index++;
+	        if (!isItem) _this4.index++;else _this4.index = index;
 	        _this4.index = _this4.index % _this4.sts.length;
 	
 	        // indicator
@@ -4754,7 +4758,7 @@
 	        // text
 	        _this4.sts[_this4.index].show_op('next');
 	        // img
-	        _this4.slider.next_op();
+	        _this4.slider.next_op(isItem, _this4.index);
 	      }, 0.1).add(function () {
 	
 	        _this4.isTimeline = false;
@@ -4766,6 +4770,10 @@
 	    value: function prev() {
 	      var _this5 = this;
 	
+	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	      var index = arguments[1];
+	
+	
 	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax();
 	
@@ -4775,7 +4783,7 @@
 	        _this5.sts[_this5.index].hide_op('prev');
 	
 	        // index
-	        _this5.index--;
+	        if (!isItem) _this5.index--;else _this5.index = index;
 	        if (_this5.index < 0) _this5.index = _this5.sts.length - 1;
 	
 	        // indicator
@@ -4786,7 +4794,7 @@
 	        // text
 	        _this5.sts[_this5.index].show_op('prev');
 	        // img
-	        _this5.slider.prev_op();
+	        _this5.slider.prev_op(isItem, _this5.index);
 	      }, 0.1).add(function () {
 	
 	        _this5.isTimeline = false;
@@ -4803,10 +4811,10 @@
 	      var index = this.$item.index(that);
 	
 	      if (index > this.index) {
-	        this.next();
+	        this.next(true, index);
 	      }
 	      if (index < this.index) {
-	        this.prev();
+	        this.prev(true, index);
 	      }
 	    }
 	  }, {
@@ -5079,16 +5087,22 @@
 	  }, {
 	    key: 'next_op',
 	    value: function next_op() {
+	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	      var index = arguments[1];
 	
-	      this.o.go();
+	
+	      if (!isItem) this.o.go();else this.o.setCur(index);
 	
 	      this.r.next_op(this.o.current, this.o.next, this.o.prev);
 	    }
 	  }, {
 	    key: 'prev_op',
 	    value: function prev_op() {
+	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	      var index = arguments[1];
 	
-	      this.o.back();
+	
+	      if (!isItem) this.o.back();else this.o.setCur(index);
 	
 	      this.r.prev_op(this.o.current, this.o.next, this.o.prev);
 	    }
@@ -5815,8 +5829,6 @@
 	      this.$span.css('display', 'inline-block'); // spanはinline-blockかblockじゃないとtnraslateが効かないので、styleつける
 	      this.len = this.$span.length;
 	      this.$wrap.css('opacity', 1);
-	
-	      // this.timeline();
 	    }
 	  }, {
 	    key: 'reset',
@@ -5959,18 +5971,6 @@
 	        z: 0,
 	        ease: Power2.easeInOut
 	      });
-	    }
-	  }, {
-	    key: 'timeline',
-	    value: function timeline() {
-	      var _this5 = this;
-	
-	      var tl = new TimelineMax();
-	
-	      tl.add(function () {
-	
-	        _this5.show();
-	      }, 1.0);
 	    }
 	  }, {
 	    key: 'setEvents',

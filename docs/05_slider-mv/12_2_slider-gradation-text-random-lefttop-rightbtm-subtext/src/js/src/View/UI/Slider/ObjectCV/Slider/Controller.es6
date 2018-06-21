@@ -58,17 +58,19 @@ export default class Controller extends Base {
 
   }
 
-  next_op() {
+  next_op(isItem=false, index) {
 
-    this.o.go();
+    if (!isItem) this.o.go();
+    else this.o.setCur(index);
 
     this.r.next_op(this.o.current, this.o.next, this.o.prev);
 
   }
 
-  prev_op() {
+  prev_op(isItem=false, index) {
 
-    this.o.back();
+    if (!isItem) this.o.back();
+    else this.o.setCur(index);
 
     this.r.prev_op(this.o.current, this.o.next, this.o.prev);
 

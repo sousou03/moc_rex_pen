@@ -51,8 +51,6 @@ export default class SpanText {
     this.len = this.$span.length;
     this.$wrap.css('opacity', 1);
 
-    // this.timeline();
-
   }
 
   reset() {
@@ -191,21 +189,7 @@ export default class SpanText {
     
   }
 
-
-  timeline() {
-
-    var tl = new TimelineMax();
-
-    tl
-      .add(()=>{
-
-        this.show();
-
-      }, 1.0)
-
-  }
-
-  setEvents() {
+ setEvents() {
 
   
 
