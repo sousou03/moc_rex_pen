@@ -4727,7 +4727,7 @@
 	      }, 0.6).add(function () {
 	
 	        _this3.isTimeline = false;
-	      }, 1.0);
+	      }, 2.0);
 	    }
 	  }, {
 	    key: 'next',

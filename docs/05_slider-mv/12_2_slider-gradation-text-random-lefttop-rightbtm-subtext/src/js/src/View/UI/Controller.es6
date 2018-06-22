@@ -117,7 +117,7 @@ export default class Controller extends Base {
 
         this.isTimeline = false;
 
-      }, 1.0)
+      }, 2.0)
 
   }
 
