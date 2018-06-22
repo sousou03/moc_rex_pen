@@ -189,9 +189,29 @@ export default class SpanText {
     
   }
 
- setEvents() {
+  cancel() {
 
-  
+    TweenMax.killTweensOf(this.$span);
+    TweenMax.killTweensOf(this.$sub);
+    TweenMax.killTweensOf(this.$tag);
+    TweenMax.killTweensOf(this.$more);
+
+    TweenMax.to(this.$span, 0.3, {
+      opacity: 0,
+      ease: Power2.easeInOut,
+    });
+      
+    TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.3, {
+      opacity: 0,
+      x: 0,
+      ease: Power2.easeInOut,
+    });
+
+  }
+
+  setEvents() {
+
+
 
 
   }

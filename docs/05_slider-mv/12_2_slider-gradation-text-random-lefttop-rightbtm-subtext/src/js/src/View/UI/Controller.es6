@@ -117,7 +117,7 @@ export default class Controller extends Base {
 
         this.isTimeline = false;
 
-      }, 2.0)
+      }, 1.0)
 
   }
 
@@ -133,8 +133,13 @@ export default class Controller extends Base {
         this.sts[this.index].hide_op('next');
 
         // index
-        if (!isItem) this.index++;
-        else this.index = index;
+        if (!isItem) {
+          this.sts[this.index].cancel();
+          this.index++;
+        } else {
+          this.sts[this.index].cancel();  
+          this.index = index;
+        }
         this.index = this.index % this.sts.length;      
 
         // indicator
@@ -172,8 +177,13 @@ export default class Controller extends Base {
         this.sts[this.index].hide_op('prev');
 
         // index
-        if (!isItem) this.index--;
-        else this.index = index;
+        if (!isItem) {
+          this.sts[this.index].cancel();
+          this.index--;
+        } else {
+          this.sts[this.index].cancel();
+          this.index = index;
+        }
         if (this.index<0) this.index = this.sts.length - 1;
 
         // indicator
