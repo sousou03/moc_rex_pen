@@ -117,7 +117,7 @@ export default class Controller extends Base {
 
         this.isTimeline = false;
 
-      }, 1.0)
+      }, 0.1)
 
   }
 
@@ -134,9 +134,15 @@ export default class Controller extends Base {
 
         // index
         if (!isItem) {
+          var prevIndex = this.index - 1;
+          if (prevIndex<0) prevIndex = this.sts.length - 1;
+          this.sts[prevIndex].cancel();
           this.sts[this.index].cancel();
           this.index++;
         } else {
+          var prevIndex = this.index - 1;
+          if (prevIndex<0) prevIndex = this.sts.length - 1;
+          this.sts[prevIndex].cancel();
           this.sts[this.index].cancel();  
           this.index = index;
         }
@@ -178,9 +184,15 @@ export default class Controller extends Base {
 
         // index
         if (!isItem) {
+          var prevIndex = this.index - 1;
+          if (prevIndex<0) prevIndex = this.sts.length - 1;
+          this.sts[prevIndex].cancel();
           this.sts[this.index].cancel();
           this.index--;
         } else {
+          var prevIndex = this.index - 1;
+          if (prevIndex<0) prevIndex = this.sts.length - 1;
+          this.sts[prevIndex].cancel();
           this.sts[this.index].cancel();
           this.index = index;
         }

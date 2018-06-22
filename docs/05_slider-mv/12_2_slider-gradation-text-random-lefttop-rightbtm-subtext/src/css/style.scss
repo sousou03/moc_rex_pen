@@ -94,12 +94,15 @@
     position: absolute;
     left: 0;
     top: 0;
+    
+    transform: translate3d(0,0,0);
   }
 
   .box {
     // position: absolute;
     // left: 5%;
     // transform: translateY(-50%);
+    transform: translate3d(0,0,0);
   }
 
   .tag {
@@ -108,6 +111,8 @@
     z-index: 9999;
     color: #fff;
     margin-bottom: 10px;
+    
+    transform: translate3d(0,0,0);
     
     .inner {
       opacity: 0;  
@@ -133,6 +138,8 @@
     
     width: 75%;
     margin-left: -3px;
+    
+    transform: translate3d(0,0,0);
     
     span {
       opacity: 0;
@@ -160,6 +167,8 @@
     margin-bottom: 20px;
     width: 60%;
     
+    transform: translate3d(0,0,0);
+    
     .inner {
       line-height: 1.5;
       opacity: 0;
@@ -175,6 +184,8 @@
     letter-spacing: 0.15em;
     z-index: 9999;
     color: #fff;    
+    
+    transform: translate3d(0,0,0);
     
     .inner {
     opacity: 0;

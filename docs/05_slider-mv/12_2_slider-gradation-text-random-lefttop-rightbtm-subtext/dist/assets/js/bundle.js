@@ -4781,7 +4781,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      }, 0.6).add(function () {
 	
 	        _this3.isTimeline = false;
-	      }, 1.0);
+	      }, 0.1);
 	    }
 	  }, {
 	    key: 'next',
@@ -4802,9 +4802,15 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	        // index
 	        if (!isItem) {
+	          var prevIndex = _this4.index - 1;
+	          if (prevIndex < 0) prevIndex = _this4.sts.length - 1;
+	          _this4.sts[prevIndex].cancel();
 	          _this4.sts[_this4.index].cancel();
 	          _this4.index++;
 	        } else {
+	          var prevIndex = _this4.index - 1;
+	          if (prevIndex < 0) prevIndex = _this4.sts.length - 1;
+	          _this4.sts[prevIndex].cancel();
 	          _this4.sts[_this4.index].cancel();
 	          _this4.index = index;
 	        }
@@ -4844,9 +4850,15 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	        // index
 	        if (!isItem) {
+	          var prevIndex = _this5.index - 1;
+	          if (prevIndex < 0) prevIndex = _this5.sts.length - 1;
+	          _this5.sts[prevIndex].cancel();
 	          _this5.sts[_this5.index].cancel();
 	          _this5.index--;
 	        } else {
+	          var prevIndex = _this5.index - 1;
+	          if (prevIndex < 0) prevIndex = _this5.sts.length - 1;
+	          _this5.sts[prevIndex].cancel();
 	          _this5.sts[_this5.index].cancel();
 	          _this5.index = index;
 	        }

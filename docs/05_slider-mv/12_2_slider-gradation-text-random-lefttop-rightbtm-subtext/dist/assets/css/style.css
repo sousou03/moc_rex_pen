@@ -1026,6 +1026,13 @@ a:active {
   position: absolute;
   left: 0;
   top: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+
+#wrapper.id_top .box {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
 #wrapper.id_top .tag {
@@ -1034,6 +1041,8 @@ a:active {
   z-index: 9999;
   color: #fff;
   margin-bottom: 10px;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
 #wrapper.id_top .tag .inner {
@@ -1051,6 +1060,8 @@ a:active {
   z-index: 9999;
   width: 75%;
   margin-left: -3px;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
 #wrapper.id_top .text span {
@@ -1075,6 +1086,8 @@ a:active {
   line-height: 1.5;
   margin-bottom: 20px;
   width: 60%;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
 #wrapper.id_top .subtext .inner {
@@ -1091,6 +1104,8 @@ a:active {
   letter-spacing: 0.15em;
   z-index: 9999;
   color: #fff;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
 #wrapper.id_top .more .inner {
