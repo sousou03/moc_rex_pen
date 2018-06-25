@@ -4763,23 +4763,8 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      // show
 	      .add(function () {
 	
-	        _this3.isTimeline = true;
-	
-	        _this3.sts[_this3.index].hide();
-	        _this3.index++;
-	        _this3.index = _this3.index % _this3.sts.length;
-	      }, 0.0)
-	      // hide
-	      .add(function () {
-	
-	        _this3.sts[_this3.index].show();
-	        _this3.$item.removeClass('active');
-	        _this3.$item.eq(_this3.index).addClass('active');
-	        var tl = new TimelineMax();
-	        tl.add(function () {
-	          _this3.slider.next();
-	        }, 0.0);
-	      }, 0.6).add(function () {
+	        _this3.next();
+	      }, 0.0).add(function () {
 	
 	        _this3.isTimeline = false;
 	      }, 0.1);
