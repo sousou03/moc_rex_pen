@@ -1,0 +1,187 @@
+@charset "utf-8";
+
+/* --------------------------------------------------------------------------------
+*   common
+-------------------------------------------------------------------------------- */
+@import "./_init/import";
+@import "./_init/reset"; // リセットCSS、フォントサイズ sss
+
+/* --------------------------------------------------------------------------------
+*   parts
+-------------------------------------------------------------------------------- */
+@import "./_parts/_common/**/*.scss";
+@import "./_parts/_compornents/**/*.scss";
+
+/* --------------------------------------------------------------------------------
+*   page
+-------------------------------------------------------------------------------- */
+#wrapper.id_top {
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+    
+  .mv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 75vh;
+    
+    // media query
+    @media only screen and (max-width: 567px) {
+      height: 65vh;
+      min-height: 350px;
+    }
+    
+    // ------------------------------------------------------------
+    // text
+    // ------------------------------------------------------------    
+    .boxWrap {
+      padding-left: 5%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      
+      position: absolute;
+      left: 0;
+      top: 0;
+      
+      transform: translate3d(0,0,0);
+      
+      .box {
+        // position: absolute;
+        // left: 5%;
+        // transform: translateY(-50%);
+        transform: translate3d(0,0,0);
+      }
+
+      .tag {
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        z-index: 9999;
+        color: #fff;
+        margin-bottom: 10px;
+        
+        transform: translate3d(0,0,0);
+        
+        .inner {
+          opacity: 0;  
+        }    
+      }
+      .tag01 {
+        .inner {
+          opacity: 1;
+        }
+      }
+      .text {
+        
+        font-size: 50px;
+        margin-bottom: 30px;
+        // display: flex;
+        // align-items: center;
+        
+        // white-space: nowrap;
+        
+        opacity: 0;
+        
+        z-index: 9999;
+        
+        width: 75%;
+        margin-left: -3px;
+        
+        transform: translate3d(0,0,0);
+        
+        span {
+          opacity: 0;
+          // color: #fff;
+          color: #fff;
+          line-height: 1.1;
+        }
+        div {
+          display: inline-block;
+        }
+      }
+      .text01 {
+        span {
+          opacity: 1;
+        }
+      }
+
+
+      .subtext {
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        z-index: 9999;
+        color: #fff;    
+        line-height: 1.5;
+        margin-bottom: 20px;
+        width: 60%;
+        
+        transform: translate3d(0,0,0);
+        
+        .inner {
+          line-height: 1.5;
+          opacity: 0;
+        }
+      }
+      .subtext01 {
+        .inner {
+          opacity: 1;
+        }
+      }
+      .more {
+        font-size: 20px;
+        letter-spacing: 0.15em;
+        z-index: 9999;
+        color: #fff;    
+        
+        transform: translate3d(0,0,0);
+        
+        .inner {
+        opacity: 0;
+        }
+      }
+      .more01 {
+        .inner {
+        opacity: 1;
+        }
+      }
+    }
+
+
+
+    // ------------------------------------------------------------
+    // indicator
+    // ------------------------------------------------------------    
+    .indicator {
+      position: absolute;
+      left: calc(5% + 3px);
+      bottom: 30px;
+      transform: translateY(-50%);
+      z-index: 9999;
+      color: #fff;
+      .item {
+        width: 8px;
+        height: 8px;
+        border: 1px solid #fff;
+        border-radius: 100%;
+        margin-right: 8px;
+        box-sizing: border-box;
+        
+        transition: background-color .7s $easeInOutQuad 0s;
+        cursor: pointer;
+      }
+      .item.active {
+        background-color: #fff;
+      }
+    }
+  }
+
+
+
+
+
+}
