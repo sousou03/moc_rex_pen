@@ -8,13 +8,14 @@ import Base from '../../../../Util/Base.es6';
 
 export default class Line extends Base {
 
-  constructor(stage, i, len, $wrap) {
+  constructor(stage, i, len, $wrap, path) {
 
     super();
 
     this.stage = stage;
     this.$wrap = $wrap;
     this.c = this.stage.canvas;
+    this.path = path;
 
     this.index = i;
     this.len = len;
@@ -40,7 +41,7 @@ export default class Line extends Base {
 
     this.img = new Image();
     this.img.onload = this.add.bind(this);
-    this.img.src = './assets/resource/img/img0'+(this.index+1)+'.jpeg';
+    this.img.src = this.path;
 
   }
 

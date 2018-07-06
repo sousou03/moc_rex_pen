@@ -33,6 +33,7 @@ export default class Controller extends Base {
 
     var padding = 50;
     var margin = 5;
+    var marginLeft = parseInt(this.$inner.css('margin-left'));
     this.w = this.$item.width();
     var len = this.$item.length;
 
@@ -43,7 +44,9 @@ export default class Controller extends Base {
       margin = 0;
     }
     this.innerw = this.w * len + margin * (len - 1)
-    this.dis = this.innerw - this.wrapw + padding
+    this.dis = this.innerw - this.wrapw + padding + marginLeft;
+
+    log(marginLeft)
 
     this.x = 0;
     this.tarx = 0;
@@ -183,12 +186,13 @@ export default class Controller extends Base {
 
     var padding = 50;
     var margin = 5;
+    var marginLeft = parseInt(this.$inner.css('margin-left'));
     this.w = this.$item.width();
     var len = this.$item.length;
 
     this.wrapw = gb.r.w - 50;
     this.innerw = this.w * len + margin * (len - 1)
-    this.dis = this.innerw - this.wrapw + padding
+    this.dis = this.innerw - this.wrapw + padding + marginLeft;
 
   }
 

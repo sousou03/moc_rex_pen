@@ -5578,7 +5578,9 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.imgs = [];
 	
 	      for (var i = 0; i < this.len; i++) {
-	        var img = new _Img2.default(this.stage, i, this.len, this.$wrap);
+	
+	        var path = window.pen_TopSlider[i];
+	        var img = new _Img2.default(this.stage, i, this.len, this.$wrap, path);
 	        this.imgs.push(img);
 	      }
 	    }
@@ -5629,7 +5631,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	var Line = function (_Base) {
 	  _inherits(Line, _Base);
 	
-	  function Line(stage, i, len, $wrap) {
+	  function Line(stage, i, len, $wrap, path) {
 	    _classCallCheck(this, Line);
 	
 	    var _this = _possibleConstructorReturn(this, (Line.__proto__ || Object.getPrototypeOf(Line)).call(this));
@@ -5637,6 +5639,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    _this.stage = stage;
 	    _this.$wrap = $wrap;
 	    _this.c = _this.stage.canvas;
+	    _this.path = path;
 	
 	    _this.index = i;
 	    _this.len = len;
@@ -5664,7 +5667,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      this.img = new Image();
 	      this.img.onload = this.add.bind(this);
-	      this.img.src = './assets/resource/img/img0' + (this.index + 1) + '.jpeg';
+	      this.img.src = this.path;
 	    }
 	  }, {
 	    key: 'add',

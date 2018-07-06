@@ -52,7 +52,9 @@ export default class Bubble extends Base {
     this.imgs = [];
 
     for (var i = 0; i < this.len; i++) {
-      var img = new Img(this.stage, i, this.len, this.$wrap)
+
+      var path = window.pen_TopSlider[i];
+      var img = new Img(this.stage, i, this.len, this.$wrap, path)
       this.imgs.push(img);
     }
     
