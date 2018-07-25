@@ -39,9 +39,9 @@ body {
       display: flex;
       align-items: center;
 
-      margin-left: calc((100vw - 1600px) / 2);
+      // margin-left: calc((100vw - 1600px) / 2);
       margin-right: 0;
-      width: calc(100% - ((100vw - 1600px) / 2));
+      // width: calc(100% - ((100vw - 1600px) / 2));
       padding: 0 50px;
 
       @media only screen and (max-width: 500px) {
@@ -101,10 +101,7 @@ body {
       margin-right: 0;
     }
 
-    .arrow {
-      width: 42px;
-      height: 42px;
-      background: red;
+    .arrow {      
       position: absolute;
       top: calc(50% - 27px);
       z-index: 5;
@@ -113,12 +110,33 @@ body {
       cursor: pointer;
       opacity: 0;
       
+      transition: opacity .4s cubic-bezier(.455, .03, .515, .955) 0s;
+      
       // media query
       @media only screen and (max-width: 500px) {
 
         display: none;
 
       }
+
+      .inner {
+        width: 42px;
+        height: 42px;
+        background: red;
+        
+        transition: opacity .4s cubic-bezier(.455, .03, .515, .955) 0s;
+      }
+      .inner.edge {
+        
+        opacity: .5 !important;
+        
+      }
+
+    }
+    .arrow.active {
+      
+      opacity: 1;
+      
     }
     .arrowL {
       left: 50px;

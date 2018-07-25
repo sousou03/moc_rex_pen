@@ -24,6 +24,8 @@ export default class Controller extends Base {
 
     this.$arrow = $('.arrow');
 
+    this.isLock = false;
+
     this.setup();
     this.setEvents();
 
@@ -95,29 +97,28 @@ export default class Controller extends Base {
 
   update() {
 
-    // update
-    // if (!this.isStop) {
-    //   if (this.isToRight) this.tarx -= 0.5 * 1;
-    //   else this.tarx += 0.5 * 1;
-    // }
 
     // max
     // min
     if (this.tarx < - this.dis) {
       this.tarx = - this.dis;
-      // this.cnt++;
-      // if (this.cnt>60) {
-      //   this.isToRight = false;
-      //   this.cnt = 0;
-      // }
     }
     if (this.tarx > 0) {
       this.tarx = 0;
-      // this.cnt++;
-      // if (this.cnt>60) {
-      //   this.isToRight = true;
-      //   this.cnt = 0;
-      // }
+    }
+
+    
+    if ((this.tarx!==0&&this.tarx!==-this.dis)&&this.isLock) {
+      this.isLock = false;
+      this.$arrow.find('.inner').removeClass('edge');
+    }    
+    if (this.tarx==0&&!this.isLock) {
+      this.$arrow.eq(0).find('.inner').addClass('edge');
+      this.isLock = true;
+    }
+    if (this.tarx==-this.dis&&!this.isLock) {
+      this.$arrow.eq(1).find('.inner').addClass('edge');
+      this.isLock = true;
     }
 
     this.x += (this.tarx - this.x) * 0.12;
@@ -128,13 +129,7 @@ export default class Controller extends Base {
 
   show() {
 
-    TweenMax.killTweensOf(this.$arrow);
-
-    var tl = new TimelineMax();
-
-    tl
-      // op
-      .to(this.$arrow, 0.7, {opacity: 1, ease: Power2.easeInOut,})
+    this.$arrow.addClass('active');
 
     // 横スライドstop
     this.isStop = true;
@@ -143,13 +138,7 @@ export default class Controller extends Base {
 
   hide() {
 
-    TweenMax.killTweensOf(this.$arrow);
-
-    var tl = new TimelineMax();
-
-    tl
-      // op
-      .to(this.$arrow, 0.7, {opacity: 0, ease: Power2.easeInOut})      
+    this.$arrow.removeClass('active');
 
     // 横スライドplay
     this.isStop = false;
@@ -193,6 +182,8 @@ export default class Controller extends Base {
     this.wrapw = gb.r.w - 50;
     this.innerw = this.w * len + margin * (len - 1)
     this.dis = this.innerw - this.wrapw + padding + marginLeft;
+
+    if (gb.r.w=500) this.tarx = 0;
 
   }
 
