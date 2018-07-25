@@ -15,9 +15,12 @@ import MouseDrag from './MouseDrag.es6';
 
 export default class Controller extends Base {
 
-  constructor() {
+  constructor($wrap, index) {
 
     super();
+
+    this.$wrap = $wrap;
+    this.index = index;
 
     this.setup()
     this.setEvents();
@@ -29,55 +32,31 @@ export default class Controller extends Base {
     this.isUEv = true;
     this.isREv = true;
 
-    this.s = new SliderImg($('.mv'), 'cv');
+    // slider
+    this.s = new SliderImg(this.$wrap, 'cv'+this.index);
     this.slider = this.s.slider;
-    this.st1 = new SpanText($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'), $('.more01 .inner'));
-    this.st2 = new SpanText($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'), $('.more02 .inner'));
-    this.st3 = new SpanText($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'), $('.more03 .inner'));
-    this.st4 = new SpanText($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'), $('.more04 .inner'));
+
     this.sts = [];
-    this.sts.push(this.st1,this.st2,this.st3,this.st4);
-    this.$item = $('.indicator .item');
+    var $target = this.$wrap.find('.sliderContents');
 
+    for (var i = 0; i < $target.length; i++) {
+      var $sc = $target.eq(i);
+      var st = new SpanText($sc.find('.text'), $sc.find('.subtext .inner'), $sc.find('.tag .inner'), $sc.find('.more .inner'));
+      this.sts.push(st);
+    }
+
+    // indicator   
+    this.$indicator = this.$wrap.find('.indicator');
+    var html = '';
+    for (var i = 0; i < $target.length; i++) {
+      html += '<div class="item"></div>';
+    }
+    this.$indicator.append(html);
+    this.$item = this.$indicator.find('.item');
+    this.$item.eq(0).addClass('active');
+
+    // variable
     this.index = 0;
-
-
-    if (gb.u.dv.isSP) this.s = new Swipe($(window));
-    else this.s = new MouseDrag($(window));
-
-    this.isTimeline = false;
-    this.isLock = false;
-    this.isDrag = false;
-
-    // swipe event
-    this.s.onStart = ()=>{
-
-      this.isDrag = true;
-
-    }
-    this.s.onMove = (sign, val)=>{
-
-      if (!this.isDrag||val<10) return;
-      if (this.isTimeline) return;
-      this.isTimeline = true;
-      this.isDrag = false; // 連続でさせるなら、ここをコメントアウト
-
-      if (sign>0) {
-        this.next();
-      } else {
-        this.prev();
-      }
-
-    }
-    this.s.onEnd = ()=>{
-
-      this.isDrag = false;
-
-    }
-    this.s.onSwipe = (sign)=>{
-
-
-    }
 
     this.timeline();
 
@@ -225,6 +204,18 @@ export default class Controller extends Base {
 
   }
 
+  isDeviceSP(){
+
+    var media = ["iphone","ipod","ipad","android","dream","cupcake","blackberry9500","blackberry9530","blackberry9520","blackberry9550","blackberry9800","webos","incognito","webmate"];
+    var pattern = new RegExp(media.join("|"),"i");
+
+    var ua = window.navigator.userAgent.toLowerCase(); //useragent
+    var b = pattern.test(ua);
+
+    return b;
+
+  }
+
   setEvents() {
 
     super.setEvents();
@@ -232,6 +223,44 @@ export default class Controller extends Base {
     var self = this;
 
     this.$item.on('click', function(){self.onItem.call(self, this)});
+
+    // event
+    if (this.isDeviceSP()) this.s = new Swipe(this.$wrap);
+    else this.s = new MouseDrag(this.$wrap);
+
+    this.isTimeline = false;
+    this.isLock = false;
+    this.isDrag = false;
+
+    // swipe event
+    this.s.onStart = ()=>{
+
+      this.isDrag = true;
+
+    }
+    this.s.onMove = (sign, val)=>{
+
+      if (!this.isDrag||val<10) return;
+      if (this.isTimeline) return;
+      this.isTimeline = true;
+      this.isDrag = false; // 連続でさせるなら、ここをコメントアウト
+
+      if (sign>0) {
+        this.next();
+      } else {
+        this.prev();
+      }
+
+    }
+    this.s.onEnd = ()=>{
+
+      this.isDrag = false;
+
+    }
+    this.s.onSwipe = (sign)=>{
+
+
+    }
 
   }
 

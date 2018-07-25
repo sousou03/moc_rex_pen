@@ -44,7 +44,7 @@ export default class MouseDrag {
     // time
     this.sT = (new Date).getTime();
     // pos
-    this.sX = gb.m.x;
+    this.sX = e.pageX - $(window).scrollLeft();
 
     // コールバック
     this.onStart();
@@ -54,7 +54,7 @@ export default class MouseDrag {
   onTouchMove (e) {
 
     // pos
-    this.mX = gb.m.x;
+    this.mX = e.pageX - $(window).scrollLeft();
     var dis = this.sX - this.mX;
     var sign = 1;
     if (dis<0) sign = -1;
@@ -73,12 +73,10 @@ export default class MouseDrag {
     this.eT = (new Date).getTime() - this.sT;
     var disT = this.sT - this.eT;
     // pos
-    this.eX = gb.m.x;;
+    this.eX = e.pageX - $(window).scrollLeft();
     var dis = this.sX - this.eX;
     var sign = 1;
     if (dis<0) sign = -1;
-
-    log(dis);
 
     // 最小時間より長かったら、処理
     // if(this.minT < this.eT) this.onSwipe();

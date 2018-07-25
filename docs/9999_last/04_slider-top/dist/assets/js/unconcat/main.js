@@ -4522,7 +4522,11 @@
 	      // ------------------------------------------------------------
 	      //  ui
 	      // ------------------------------------------------------------
-	      new _Controller2.default();
+	      var $wrap = $('.slider');
+	      $wrap.each(function (index, el) {
+	
+	        new _Controller2.default($(el), index);
+	      });
 	
 	      // ------------------------------------------------------------
 	      // timeline
@@ -4631,10 +4635,13 @@
 	var Controller = function (_Base) {
 	  _inherits(Controller, _Base);
 	
-	  function Controller() {
+	  function Controller($wrap, index) {
 	    _classCallCheck(this, Controller);
 	
 	    var _this = _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).call(this));
+	
+	    _this.$wrap = $wrap;
+	    _this.index = index;
 	
 	    _this.setup();
 	    _this.setEvents();
@@ -4645,52 +4652,35 @@
 	  _createClass(Controller, [{
 	    key: 'setup',
 	    value: function setup() {
-	      var _this2 = this;
 	
 	      this.isUEv = true;
 	      this.isREv = true;
 	
-	      this.s = new _Controller2.default($('.mv'), 'cv');
+	      // slider
+	      this.s = new _Controller2.default(this.$wrap, 'cv' + this.index);
 	      this.slider = this.s.slider;
-	      this.st1 = new _Controller4.default($('.text01'), $('.subtext01 .inner'), $('.tag01 .inner'), $('.more01 .inner'));
-	      this.st2 = new _Controller4.default($('.text02'), $('.subtext02 .inner'), $('.tag02 .inner'), $('.more02 .inner'));
-	      this.st3 = new _Controller4.default($('.text03'), $('.subtext03 .inner'), $('.tag03 .inner'), $('.more03 .inner'));
-	      this.st4 = new _Controller4.default($('.text04'), $('.subtext04 .inner'), $('.tag04 .inner'), $('.more04 .inner'));
+	
 	      this.sts = [];
-	      this.sts.push(this.st1, this.st2, this.st3, this.st4);
-	      this.$item = $('.indicator .item');
+	      var $target = this.$wrap.find('.sliderContents');
 	
+	      for (var i = 0; i < $target.length; i++) {
+	        var $sc = $target.eq(i);
+	        var st = new _Controller4.default($sc.find('.text'), $sc.find('.subtext .inner'), $sc.find('.tag .inner'), $sc.find('.more .inner'));
+	        this.sts.push(st);
+	      }
+	
+	      // indicator   
+	      this.$indicator = this.$wrap.find('.indicator');
+	      var html = '';
+	      for (var i = 0; i < $target.length; i++) {
+	        html += '<div class="item"></div>';
+	      }
+	      this.$indicator.append(html);
+	      this.$item = this.$indicator.find('.item');
+	      this.$item.eq(0).addClass('active');
+	
+	      // variable
 	      this.index = 0;
-	
-	      if (gb.u.dv.isSP) this.s = new _Swipe2.default($(window));else this.s = new _MouseDrag2.default($(window));
-	
-	      this.isTimeline = false;
-	      this.isLock = false;
-	      this.isDrag = false;
-	
-	      // swipe event
-	      this.s.onStart = function () {
-	
-	        _this2.isDrag = true;
-	      };
-	      this.s.onMove = function (sign, val) {
-	
-	        if (!_this2.isDrag || val < 10) return;
-	        if (_this2.isTimeline) return;
-	        _this2.isTimeline = true;
-	        _this2.isDrag = false; // 連続でさせるなら、ここをコメントアウト
-	
-	        if (sign > 0) {
-	          _this2.next();
-	        } else {
-	          _this2.prev();
-	        }
-	      };
-	      this.s.onEnd = function () {
-	
-	        _this2.isDrag = false;
-	      };
-	      this.s.onSwipe = function (sign) {};
 	
 	      this.timeline();
 	    }
@@ -4700,7 +4690,7 @@
 	  }, {
 	    key: 'timeline',
 	    value: function timeline() {
-	      var _this3 = this;
+	      var _this2 = this;
 	
 	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax({ repeat: -1, delay: 3.0, repeatDelay: 3.0 });
@@ -4709,15 +4699,63 @@
 	      // show
 	      .add(function () {
 	
-	        _this3.next();
+	        _this2.next();
 	      }, 0.0).add(function () {
 	
-	        _this3.isTimeline = false;
+	        _this2.isTimeline = false;
 	      }, 0.1);
 	    }
 	  }, {
 	    key: 'next',
 	    value: function next() {
+	      var _this3 = this;
+	
+	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	      var index = arguments[1];
+	
+	
+	      if (this.tl) this.tl.kill();
+	      this.tl = new TimelineMax();
+	
+	      this.tl.add(function () {
+	
+	        // text
+	        _this3.sts[_this3.index].hide_op('next');
+	
+	        // index
+	        if (!isItem) {
+	          var prevIndex = _this3.index - 1;
+	          if (prevIndex < 0) prevIndex = _this3.sts.length - 1;
+	          _this3.sts[prevIndex].cancel();
+	          _this3.sts[_this3.index].cancel();
+	          _this3.index++;
+	        } else {
+	          var prevIndex = _this3.index - 1;
+	          if (prevIndex < 0) prevIndex = _this3.sts.length - 1;
+	          _this3.sts[prevIndex].cancel();
+	          _this3.sts[_this3.index].cancel();
+	          _this3.index = index;
+	        }
+	        _this3.index = _this3.index % _this3.sts.length;
+	
+	        // indicator
+	        _this3.$item.removeClass('active');
+	        _this3.$item.eq(_this3.index).addClass('active');
+	      }, 0.0).add(function () {
+	
+	        // text
+	        _this3.sts[_this3.index].show_op('next');
+	        // img
+	        _this3.slider.next_op(isItem, _this3.index);
+	      }, 0.1).add(function () {
+	
+	        _this3.isTimeline = false;
+	        _this3.timeline();
+	      }, 0.3);
+	    }
+	  }, {
+	    key: 'prev',
+	    value: function prev() {
 	      var _this4 = this;
 	
 	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -4730,7 +4768,7 @@
 	      this.tl.add(function () {
 	
 	        // text
-	        _this4.sts[_this4.index].hide_op('next');
+	        _this4.sts[_this4.index].hide_op('prev');
 	
 	        // index
 	        if (!isItem) {
@@ -4738,7 +4776,7 @@
 	          if (prevIndex < 0) prevIndex = _this4.sts.length - 1;
 	          _this4.sts[prevIndex].cancel();
 	          _this4.sts[_this4.index].cancel();
-	          _this4.index++;
+	          _this4.index--;
 	        } else {
 	          var prevIndex = _this4.index - 1;
 	          if (prevIndex < 0) prevIndex = _this4.sts.length - 1;
@@ -4746,7 +4784,7 @@
 	          _this4.sts[_this4.index].cancel();
 	          _this4.index = index;
 	        }
-	        _this4.index = _this4.index % _this4.sts.length;
+	        if (_this4.index < 0) _this4.index = _this4.sts.length - 1;
 	
 	        // indicator
 	        _this4.$item.removeClass('active');
@@ -4754,61 +4792,13 @@
 	      }, 0.0).add(function () {
 	
 	        // text
-	        _this4.sts[_this4.index].show_op('next');
+	        _this4.sts[_this4.index].show_op('prev');
 	        // img
-	        _this4.slider.next_op(isItem, _this4.index);
+	        _this4.slider.prev_op(isItem, _this4.index);
 	      }, 0.1).add(function () {
 	
 	        _this4.isTimeline = false;
 	        _this4.timeline();
-	      }, 0.3);
-	    }
-	  }, {
-	    key: 'prev',
-	    value: function prev() {
-	      var _this5 = this;
-	
-	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	      var index = arguments[1];
-	
-	
-	      if (this.tl) this.tl.kill();
-	      this.tl = new TimelineMax();
-	
-	      this.tl.add(function () {
-	
-	        // text
-	        _this5.sts[_this5.index].hide_op('prev');
-	
-	        // index
-	        if (!isItem) {
-	          var prevIndex = _this5.index - 1;
-	          if (prevIndex < 0) prevIndex = _this5.sts.length - 1;
-	          _this5.sts[prevIndex].cancel();
-	          _this5.sts[_this5.index].cancel();
-	          _this5.index--;
-	        } else {
-	          var prevIndex = _this5.index - 1;
-	          if (prevIndex < 0) prevIndex = _this5.sts.length - 1;
-	          _this5.sts[prevIndex].cancel();
-	          _this5.sts[_this5.index].cancel();
-	          _this5.index = index;
-	        }
-	        if (_this5.index < 0) _this5.index = _this5.sts.length - 1;
-	
-	        // indicator
-	        _this5.$item.removeClass('active');
-	        _this5.$item.eq(_this5.index).addClass('active');
-	      }, 0.0).add(function () {
-	
-	        // text
-	        _this5.sts[_this5.index].show_op('prev');
-	        // img
-	        _this5.slider.prev_op(isItem, _this5.index);
-	      }, 0.1).add(function () {
-	
-	        _this5.isTimeline = false;
-	        _this5.timeline();
 	      }, 0.3);
 	    }
 	  }, {
@@ -4828,8 +4818,21 @@
 	      }
 	    }
 	  }, {
+	    key: 'isDeviceSP',
+	    value: function isDeviceSP() {
+	
+	      var media = ["iphone", "ipod", "ipad", "android", "dream", "cupcake", "blackberry9500", "blackberry9530", "blackberry9520", "blackberry9550", "blackberry9800", "webos", "incognito", "webmate"];
+	      var pattern = new RegExp(media.join("|"), "i");
+	
+	      var ua = window.navigator.userAgent.toLowerCase(); //useragent
+	      var b = pattern.test(ua);
+	
+	      return b;
+	    }
+	  }, {
 	    key: 'setEvents',
 	    value: function setEvents() {
+	      var _this5 = this;
 	
 	      _get(Controller.prototype.__proto__ || Object.getPrototypeOf(Controller.prototype), 'setEvents', this).call(this);
 	
@@ -4838,6 +4841,37 @@
 	      this.$item.on('click', function () {
 	        self.onItem.call(self, this);
 	      });
+	
+	      // event
+	      if (this.isDeviceSP()) this.s = new _Swipe2.default(this.$wrap);else this.s = new _MouseDrag2.default(this.$wrap);
+	
+	      this.isTimeline = false;
+	      this.isLock = false;
+	      this.isDrag = false;
+	
+	      // swipe event
+	      this.s.onStart = function () {
+	
+	        _this5.isDrag = true;
+	      };
+	      this.s.onMove = function (sign, val) {
+	
+	        if (!_this5.isDrag || val < 10) return;
+	        if (_this5.isTimeline) return;
+	        _this5.isTimeline = true;
+	        _this5.isDrag = false; // 連続でさせるなら、ここをコメントアウト
+	
+	        if (sign > 0) {
+	          _this5.next();
+	        } else {
+	          _this5.prev();
+	        }
+	      };
+	      this.s.onEnd = function () {
+	
+	        _this5.isDrag = false;
+	      };
+	      this.s.onSwipe = function (sign) {};
 	    }
 	  }]);
 	
@@ -5504,7 +5538,8 @@
 	      this.isUEv = true;
 	      this.isREv = true;
 	
-	      this.len = 4;
+	      // this.len = window.pen_TopSlider.length;
+	      this.len = this.$wrap.find('.sliderContents').length;
 	
 	      // ready
 	      this.ready();
@@ -6469,7 +6504,7 @@
 	      // time
 	      this.sT = new Date().getTime();
 	      // pos
-	      this.sX = gb.m.x;
+	      this.sX = e.pageX - $(window).scrollLeft();
 	
 	      // コールバック
 	      this.onStart();
@@ -6479,7 +6514,7 @@
 	    value: function onTouchMove(e) {
 	
 	      // pos
-	      this.mX = gb.m.x;
+	      this.mX = e.pageX - $(window).scrollLeft();
 	      var dis = this.sX - this.mX;
 	      var sign = 1;
 	      if (dis < 0) sign = -1;
@@ -6497,12 +6532,10 @@
 	      this.eT = new Date().getTime() - this.sT;
 	      var disT = this.sT - this.eT;
 	      // pos
-	      this.eX = gb.m.x;;
+	      this.eX = e.pageX - $(window).scrollLeft();
 	      var dis = this.sX - this.eX;
 	      var sign = 1;
 	      if (dis < 0) sign = -1;
-	
-	      log(dis);
 	
 	      // 最小時間より長かったら、処理
 	      // if(this.minT < this.eT) this.onSwipe();

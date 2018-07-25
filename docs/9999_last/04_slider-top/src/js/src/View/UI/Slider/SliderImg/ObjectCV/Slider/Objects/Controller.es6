@@ -28,7 +28,8 @@ export default class Bubble extends Base {
     this.isUEv = true;
     this.isREv = true;
 
-    this.len = 4;
+    // this.len = window.pen_TopSlider.length;
+    this.len = this.$wrap.find('.sliderContents').length;
 
     // ready
     this.ready();
