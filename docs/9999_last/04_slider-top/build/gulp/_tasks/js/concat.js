@@ -27,3 +27,22 @@ gulp.task('concatJSLibs', ()=>{
         .pipe(gulp.dest(PATH.dist.js + 'unconcat/'));
 
 });
+
+
+gulp.task('concatPENJSLibs', ()=>{
+
+
+    var src = [
+                PATH.src.js + 'libs/util/Stats.js',
+
+                PATH.src.js + 'libs/canvas/easeljs-0.8.1.min.js',
+              ]
+
+    gulp.src(src)
+        .pipe(plumber())
+        .pipe(concat('PENlibs.js'))
+        // .pipe(gulp.dest(PATH.dist.js));
+        // .pipe(gulp.dest(PATH.dist.js + 'common/'));
+        .pipe(gulp.dest(PATH.dist.js + 'unconcat/'));
+
+});
