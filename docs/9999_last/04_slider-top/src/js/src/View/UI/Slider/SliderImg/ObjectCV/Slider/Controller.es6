@@ -13,13 +13,14 @@ import Render from './Render/Render.es6';
 
 export default class Controller extends Base {
 
-  constructor(stage, $wrap) {
+  constructor(stage, $wrap, index) {
 
     super();
 
     this.stage = stage;
     this.c = this.stage.canvas;
     this.$wrap = $wrap;
+    this.index = index;
 
     this.setup();
     this.setEvents();
@@ -28,7 +29,7 @@ export default class Controller extends Base {
 
   setup() {
 
-    this.obj = new Objects(this.stage, this.$wrap);
+    this.obj = new Objects(this.stage, this.$wrap, this.index);
     this.o = new Order(this.obj.len);
 
     var tl = new TimelineMax();

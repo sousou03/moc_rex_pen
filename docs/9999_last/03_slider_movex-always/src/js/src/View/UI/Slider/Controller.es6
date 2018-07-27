@@ -10,7 +10,7 @@ import MouseDrag from './MouseDrag.es6';
 
 export default class Controller extends Base {
 
-  constructor($target) {
+  constructor($wrap) {
 
     super();
 
@@ -18,13 +18,14 @@ export default class Controller extends Base {
     this.isREv = true;
     this.isUpdate = true;
 
-    this.$wrap = $('.slider');
+    this.$wrap = $wrap;
     this.$inner = this.$wrap.find('.sliderInner');
     this.$item = this.$inner.find('.item');
 
-    this.$arrow = $('.arrow');
+    this.$arrow = this.$wrap.find('.arrow');
 
     this.isLock = false;
+    this.isLock2 = false;
 
     this.setup();
     this.setEvents();
@@ -39,16 +40,14 @@ export default class Controller extends Base {
     this.w = this.$item.width();
     var len = this.$item.length;
 
-    this.wrapw = gb.r.w - 50;
-    if (gb.r.w<500) {
-      this.wrapw = gb.r.w;
+    this.wrapw = window.innerWidth - 50;
+    if (window.innerWidth<500) {
+      this.wrapw = window.innerWidth;
       padding = 0;
       margin = 0;
     }
     this.innerw = this.w * len + margin * (len - 1)
     this.dis = this.innerw - this.wrapw + padding + marginLeft;
-
-    log(marginLeft)
 
     this.x = 0;
     this.tarx = 0;
@@ -60,8 +59,8 @@ export default class Controller extends Base {
     this.isDrag = false;
 
     // swipe
-    if (gb.u.dv.isSP) this.s = new Swipe($(window));
-    else this.s = new MouseDrag($(window));
+    if (this.isDeviceSP()) this.s = new Swipe(this.$wrap);
+    else this.s = new MouseDrag(this.$wrap);
 
 
     // swipe event
@@ -71,6 +70,7 @@ export default class Controller extends Base {
 
     }
     this.s.onMove = (sign, val)=>{
+
 
       if (!this.isDrag) return;
       if (val<10||this.isLock) return;
@@ -108,17 +108,17 @@ export default class Controller extends Base {
     }
 
     
-    if ((this.tarx!==0&&this.tarx!==-this.dis)&&this.isLock) {
-      this.isLock = false;
+    if ((this.tarx!==0&&this.tarx!==-this.dis)&&this.isLock2) {
+      this.isLock2 = false;
       this.$arrow.find('.inner').removeClass('edge');
     }    
-    if (this.tarx==0&&!this.isLock) {
+    if (this.tarx==0&&!this.isLock2) {
       this.$arrow.eq(0).find('.inner').addClass('edge');
-      this.isLock = true;
+      this.isLock2 = true;
     }
-    if (this.tarx==-this.dis&&!this.isLock) {
+    if (this.tarx==-this.dis&&!this.isLock2) {
       this.$arrow.eq(1).find('.inner').addClass('edge');
-      this.isLock = true;
+      this.isLock2 = true;
     }
 
     this.x += (this.tarx - this.x) * 0.12;
@@ -179,11 +179,28 @@ export default class Controller extends Base {
     this.w = this.$item.width();
     var len = this.$item.length;
 
-    this.wrapw = gb.r.w - 50;
+    this.wrapw = window.innerWidth - 50;
+    if (window.innerWidth<500) {
+      this.wrapw = window.innerWidth;
+      padding = 0;
+      margin = 0;
+    }
     this.innerw = this.w * len + margin * (len - 1)
     this.dis = this.innerw - this.wrapw + padding + marginLeft;
 
-    if (gb.r.w=500) this.tarx = 0;
+    if (window.innerWidth<=500) this.tarx = 0;    
+
+  }
+
+  isDeviceSP(){
+
+    var media = ["iphone","ipod","ipad","android","dream","cupcake","blackberry9500","blackberry9530","blackberry9520","blackberry9550","blackberry9800","webos","incognito","webmate"];
+    var pattern = new RegExp(media.join("|"),"i");
+
+    var ua = window.navigator.userAgent.toLowerCase(); //useragent
+    var b = pattern.test(ua);
+
+    return b;
 
   }
 

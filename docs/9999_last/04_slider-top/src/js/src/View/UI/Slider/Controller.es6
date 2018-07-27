@@ -33,7 +33,7 @@ export default class Controller extends Base {
     this.isREv = true;
 
     // slider
-    this.s = new SliderImg(this.$wrap, 'cv'+this.index);
+    this.s = new SliderImg(this.$wrap, 'cv'+this.index, this.index);
     this.slider = this.s.slider;
 
     this.sts = [];

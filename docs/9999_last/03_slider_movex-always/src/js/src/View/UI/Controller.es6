@@ -23,7 +23,11 @@ export default class Controller extends Base {
 
   setup() {
 
-    new Slider();
+    $('.slider').each(function(index, el) {
+
+      new Slider($(el));
+      
+    });    
 
   }
 

@@ -129,18 +129,23 @@
 
   var path = './assets/resource/img/img0';
   var ext = '.jpeg';
-  var len = 4;
+  var len1 = 4;
+  var len2 = 3;
 
-  window.pen_TopSlider = [];
+  window.pen_TopSlider1 = [];
+  window.pen_TopSlider2 = [];
 
-  for (var i = 0; i < len; i++) {
-    
+  for (var i = 0; i < len1; i++) {
     var name = path + (i+1) + ext;
-    window.pen_TopSlider.push(name);
-
+    window.pen_TopSlider1.push(name);
+  }
+  for (var i = 0; i < len2; i++) {
+    var name = path + (i+1) + ext;
+    window.pen_TopSlider2.push(name);
   }
 
-  // console.log(pen_TopSlider);
+  // console.log(pen_TopSlider1);
+  // console.log(pen_TopSlider2);
 
 </script>
 <!-- ************************************************************

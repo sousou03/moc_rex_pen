@@ -4711,7 +4711,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.isREv = true;
 	
 	      // slider
-	      this.s = new _Controller2.default(this.$wrap, 'cv' + this.index);
+	      this.s = new _Controller2.default(this.$wrap, 'cv' + this.index, this.index);
 	      this.slider = this.s.slider;
 	
 	      this.sts = [];
@@ -5146,13 +5146,14 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	var Content = function (_Base) {
 	  _inherits(Content, _Base);
 	
-	  function Content($wrap, id) {
+	  function Content($wrap, id, index) {
 	    _classCallCheck(this, Content);
 	
 	    var _this = _possibleConstructorReturn(this, (Content.__proto__ || Object.getPrototypeOf(Content)).call(this));
 	
 	    _this.$wrap = $wrap;
 	    _this.id = id;
+	    _this.index = index;
 	
 	    _this.setup();
 	    _this.setEvents();
@@ -5190,7 +5191,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    value: function add() {
 	
 	      // obj生成
-	      this.slider = new _Controller2.default(this.stage, this.$wrap);
+	      this.slider = new _Controller2.default(this.stage, this.$wrap, this.index);
 	    }
 	  }, {
 	    key: 'update',
@@ -5270,7 +5271,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	var Controller = function (_Base) {
 	  _inherits(Controller, _Base);
 	
-	  function Controller(stage, $wrap) {
+	  function Controller(stage, $wrap, index) {
 	    _classCallCheck(this, Controller);
 	
 	    var _this = _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).call(this));
@@ -5278,6 +5279,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    _this.stage = stage;
 	    _this.c = _this.stage.canvas;
 	    _this.$wrap = $wrap;
+	    _this.index = index;
 	
 	    _this.setup();
 	    _this.setEvents();
@@ -5290,7 +5292,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    value: function setup() {
 	      var _this2 = this;
 	
-	      this.obj = new _Controller2.default(this.stage, this.$wrap);
+	      this.obj = new _Controller2.default(this.stage, this.$wrap, this.index);
 	      this.o = new _Order2.default(this.obj.len);
 	
 	      var tl = new TimelineMax();
@@ -5570,7 +5572,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	var Bubble = function (_Base) {
 	  _inherits(Bubble, _Base);
 	
-	  function Bubble(stage, $wrap) {
+	  function Bubble(stage, $wrap, index) {
 	    _classCallCheck(this, Bubble);
 	
 	    var _this = _possibleConstructorReturn(this, (Bubble.__proto__ || Object.getPrototypeOf(Bubble)).call(this));
@@ -5578,6 +5580,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    _this.stage = stage;
 	    _this.c = _this.stage.canvas;
 	    _this.$wrap = $wrap;
+	    _this.index = index;
 	
 	    _this.setup();
 	    _this.setEvents();
@@ -5611,10 +5614,11 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    value: function add() {
 	
 	      this.imgs = [];
+	      var imgList = [window.pen_TopSlider1, window.pen_TopSlider2];
 	
 	      for (var i = 0; i < this.len; i++) {
 	
-	        var path = window.pen_TopSlider[i];
+	        var path = imgList[this.index][i];
 	        var img = new _Img2.default(this.stage, i, this.len, this.$wrap, path);
 	        this.imgs.push(img);
 	      }
