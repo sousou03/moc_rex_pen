@@ -10,12 +10,13 @@ import Slider from './ObjectCV/Slider/Controller.es6';
 
 export default class Content extends Base {
 
-  constructor($wrap, id) {
+  constructor($wrap, id, index) {
 
     super();
 
     this.$wrap = $wrap;
     this.id = id;
+    this.index = index;
 
     this.setup();
     this.setEvents();
@@ -50,7 +51,7 @@ export default class Content extends Base {
   add() {
 
     // obj生成
-    this.slider = new Slider(this.stage, this.$wrap);
+    this.slider = new Slider(this.stage, this.$wrap, this.index);
 
   }
 

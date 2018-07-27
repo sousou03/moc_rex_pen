@@ -78,8 +78,6 @@ export default class Swipe {
     var sign = 1;
     if (dis<0) sign = -1;
 
-    log(dis);
-
     // 最小時間より長かったら、処理
     // if(this.minT < this.eT) this.onSwipe();
     // 最小距離より長かったら、処理

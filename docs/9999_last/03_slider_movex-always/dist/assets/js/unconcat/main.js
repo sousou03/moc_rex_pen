@@ -4630,7 +4630,10 @@
 	    key: 'setup',
 	    value: function setup() {
 	
-	      new _Controller2.default();
+	      $('.slider').each(function (index, el) {
+	
+	        new _Controller2.default($(el));
+	      });
 	    }
 	  }, {
 	    key: 'onResize',
@@ -4726,7 +4729,7 @@
 	var Controller = function (_Base) {
 	  _inherits(Controller, _Base);
 	
-	  function Controller($target) {
+	  function Controller($wrap) {
 	    _classCallCheck(this, Controller);
 	
 	    var _this = _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).call(this));
@@ -4735,13 +4738,14 @@
 	    _this.isREv = true;
 	    _this.isUpdate = true;
 	
-	    _this.$wrap = $('.slider');
+	    _this.$wrap = $wrap;
 	    _this.$inner = _this.$wrap.find('.sliderInner');
 	    _this.$item = _this.$inner.find('.item');
 	
-	    _this.$arrow = $('.arrow');
+	    _this.$arrow = _this.$wrap.find('.arrow');
 	
 	    _this.isLock = false;
+	    _this.isLock2 = false;
 	
 	    _this.setup();
 	    _this.setEvents();
@@ -4760,16 +4764,14 @@
 	      this.w = this.$item.width();
 	      var len = this.$item.length;
 	
-	      this.wrapw = gb.r.w - 50;
-	      if (gb.r.w < 500) {
-	        this.wrapw = gb.r.w;
+	      this.wrapw = window.innerWidth - 50;
+	      if (window.innerWidth < 500) {
+	        this.wrapw = window.innerWidth;
 	        padding = 0;
 	        margin = 0;
 	      }
 	      this.innerw = this.w * len + margin * (len - 1);
 	      this.dis = this.innerw - this.wrapw + padding + marginLeft;
-	
-	      log(marginLeft);
 	
 	      this.x = 0;
 	      this.tarx = 0;
@@ -4781,7 +4783,7 @@
 	      this.isDrag = false;
 	
 	      // swipe
-	      if (gb.u.dv.isSP) this.s = new _Swipe2.default($(window));else this.s = new _MouseDrag2.default($(window));
+	      if (this.isDeviceSP()) this.s = new _Swipe2.default(this.$wrap);else this.s = new _MouseDrag2.default(this.$wrap);
 	
 	      // swipe event
 	      this.s.onStart = function () {
@@ -4818,17 +4820,17 @@
 	        this.tarx = 0;
 	      }
 	
-	      if (this.tarx !== 0 && this.tarx !== -this.dis && this.isLock) {
-	        this.isLock = false;
+	      if (this.tarx !== 0 && this.tarx !== -this.dis && this.isLock2) {
+	        this.isLock2 = false;
 	        this.$arrow.find('.inner').removeClass('edge');
 	      }
-	      if (this.tarx == 0 && !this.isLock) {
+	      if (this.tarx == 0 && !this.isLock2) {
 	        this.$arrow.eq(0).find('.inner').addClass('edge');
-	        this.isLock = true;
+	        this.isLock2 = true;
 	      }
-	      if (this.tarx == -this.dis && !this.isLock) {
+	      if (this.tarx == -this.dis && !this.isLock2) {
 	        this.$arrow.eq(1).find('.inner').addClass('edge');
-	        this.isLock = true;
+	        this.isLock2 = true;
 	      }
 	
 	      this.x += (this.tarx - this.x) * 0.12;
@@ -4889,11 +4891,28 @@
 	      this.w = this.$item.width();
 	      var len = this.$item.length;
 	
-	      this.wrapw = gb.r.w - 50;
+	      this.wrapw = window.innerWidth - 50;
+	      if (window.innerWidth < 500) {
+	        this.wrapw = window.innerWidth;
+	        padding = 0;
+	        margin = 0;
+	      }
 	      this.innerw = this.w * len + margin * (len - 1);
 	      this.dis = this.innerw - this.wrapw + padding + marginLeft;
 	
-	      if (gb.r.w = 500) this.tarx = 0;
+	      if (window.innerWidth <= 500) this.tarx = 0;
+	    }
+	  }, {
+	    key: 'isDeviceSP',
+	    value: function isDeviceSP() {
+	
+	      var media = ["iphone", "ipod", "ipad", "android", "dream", "cupcake", "blackberry9500", "blackberry9530", "blackberry9520", "blackberry9550", "blackberry9800", "webos", "incognito", "webmate"];
+	      var pattern = new RegExp(media.join("|"), "i");
+	
+	      var ua = window.navigator.userAgent.toLowerCase(); //useragent
+	      var b = pattern.test(ua);
+	
+	      return b;
 	    }
 	  }, {
 	    key: 'setEvents',
@@ -5140,8 +5159,6 @@
 	      var sign = 1;
 	      if (dis < 0) sign = -1;
 	
-	      log(dis);
-	
 	      // 最小時間より長かったら、処理
 	      // if(this.minT < this.eT) this.onSwipe();
 	      // 最小距離より長かったら、処理
@@ -5234,7 +5251,7 @@
 	      // time
 	      this.sT = new Date().getTime();
 	      // pos
-	      this.sX = gb.m.x;
+	      this.sX = e.pageX - $(window).scrollLeft();
 	
 	      // コールバック
 	      this.onStart();
@@ -5244,7 +5261,7 @@
 	    value: function onTouchMove(e) {
 	
 	      // pos
-	      this.mX = gb.m.x;
+	      this.mX = e.pageX - $(window).scrollLeft();
 	      var dis = this.sX - this.mX;
 	      var sign = 1;
 	      if (dis < 0) sign = -1;
@@ -5262,7 +5279,7 @@
 	      this.eT = new Date().getTime() - this.sT;
 	      var disT = this.sT - this.eT;
 	      // pos
-	      this.eX = gb.m.x;;
+	      this.eX = e.pageX - $(window).scrollLeft();
 	      var dis = this.sX - this.eX;
 	      var sign = 1;
 	      if (dis < 0) sign = -1;

@@ -10,13 +10,14 @@ import Img from './Img.es6';
 
 export default class Bubble extends Base {
 
-  constructor(stage, $wrap) {
+  constructor(stage, $wrap, index) {
 
     super();
 
     this.stage = stage;
     this.c = this.stage.canvas;
     this.$wrap = $wrap;
+    this.index = index;
 
     this.setup();
     this.setEvents();
@@ -51,10 +52,14 @@ export default class Bubble extends Base {
   add() {
 
     this.imgs = [];
+    var imgList = [
+      window.pen_TopSlider1,
+      window.pen_TopSlider2,
+    ]
 
     for (var i = 0; i < this.len; i++) {
 
-      var path = window.pen_TopSlider[i];
+      var path = imgList[this.index][i];
       var img = new Img(this.stage, i, this.len, this.$wrap, path)
       this.imgs.push(img);
     }
