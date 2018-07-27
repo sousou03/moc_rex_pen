@@ -14,7 +14,7 @@ gulp.task('webpack', ()=>{
             .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
             .pipe(webpack(require('../../_setting/webpack.config.js')))
             .pipe(gulp.dest(PATH.dist.js + 'unconcat/'))
-    
+
 });
 
 // ------------------------------------------------------------
@@ -45,5 +45,23 @@ gulp.task('bundleJS', ['webpack'], ()=>{
           .pipe(gulp.dest(PATH.dist.js))
 
     }
+
+});
+
+
+gulp.task('bundlePENJS', ['webpack'], ()=>{
+
+    var argv = minimist(process.argv.slice(2));
+
+    var src = [
+                  PATH.dist.js + 'unconcat/PENlibs.js',
+                  PATH.dist.js + 'unconcat/main.js',
+              ]
+
+    gulp.src(src)
+        .pipe(plumber())
+        .pipe(concat('PENbundle.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(PATH.dist.js))
 
 });
