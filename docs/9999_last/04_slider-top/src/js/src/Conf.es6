@@ -10,9 +10,9 @@ export default class Conf {
 
     // ------------------------------------------------------------
     //  本番フラグ
-    // ------------------------------------------------------------    
-    // this.RELEASE = true;
-    this.RELEASE = false;
+    // ------------------------------------------------------------
+     this.RELEASE = true;
+    //this.RELEASE = false;
 
     // ------------------------------------------------------------
     //  フラグ関連
@@ -31,7 +31,7 @@ export default class Conf {
     this.isResizeMgr = true;
     this.isScrollMgr = true;
     this.isMouseMgr = true;
-  
+
     if (this.RELEASE) {
       this.LOG = false;
       this.PARAM = false;
