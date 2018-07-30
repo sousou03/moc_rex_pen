@@ -6,6 +6,7 @@
 
 import Base from './Util/Base.es6';
 import * as m from './Util/Math/index.es6';
+import Position from './Util/Position.es6';
 
 import SliderImg from './SliderImg/Controller.es6';
 import SpanText from './SpanText/Controller.es6';
@@ -31,16 +32,17 @@ export default class Controller extends Base {
 
     this.isUEv = true;
     this.isREv = true;
+    this.isLock2 = false;
 
     // slider
     this.s = new SliderImg(this.$wrap, 'cv'+this.index, this.index);
     this.slider = this.s.slider;
 
     this.sts = [];
-    var $target = this.$wrap.find('.sliderContents');
+    this.$target = this.$wrap.find('.sliderContents');
 
-    for (var i = 0; i < $target.length; i++) {
-      var $sc = $target.eq(i);
+    for (var i = 0; i <this. $target.length; i++) {
+      var $sc =this. $target.eq(i);
       var st = new SpanText($sc.find('.text'), $sc.find('.subtext .inner'), $sc.find('.tag .inner'), $sc.find('.more .inner'));
       this.sts.push(st);
     }
@@ -48,7 +50,7 @@ export default class Controller extends Base {
     // indicator   
     this.$indicator = this.$wrap.find('.indicator');
     var html = '';
-    for (var i = 0; i < $target.length; i++) {
+    for (var i = 0; i <this. $target.length; i++) {
       html += '<div class="item"></div>';
     }
     this.$indicator.append(html);
@@ -58,11 +60,33 @@ export default class Controller extends Base {
     // variable
     this.index = 0;
 
-    this.timeline();
+    // position
+    this.p = new Position(this.$wrap);
+
+    // if ($target.length>1) this.on();
 
   }
 
   update() {
+
+    if (this.$target.length<=1) return;
+
+    this.p.update();
+
+    if (this.p.isStageIn&&!this.isLock2) {
+      this.isLock2 = true;
+
+      this.on();
+      log('on');
+
+    }
+    if (!this.p.isStageIn&&this.isLock2) {
+      this.isLock2 = false;
+
+      this.off();
+      log('off');
+
+    }
 
   }
 
@@ -116,6 +140,10 @@ export default class Controller extends Base {
         // indicator
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
+
+        // dom
+        this.$target.css('z-index', 1);
+        this.$target.eq(this.index).css('z-index', 2);
         
 
       }, 0.0)
@@ -167,6 +195,10 @@ export default class Controller extends Base {
         this.$item.removeClass('active')
         this.$item.eq(this.index).addClass('active');
 
+        // dom
+        this.$target.css('z-index', 1);
+        this.$target.eq(this.index).css('z-index', 2);
+
 
       }, 0.0)
       .add(()=>{
@@ -216,6 +248,18 @@ export default class Controller extends Base {
 
   }
 
+  on() {
+
+    this.timeline();
+    
+  }
+
+  off() {
+
+    this.tl.kill();
+
+  }
+
   setEvents() {
 
     super.setEvents();
@@ -232,6 +276,10 @@ export default class Controller extends Base {
     this.isLock = false;
     this.isDrag = false;
 
+    $(window).on('swipe', function(event) {
+      log('swipe');
+    });
+
     // swipe event
     this.s.onStart = ()=>{
 
@@ -247,8 +295,10 @@ export default class Controller extends Base {
 
       if (sign>0) {
         this.next();
+        $(window).trigger('swipe');
       } else {
         this.prev();
+        $(window).trigger('swipe');
       }
 
     }

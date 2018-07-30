@@ -30,9 +30,6 @@ export default class Content extends Base {
     // this.isRetina = (window.devicePixelRatio>=2)? true: false;
     this.isRetina = false;
 
-    this.w = this.$wrap.width();
-    this.h = this.$wrap.height();
-
     // canvas要素追加
     var dom = '<canvas id="'+this.id+'"></canvas>';
     this.$wrap.prepend(dom);
@@ -68,8 +65,10 @@ export default class Content extends Base {
 
   onResize() {
 
-    this.w = this.$wrap.width();
-    this.h = this.$wrap.height();
+    this.w = this.$wrap.find('.area').width();
+    this.h = this.$wrap.find('.area').height();
+    var left = this.$wrap.find('.area').css('left');
+    $(this.canvas).css('left', parseInt(left));
 
     // attribute
     this.canvas.width = this.w * window.devicePixelRatio;

@@ -59,9 +59,9 @@ export default class SpanText {
     this.$target.html(append);
 
     // log
-    log(text);
-    log(span)
-    log(append)
+    // log(text);
+    // log(span)
+    // log(append)
 
 
   }

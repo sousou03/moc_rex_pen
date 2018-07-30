@@ -261,8 +261,8 @@
 	  // ------------------------------------------------------------
 	  //  本番フラグ
 	  // ------------------------------------------------------------
-	  this.RELEASE = true;
-	  //this.RELEASE = false;
+	  // this.RELEASE = true;
+	  this.RELEASE = false;
 	
 	  // ------------------------------------------------------------
 	  //  フラグ関連
@@ -4602,19 +4602,23 @@
 	
 	var m = _interopRequireWildcard(_index);
 	
-	var _Controller = __webpack_require__(35);
+	var _Position = __webpack_require__(35);
+	
+	var _Position2 = _interopRequireDefault(_Position);
+	
+	var _Controller = __webpack_require__(36);
 	
 	var _Controller2 = _interopRequireDefault(_Controller);
 	
-	var _Controller3 = __webpack_require__(41);
+	var _Controller3 = __webpack_require__(42);
 	
 	var _Controller4 = _interopRequireDefault(_Controller3);
 	
-	var _Swipe = __webpack_require__(44);
+	var _Swipe = __webpack_require__(45);
 	
 	var _Swipe2 = _interopRequireDefault(_Swipe);
 	
-	var _MouseDrag = __webpack_require__(45);
+	var _MouseDrag = __webpack_require__(46);
 	
 	var _MouseDrag2 = _interopRequireDefault(_MouseDrag);
 	
@@ -4655,16 +4659,17 @@
 	
 	      this.isUEv = true;
 	      this.isREv = true;
+	      this.isLock2 = false;
 	
 	      // slider
 	      this.s = new _Controller2.default(this.$wrap, 'cv' + this.index, this.index);
 	      this.slider = this.s.slider;
 	
 	      this.sts = [];
-	      var $target = this.$wrap.find('.sliderContents');
+	      this.$target = this.$wrap.find('.sliderContents');
 	
-	      for (var i = 0; i < $target.length; i++) {
-	        var $sc = $target.eq(i);
+	      for (var i = 0; i < this.$target.length; i++) {
+	        var $sc = this.$target.eq(i);
 	        var st = new _Controller4.default($sc.find('.text'), $sc.find('.subtext .inner'), $sc.find('.tag .inner'), $sc.find('.more .inner'));
 	        this.sts.push(st);
 	      }
@@ -4672,7 +4677,7 @@
 	      // indicator   
 	      this.$indicator = this.$wrap.find('.indicator');
 	      var html = '';
-	      for (var i = 0; i < $target.length; i++) {
+	      for (var i = 0; i < this.$target.length; i++) {
 	        html += '<div class="item"></div>';
 	      }
 	      this.$indicator.append(html);
@@ -4682,11 +4687,32 @@
 	      // variable
 	      this.index = 0;
 	
-	      this.timeline();
+	      // position
+	      this.p = new _Position2.default(this.$wrap);
+	
+	      // if ($target.length>1) this.on();
 	    }
 	  }, {
 	    key: 'update',
-	    value: function update() {}
+	    value: function update() {
+	
+	      if (this.$target.length <= 1) return;
+	
+	      this.p.update();
+	
+	      if (this.p.isStageIn && !this.isLock2) {
+	        this.isLock2 = true;
+	
+	        this.on();
+	        log('on');
+	      }
+	      if (!this.p.isStageIn && this.isLock2) {
+	        this.isLock2 = false;
+	
+	        this.off();
+	        log('off');
+	      }
+	    }
 	  }, {
 	    key: 'timeline',
 	    value: function timeline() {
@@ -4741,6 +4767,10 @@
 	        // indicator
 	        _this3.$item.removeClass('active');
 	        _this3.$item.eq(_this3.index).addClass('active');
+	
+	        // dom
+	        _this3.$target.css('z-index', 1);
+	        _this3.$target.eq(_this3.index).css('z-index', 2);
 	      }, 0.0).add(function () {
 	
 	        // text
@@ -4789,6 +4819,10 @@
 	        // indicator
 	        _this4.$item.removeClass('active');
 	        _this4.$item.eq(_this4.index).addClass('active');
+	
+	        // dom
+	        _this4.$target.css('z-index', 1);
+	        _this4.$target.eq(_this4.index).css('z-index', 2);
 	      }, 0.0).add(function () {
 	
 	        // text
@@ -4830,6 +4864,18 @@
 	      return b;
 	    }
 	  }, {
+	    key: 'on',
+	    value: function on() {
+	
+	      this.timeline();
+	    }
+	  }, {
+	    key: 'off',
+	    value: function off() {
+	
+	      this.tl.kill();
+	    }
+	  }, {
 	    key: 'setEvents',
 	    value: function setEvents() {
 	      var _this5 = this;
@@ -4849,6 +4895,10 @@
 	      this.isLock = false;
 	      this.isDrag = false;
 	
+	      $(window).on('swipe', function (event) {
+	        log('swipe');
+	      });
+	
 	      // swipe event
 	      this.s.onStart = function () {
 	
@@ -4863,8 +4913,10 @@
 	
 	        if (sign > 0) {
 	          _this5.next();
+	          $(window).trigger('swipe');
 	        } else {
 	          _this5.prev();
+	          $(window).trigger('swipe');
 	        }
 	      };
 	      this.s.onEnd = function () {
@@ -5059,6 +5111,86 @@
 
 /***/ }),
 /* 35 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	//--------------------------------------------------
+	//
+	//  Position
+	//
+	//--------------------------------------------------
+	
+	var Position = function () {
+	  function Position($target, $bg) {
+	    _classCallCheck(this, Position);
+	
+	    this.$target = $target;
+	    this.$bg = $bg;
+	
+	    this.setup();
+	    this.setEvents();
+	  }
+	
+	  _createClass(Position, [{
+	    key: "setup",
+	    value: function setup() {
+	
+	      this.progress = 0;
+	      this.progressOld = 0;
+	      this.isStageIn = false;
+	      this.stageSize = { width: 0, height: 0 };
+	      this.offset = { left: 0, top: 0, width: 0, height: 0 };
+	      this.stageInOffset = { min: 0, max: 1 };
+	    }
+	  }, {
+	    key: "update",
+	    value: function update() {
+	
+	      var top = this.$target.offset().top - $(window).scrollTop();
+	      var h = this.$target.height();
+	
+	      // progress
+	      this.progress = 1 - (top + h) / (gb.r.h + h);
+	      var dir = this.progress - this.progressOld;
+	
+	      // in,out
+	      if (this.progress >= 0 && this.progress <= 1) {
+	        if (!this.isStageIn && this.progress > this.stageInOffset.min) {
+	          // this.in(dir);
+	          this.isStageIn = true;
+	        }
+	      } else {
+	        if (this.isStageIn) {
+	          // this.out(dir);
+	        }
+	        this.isStageIn = false;
+	      }
+	      this.progressOld = this.progress;
+	    }
+	  }, {
+	    key: "onResize",
+	    value: function onResize() {}
+	  }, {
+	    key: "setEvents",
+	    value: function setEvents() {}
+	  }]);
+	
+	  return Position;
+	}();
+	
+	exports.default = Position;
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5073,7 +5205,7 @@
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _Controller = __webpack_require__(36);
+	var _Controller = __webpack_require__(37);
 	
 	var _Controller2 = _interopRequireDefault(_Controller);
 	
@@ -5116,9 +5248,6 @@
 	      // this.isRetina = (window.devicePixelRatio>=2)? true: false;
 	      this.isRetina = false;
 	
-	      this.w = this.$wrap.width();
-	      this.h = this.$wrap.height();
-	
 	      // canvas要素追加
 	      var dom = '<canvas id="' + this.id + '"></canvas>';
 	      this.$wrap.prepend(dom);
@@ -5152,8 +5281,10 @@
 	    key: 'onResize',
 	    value: function onResize() {
 	
-	      this.w = this.$wrap.width();
-	      this.h = this.$wrap.height();
+	      this.w = this.$wrap.find('.area').width();
+	      this.h = this.$wrap.find('.area').height();
+	      var left = this.$wrap.find('.area').css('left');
+	      $(this.canvas).css('left', parseInt(left));
 	
 	      // attribute
 	      this.canvas.width = this.w * window.devicePixelRatio;
@@ -5173,7 +5304,7 @@
 	exports.default = Content;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5190,15 +5321,15 @@
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _Order = __webpack_require__(37);
+	var _Order = __webpack_require__(38);
 	
 	var _Order2 = _interopRequireDefault(_Order);
 	
-	var _Controller = __webpack_require__(38);
+	var _Controller = __webpack_require__(39);
 	
 	var _Controller2 = _interopRequireDefault(_Controller);
 	
-	var _Render = __webpack_require__(40);
+	var _Render = __webpack_require__(41);
 	
 	var _Render2 = _interopRequireDefault(_Render);
 	
@@ -5331,7 +5462,7 @@
 	exports.default = Controller;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -5484,7 +5615,7 @@
 	exports.default = Order;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5499,7 +5630,7 @@
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _Img = __webpack_require__(39);
+	var _Img = __webpack_require__(40);
 	
 	var _Img2 = _interopRequireDefault(_Img);
 	
@@ -5586,7 +5717,7 @@
 	exports.default = Bubble;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5643,6 +5774,9 @@
 	      this.isREv = true;
 	      this.isLoad = false;
 	
+	      this.w = this.$wrap.find('.area').width();
+	      this.h = this.$wrap.find('.area').height();
+	
 	      // ready
 	      this.ready();
 	    }
@@ -5677,8 +5811,8 @@
 	      this.bmp.scaleY = 1;
 	
 	      // pos
-	      this.container.x = this.$wrap.width() / 2 - this.imgw / 2;
-	      this.container.y = this.$wrap.height() / 2 - this.imgh / 2;
+	      this.container.x = this.w / 2 - this.imgw / 2;
+	      this.container.y = this.h / 2 - this.imgh / 2;
 	
 	      // op
 	      this.inner.alpha = 0;
@@ -5704,8 +5838,8 @@
 	      // if (!this.isLoad) return;
 	
 	      // pos
-	      // this.container.x = this.$wrap.width()/2 - this.imgw / 2;
-	      // this.container.y = this.$wrap.height()/2 - this.imgh / 2;
+	      // this.container.x = this.w/2 - this.imgw / 2;
+	      // this.container.y = this.h/2 - this.imgh / 2;
 	
 	    }
 	  }, {
@@ -5721,23 +5855,26 @@
 	    key: 'onResize',
 	    value: function onResize() {
 	
-	      this.ratioW = this.$wrap.height() / this.$wrap.width();
+	      this.w = this.$wrap.find('.area').width();
+	      this.h = this.$wrap.find('.area').height();
+	
+	      this.ratioW = this.h / this.w;
 	      this.ratio = this.imgh / this.imgw;
 	
 	      // pos
-	      this.container.x = this.$wrap.width() / 2 - this.imgw / 2;
-	      this.container.y = this.$wrap.height() / 2 - this.imgh / 2;
+	      this.container.x = this.w / 2 - this.imgw / 2;
+	      this.container.y = this.h / 2 - this.imgh / 2;
 	
 	      // size cover
 	      if (this.ratioW > this.ratio) {
 	
-	        var scale = this.$wrap.height() / this.imgh * 1.01;
+	        var scale = this.h / this.imgh * 1.01;
 	
 	        this.bmp.scaleX = scale;
 	        this.bmp.scaleY = scale;
 	      } else if (this.ratioW <= this.ratio) {
 	
-	        var scale = this.$wrap.width() / this.imgw * 1.01;
+	        var scale = this.w / this.imgw * 1.01;
 	
 	        this.bmp.scaleX = scale;
 	        this.bmp.scaleY = scale;
@@ -5751,7 +5888,7 @@
 	exports.default = Line;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5947,7 +6084,7 @@
 	exports.default = Render;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5962,11 +6099,11 @@
 	//
 	//--------------------------------------------------
 	
-	var _SetSpan = __webpack_require__(42);
+	var _SetSpan = __webpack_require__(43);
 	
 	var _SetSpan2 = _interopRequireDefault(_SetSpan);
 	
-	var _index = __webpack_require__(43);
+	var _index = __webpack_require__(44);
 	
 	var a = _interopRequireWildcard(_index);
 	
@@ -6191,7 +6328,7 @@
 	exports.default = SpanText;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -6264,9 +6401,10 @@
 	      this.$target.html(append);
 	
 	      // log
-	      log(text);
-	      log(span);
-	      log(append);
+	      // log(text);
+	      // log(span)
+	      // log(append)
+	
 	    }
 	  }, {
 	    key: 'setEvents',
@@ -6279,7 +6417,7 @@
 	exports.default = SpanText;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -6320,7 +6458,7 @@
 	}
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -6447,7 +6585,7 @@
 	exports.default = Swipe;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 	'use strict';

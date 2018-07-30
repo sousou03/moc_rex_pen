@@ -31,6 +31,9 @@ export default class Line extends Base {
     this.isREv = true;
     this.isLoad = false;
 
+    this.w = this.$wrap.find('.area').width();
+    this.h = this.$wrap.find('.area').height();
+
     // ready
     this.ready();
 
@@ -66,8 +69,8 @@ export default class Line extends Base {
     this.bmp.scaleY = 1;
 
     // pos
-    this.container.x = this.$wrap.width()/2 - this.imgw / 2;
-    this.container.y = this.$wrap.height()/2 - this.imgh / 2;
+    this.container.x = this.w/2 - this.imgw / 2;
+    this.container.y = this.h/2 - this.imgh / 2;
 
     // op
     this.inner.alpha = 0;
@@ -93,8 +96,8 @@ export default class Line extends Base {
     // if (!this.isLoad) return;
 
     // pos
-    // this.container.x = this.$wrap.width()/2 - this.imgw / 2;
-    // this.container.y = this.$wrap.height()/2 - this.imgh / 2;
+    // this.container.x = this.w/2 - this.imgw / 2;
+    // this.container.y = this.h/2 - this.imgh / 2;
 
   }
 　
@@ -112,24 +115,27 @@ export default class Line extends Base {
 
   onResize() {
 
-    this.ratioW = this.$wrap.height() / this.$wrap.width();
+    this.w = this.$wrap.find('.area').width();
+    this.h = this.$wrap.find('.area').height();
+
+    this.ratioW = this.h / this.w;
     this.ratio = this.imgh / this.imgw;
 
     // pos
-    this.container.x = this.$wrap.width() / 2 - this.imgw / 2;
-    this.container.y = this.$wrap.height() / 2 - this.imgh / 2;
+    this.container.x = this.w / 2 - this.imgw / 2;
+    this.container.y = this.h / 2 - this.imgh / 2;
 
     // size cover
     if (this.ratioW > this.ratio) {
 
-      var scale = this.$wrap.height() / this.imgh * 1.01;
+      var scale = this.h / this.imgh * 1.01;
 
       this.bmp.scaleX = scale;
       this.bmp.scaleY = scale;
 
     } else if ( this.ratioW <= this.ratio) {
 
-      var scale = this.$wrap.width() / this.imgw * 1.01;
+      var scale = this.w / this.imgw * 1.01;
 
       this.bmp.scaleX = scale;
       this.bmp.scaleY = scale;
