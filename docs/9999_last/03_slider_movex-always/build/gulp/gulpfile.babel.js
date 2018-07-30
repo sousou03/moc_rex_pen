@@ -30,7 +30,7 @@ gulp.task('watch', ()=>{
     gulp.watch(PATH.dist.css + '**/*.css').on('change', reload);
     gulp.watch(PATH.dist.root + '**/*.html').on('change', reload);
     gulp.watch(PATH.dist.js + '**/*.js').on('change', reload);
-    
+
 });
 
 //--------------------------------------------------
@@ -44,5 +44,6 @@ gulp.task('default', [
                         'compileHTML',
                         'compileSCSS',
                         'concatJSLibs','bundleJS',
+                        'PENconcatJSLibs','PENbundleJS',
                         'browserDist'
                     ]);

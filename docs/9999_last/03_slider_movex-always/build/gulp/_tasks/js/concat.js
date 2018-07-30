@@ -26,3 +26,18 @@ gulp.task('concatJSLibs', ()=>{
         .pipe(gulp.dest(PATH.dist.js + 'unconcat/'));
 
 });
+
+gulp.task('PENconcatJSLibs', ()=>{
+
+    var src = [
+                PATH.src.js + 'libs/util/Stats.js',
+              ]
+
+    gulp.src(src)
+        .pipe(plumber())
+        .pipe(concat('PENlibs.js'))
+        // .pipe(gulp.dest(PATH.dist.js));
+        // .pipe(gulp.dest(PATH.dist.js + 'common/'));
+        .pipe(gulp.dest(PATH.dist.js + 'unconcat/'));
+
+});
