@@ -180,7 +180,7 @@ export default class Controller extends Base {
     var len = this.$item.length;
 
     this.wrapw = window.innerWidth - 50;
-    if (window.innerWidth<500) {
+    if (window.innerWidth<=500&&!this.isDeviceSP()) {
       this.wrapw = window.innerWidth;
       padding = 0;
       margin = 0;
@@ -188,7 +188,7 @@ export default class Controller extends Base {
     this.innerw = this.w * len + margin * (len - 1)
     this.dis = this.innerw - this.wrapw + padding + marginLeft;
 
-    if (window.innerWidth<=500) this.tarx = 0;
+    if (window.innerWidth<=500&&!this.isDeviceSP()) this.tarx = 0;
 
   }
 

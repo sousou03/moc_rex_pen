@@ -261,8 +261,8 @@
 	  // ------------------------------------------------------------
 	  //  本番フラグ
 	  // ------------------------------------------------------------
-	  this.RELEASE = true;
-	  // this.RELEASE = false;
+	  // this.RELEASE = true;
+	  this.RELEASE = false;
 	
 	  // ------------------------------------------------------------
 	  //  フラグ関連
@@ -4892,7 +4892,7 @@
 	      var len = this.$item.length;
 	
 	      this.wrapw = window.innerWidth - 50;
-	      if (window.innerWidth < 500) {
+	      if (window.innerWidth <= 500 && !this.isDeviceSP()) {
 	        this.wrapw = window.innerWidth;
 	        padding = 0;
 	        margin = 0;
@@ -4900,7 +4900,7 @@
 	      this.innerw = this.w * len + margin * (len - 1);
 	      this.dis = this.innerw - this.wrapw + padding + marginLeft;
 	
-	      if (window.innerWidth <= 500) this.tarx = 0;
+	      if (window.innerWidth <= 500 && !this.isDeviceSP()) this.tarx = 0;
 	    }
 	  }, {
 	    key: 'isDeviceSP',
