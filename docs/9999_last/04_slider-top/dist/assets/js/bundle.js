@@ -4964,7 +4964,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      };
 	      this.s.onMove = function (sign, val) {
 	
-	        if (!_this5.isDrag || val < 10) return;
+	        if (!_this5.isDrag || val < 30) return;
 	        if (_this5.isTimeline) return;
 	        _this5.isTimeline = true;
 	        _this5.isDrag = false; // 連続でさせるなら、ここをコメントアウト
