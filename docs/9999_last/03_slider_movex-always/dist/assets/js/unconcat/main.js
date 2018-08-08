@@ -4822,14 +4822,14 @@
 	
 	      if (this.tarx !== 0 && this.tarx !== -this.dis && this.isLock2) {
 	        this.isLock2 = false;
-	        this.$arrow.find('.inner').removeClass('edge');
+	        this.$arrow.removeClass('edge');
 	      }
 	      if (this.tarx == 0 && !this.isLock2) {
-	        this.$arrow.eq(0).find('.inner').addClass('edge');
+	        this.$arrow.eq(0).addClass('edge');
 	        this.isLock2 = true;
 	      }
 	      if (this.tarx == -this.dis && !this.isLock2) {
-	        this.$arrow.eq(1).find('.inner').addClass('edge');
+	        this.$arrow.eq(1).addClass('edge');
 	        this.isLock2 = true;
 	      }
 	

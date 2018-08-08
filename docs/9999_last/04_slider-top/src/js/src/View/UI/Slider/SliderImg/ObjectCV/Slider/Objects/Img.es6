@@ -49,7 +49,7 @@ export default class Line extends Base {
   }
 
   add() {
-
+    $(window).trigger("sliderImgLoad",[this.$wrap,this.index]);
     // layer, object
     this.container = new createjs.Container();
     this.inner = new createjs.Container();
@@ -75,7 +75,7 @@ export default class Line extends Base {
     // op
     this.inner.alpha = 0;
     if (this.index==0) this.inner.alpha = 1;
-    
+
     // add
     this.inner.addChild(this.bmp);
     this.container.addChild(this.inner);

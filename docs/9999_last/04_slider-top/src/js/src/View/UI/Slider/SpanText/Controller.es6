@@ -36,7 +36,7 @@ export default class SpanText {
 
     this.$wrap.css({
         // overflow: 'hidden',
-        cursor: 'pointer'
+        //cursor: 'pointer'
     });
 
     this.w = this.$wrap.innerWidth();
@@ -82,7 +82,7 @@ export default class SpanText {
         ease: Power2.easeInOut,
         delay: delay + Math.random() * gb.urlp.random
       });
-      
+
     });
 
     if (dir=='next') var x = 5;
@@ -96,7 +96,7 @@ export default class SpanText {
       delay: 0.5,
       ease: Power2.easeInOut,
     });
-    
+
   }
 
   hide (dir='next') {
@@ -123,7 +123,7 @@ export default class SpanText {
         ease: Power2.easeInOut,
         delay: delay + Math.random() * gb.urlp.random
       });
-      
+
     });
 
     if (dir=='next') var x = -5;
@@ -136,7 +136,7 @@ export default class SpanText {
       delay: 0.0,
       ease: Power2.easeInOut,
     });
-    
+
   }
 
   show_op (dir='next') {
@@ -152,7 +152,7 @@ export default class SpanText {
         opacity: 1,
         ease: Power1.easeOut,
       });
-      
+
     });
 
     TweenMax.set(this.$sub.add(this.$tag).add(this.$more), {x: x,});
@@ -162,7 +162,7 @@ export default class SpanText {
       z: 0,
       ease: Power1.easeOut,
     });
-    
+
   }
 
   hide_op (dir='next') {
@@ -177,7 +177,7 @@ export default class SpanText {
         opacity: 0,
         ease: Power1.easeOut,
       });
-      
+
     });
 
     TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 1.0, {
@@ -186,7 +186,7 @@ export default class SpanText {
       z: 0,
       ease: Power1.easeOut,
     });
-    
+
   }
 
   cancel() {
@@ -200,7 +200,7 @@ export default class SpanText {
       opacity: 0,
       ease: Power2.easeInOut,
     });
-      
+
     TweenMax.to(this.$sub.add(this.$tag).add(this.$more), 0.3, {
       opacity: 0,
       x: 0,
