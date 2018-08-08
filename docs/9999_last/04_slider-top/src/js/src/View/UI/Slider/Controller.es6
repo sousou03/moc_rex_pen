@@ -47,7 +47,7 @@ export default class Controller extends Base {
       this.sts.push(st);
     }
 
-    // indicator   
+    // indicator
     this.$indicator = this.$wrap.find('.indicator');
     var html = '';
     for (var i = 0; i <this. $target.length; i++) {
@@ -100,7 +100,7 @@ export default class Controller extends Base {
       .add(()=>{
 
         this.next();
-        
+
       }, 0.0)
       .add(()=>{
 
@@ -111,7 +111,9 @@ export default class Controller extends Base {
   }
 
   next(isItem=false, index) {
-
+    if (this.sts.length <=1) {
+      return;
+    }
     if (this.tl) this.tl.kill();
     this.tl = new TimelineMax();
 
@@ -132,10 +134,10 @@ export default class Controller extends Base {
           var prevIndex = this.index - 1;
           if (prevIndex<0) prevIndex = this.sts.length - 1;
           this.sts[prevIndex].cancel();
-          this.sts[this.index].cancel();  
+          this.sts[this.index].cancel();
           this.index = index;
         }
-        this.index = this.index % this.sts.length;      
+        this.index = this.index % this.sts.length;
 
         // indicator
         this.$item.removeClass('active')
@@ -144,11 +146,11 @@ export default class Controller extends Base {
         // dom
         this.$target.css('z-index', 1);
         this.$target.eq(this.index).css('z-index', 2);
-        
+
 
       }, 0.0)
       .add(()=>{
-            
+
         // text
         this.sts[this.index].show_op('next');
           // img
@@ -156,16 +158,18 @@ export default class Controller extends Base {
 
       }, 0.1)
       .add(()=>{
-            
+
         this.isTimeline = false;
         this.timeline();
 
       }, 0.3)
-    
+
   }
 
   prev(isItem=false, index) {
-
+    if (this.sts.length <=1) {
+      return;
+    }
     if (this.tl) this.tl.kill();
     this.tl = new TimelineMax();
 
@@ -202,7 +206,7 @@ export default class Controller extends Base {
 
       }, 0.0)
       .add(()=>{
-          
+
         // text
         this.sts[this.index].show_op('prev');
           // img
@@ -210,7 +214,7 @@ export default class Controller extends Base {
 
       }, 0.1)
       .add(()=>{
-          
+
         this.isTimeline = false;
         this.timeline();
 
@@ -251,7 +255,7 @@ export default class Controller extends Base {
   on() {
 
     this.timeline();
-    
+
   }
 
   off() {

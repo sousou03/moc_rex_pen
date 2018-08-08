@@ -261,8 +261,8 @@
 	  // ------------------------------------------------------------
 	  //  本番フラグ
 	  // ------------------------------------------------------------
-	  // this.RELEASE = true;
-	  this.RELEASE = false;
+	  this.RELEASE = true;
+	  // this.RELEASE = false;
 	
 	  // ------------------------------------------------------------
 	  //  フラグ関連
@@ -4674,7 +4674,7 @@
 	        this.sts.push(st);
 	      }
 	
-	      // indicator   
+	      // indicator
 	      this.$indicator = this.$wrap.find('.indicator');
 	      var html = '';
 	      for (var i = 0; i < this.$target.length; i++) {
@@ -4739,7 +4739,9 @@
 	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	      var index = arguments[1];
 	
-	
+	      if (this.sts.length <= 1) {
+	        return;
+	      }
 	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax();
 	
@@ -4791,7 +4793,9 @@
 	      var isItem = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	      var index = arguments[1];
 	
-	
+	      if (this.sts.length <= 1) {
+	        return;
+	      }
 	      if (this.tl) this.tl.kill();
 	      this.tl = new TimelineMax();
 	
@@ -5791,7 +5795,7 @@
 	  }, {
 	    key: 'add',
 	    value: function add() {
-	
+	      $(window).trigger("sliderImgLoad", [this.$wrap, this.index]);
 	      // layer, object
 	      this.container = new createjs.Container();
 	      this.inner = new createjs.Container();
@@ -6140,7 +6144,7 @@
 	
 	      this.$wrap.css({
 	        // overflow: 'hidden',
-	        cursor: 'pointer'
+	        //cursor: 'pointer'
 	      });
 	
 	      this.w = this.$wrap.innerWidth();
