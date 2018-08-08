@@ -4793,7 +4793,7 @@
 	      this.s.onMove = function (sign, val) {
 	
 	        if (!_this2.isDrag) return;
-	        if (val < 10 || _this2.isLock) return;
+	        if (val < 30 || _this2.isLock) return;
 	        _this2.isLock = true;
 	        if (sign > 0) {
 	          _this2.next();

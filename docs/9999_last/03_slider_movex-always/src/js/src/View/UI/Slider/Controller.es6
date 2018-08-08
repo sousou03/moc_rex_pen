@@ -73,7 +73,7 @@ export default class Controller extends Base {
 
 
       if (!this.isDrag) return;
-      if (val<10||this.isLock) return;
+      if (val<30||this.isLock) return;
       this.isLock = true;
       if (sign>0) {
         this.next();
