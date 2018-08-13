@@ -292,7 +292,7 @@ export default class Controller extends Base {
     }
     this.s.onMove = (sign, val)=>{
 
-      if (!this.isDrag||val<30) return;
+      if (!this.isDrag||val<120) return;
       if (this.isTimeline) return;
       this.isTimeline = true;
       this.isDrag = false; // 連続でさせるなら、ここをコメントアウト

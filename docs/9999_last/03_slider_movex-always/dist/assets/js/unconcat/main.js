@@ -5152,7 +5152,6 @@
 	      // // スワイプ中にゆらゆらするのを止める
 	      var maxX = 5;
 	      var maxY = 20;
-	      log(disX, Math.abs(disX) > maxX, 'preventX');
 	      if (Math.abs(disX) > maxX) {
 	        e.preventDefault();
 	      }
