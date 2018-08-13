@@ -4809,22 +4809,18 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	  _createClass(Controller, [{
 	    key: 'setup',
 	    value: function setup() {
-	      var _this2 = this;
 	
-	      var padding = 50;
+	      var padding = parseInt(this.$inner.css('padding-left'));
 	      var margin = 5;
 	      var marginLeft = parseInt(this.$inner.css('margin-left'));
-	      this.w = this.$item.width();
+	      this.w = this.$item.width() + margin;
 	      var len = this.$item.length;
 	
-	      this.wrapw = window.innerWidth - 50;
-	      if (window.innerWidth < 500) {
-	        this.wrapw = window.innerWidth;
-	        padding = 0;
-	        margin = 0;
-	      }
-	      this.innerw = this.w * len + margin * (len - 1);
-	      this.dis = this.innerw - this.wrapw + padding + marginLeft;
+	      this.wrapw = window.innerWidth;
+	      var dis = padding + margin;
+	      if (window.innerWidth < 1024) dis = this.wrapw - this.w;
+	      this.innerw = (this.w - margin) * len + margin * (len - 1);
+	      this.dis = this.innerw - (this.wrapw - marginLeft - dis);
 	
 	      this.x = 0;
 	      this.tarx = 0;
@@ -4834,31 +4830,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.cnt = 0;
 	      this.isLock = false;
 	      this.isDrag = false;
-	
-	      // swipe
-	      if (this.isDeviceSP()) this.s = new _Swipe2.default(this.$wrap);else this.s = new _MouseDrag2.default(this.$wrap);
-	
-	      // swipe event
-	      this.s.onStart = function () {
-	
-	        _this2.isDrag = true;
-	      };
-	      this.s.onMove = function (sign, val) {
-	
-	        if (!_this2.isDrag) return;
-	        if (val < 30 || _this2.isLock) return;
-	        _this2.isLock = true;
-	        if (sign > 0) {
-	          _this2.next();
-	        } else {
-	          _this2.prev();
-	        }
-	      };
-	      this.s.onEnd = function () {
-	
-	        _this2.isDrag = false;
-	      };
-	      this.s.onSwipe = function (sign) {};
 	    }
 	  }, {
 	    key: 'update',
@@ -4911,26 +4882,24 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	  }, {
 	    key: 'next',
 	    value: function next() {
-	      var _this3 = this;
 	
 	      TweenMax.to(this, 0.4, {
 	        tarx: '+=' + -this.w,
 	        ease: Expo.easeOut,
 	        onComplete: function onComplete() {
-	          _this3.isLock = false;
+	          // this.isLock = false;
 	        }
 	      });
 	    }
 	  }, {
 	    key: 'prev',
 	    value: function prev() {
-	      var _this4 = this;
 	
 	      TweenMax.to(this, 0.4, {
 	        tarx: '+=' + this.w,
 	        ease: Expo.easeOut,
 	        onComplete: function onComplete() {
-	          _this4.isLock = false;
+	          // this.isLock = false;
 	        }
 	      });
 	    }
@@ -4938,20 +4907,17 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    key: 'onResize',
 	    value: function onResize() {
 	
-	      var padding = 50;
+	      var padding = parseInt(this.$inner.css('padding-left'));
 	      var margin = 5;
 	      var marginLeft = parseInt(this.$inner.css('margin-left'));
-	      this.w = this.$item.width();
+	      this.w = this.$item.width() + margin;
 	      var len = this.$item.length;
 	
-	      this.wrapw = window.innerWidth - 50;
-	      if (window.innerWidth <= 500 && !this.isDeviceSP()) {
-	        this.wrapw = window.innerWidth;
-	        padding = 0;
-	        margin = 0;
-	      }
-	      this.innerw = this.w * len + margin * (len - 1);
-	      this.dis = this.innerw - this.wrapw + padding + marginLeft;
+	      this.wrapw = window.innerWidth;
+	      var dis = padding + margin;
+	      if (window.innerWidth < 1024) dis = this.wrapw - this.w;
+	      this.innerw = (this.w - margin) * len + margin * (len - 1);
+	      this.dis = this.innerw - (this.wrapw - marginLeft - dis);
 	
 	      if (window.innerWidth <= 500 && !this.isDeviceSP()) this.tarx = 0;
 	    }
@@ -4970,6 +4936,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	  }, {
 	    key: 'setEvents',
 	    value: function setEvents() {
+	      var _this2 = this;
 	
 	      var self = this;
 	
@@ -4979,6 +4946,33 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.$wrap.on('mouseleave', this.hide.bind(this));
 	      this.$arrow.eq(0).on('click', this.prev.bind(this));
 	      this.$arrow.eq(1).on('click', this.next.bind(this));
+	
+	      // swipe
+	      if (this.isDeviceSP()) this.s = new _Swipe2.default(this.$wrap);else this.s = new _MouseDrag2.default(this.$wrap);
+	
+	      // swipe event
+	      this.s.onStart = function () {
+	
+	        _this2.isDrag = true;
+	      };
+	      this.s.onMove = function (sign, val) {
+	
+	        if (!_this2.isDrag) return;
+	        if (val < 120 || _this2.isLock) return;
+	        _this2.isLock = true;
+	        if (sign > 0) {
+	          _this2.next();
+	        } else {
+	          _this2.prev();
+	        }
+	      };
+	      this.s.onEnd = function () {
+	
+	        _this2.isDrag = false;
+	
+	        _this2.isLock = false;
+	      };
+	      this.s.onSwipe = function (sign) {};
 	    }
 	  }]);
 	
@@ -5154,7 +5148,10 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	    // position
 	    this.sX = 0;this.mX = 0;this.eX = 0; //startX,moveX,endX
+	    this.sY = 0;this.mY = 0;this.eY = 0; //startX,moveX,endX
 	    this.dis = 0;this.minDis = 50;
+	    this.premX = 0;
+	    this.premY = 0;
 	
 	    // time
 	    this.sT = 0;this.eT = 0;this.minT = 300; //startTime,ellapsedTime,
@@ -5180,6 +5177,9 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.sT = new Date().getTime();
 	      // pos
 	      this.sX = e.originalEvent.changedTouches[0].pageX;
+	      this.sY = e.originalEvent.changedTouches[0].pageY;
+	      this.premX = this.sX;
+	      this.premY = this.sY;
 	
 	      // コールバック
 	      this.onStart();
@@ -5190,11 +5190,29 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      // pos
 	      this.mX = e.originalEvent.changedTouches[0].pageX;
+	      this.mY = e.originalEvent.changedTouches[0].pageY;
 	      var dis = this.sX - this.mX;
 	      var sign = 1;
 	      if (dis < 0) sign = -1;
 	
 	      this.onMove(sign, Math.abs(dis));
+	
+	      var disX = this.premX - this.mX;
+	      var disY = this.premY - this.mY;
+	      this.premX = this.mX;
+	      this.premY = this.mY;
+	
+	      // // スワイプ中にゆらゆらするのを止める
+	      var maxX = 5;
+	      var maxY = 20;
+	      log(disX, Math.abs(disX) > maxX, 'preventX');
+	      if (Math.abs(disX) > maxX) {
+	        e.preventDefault();
+	      }
+	      // log(disY, Math.abs(disY)>maxY, 'preventY')
+	      // if (Math.abs(disY)>maxY) {
+	      //     e.preventDefault()
+	      // }
 	    }
 	  }, {
 	    key: 'onTouchEnd',

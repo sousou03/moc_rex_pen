@@ -19,7 +19,10 @@ export default class Swipe {
 
     // position
     this.sX = 0;this.mX = 0;this.eX = 0; //startX,moveX,endX
+    this.sY = 0;this.mY = 0;this.eY = 0; //startX,moveX,endX
     this.dis = 0;this.minDis = 50;
+    this.premX = 0;
+    this.premY = 0;
 
     // time
     this.sT=0;this.eT=0;this.minT = 300; //startTime,ellapsedTime,
@@ -45,6 +48,9 @@ export default class Swipe {
     this.sT = (new Date).getTime();
     // pos
     this.sX = e.originalEvent.changedTouches[0].pageX;
+    this.sY = e.originalEvent.changedTouches[0].pageY;
+    this.premX = this.sX;
+    this.premY = this.sY;
 
     // コールバック
     this.onStart();
@@ -55,11 +61,29 @@ export default class Swipe {
 
     // pos
     this.mX = e.originalEvent.changedTouches[0].pageX;
+    this.mY = e.originalEvent.changedTouches[0].pageY;
     var dis = this.sX - this.mX;
     var sign = 1;
     if (dis<0) sign = -1;
 
     this.onMove(sign, Math.abs(dis));
+
+    var disX = this.premX - this.mX;
+    var disY = this.premY - this.mY;
+    this.premX = this.mX;
+    this.premY = this.mY;
+
+    // // スワイプ中にゆらゆらするのを止める
+    var maxX = 5;
+    var maxY = 20;
+    log(disX, Math.abs(disX)>maxX, 'preventX')
+    if (Math.abs(disX)>maxX) {
+        e.preventDefault()
+    }
+    // log(disY, Math.abs(disY)>maxY, 'preventY')
+    // if (Math.abs(disY)>maxY) {
+    //     e.preventDefault()
+    // }
 
   }
 

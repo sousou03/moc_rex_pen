@@ -34,20 +34,17 @@ export default class Controller extends Base {
 
   setup() {
 
-    var padding = 50;
+    var padding = parseInt(this.$inner.css('padding-left'));
     var margin = 5;
     var marginLeft = parseInt(this.$inner.css('margin-left'));
-    this.w = this.$item.width();
+    this.w = this.$item.width() + margin;
     var len = this.$item.length;
 
-    this.wrapw = window.innerWidth - 50;
-    if (window.innerWidth<500) {
-      this.wrapw = window.innerWidth;
-      padding = 0;
-      margin = 0;
-    }
-    this.innerw = this.w * len + margin * (len - 1)
-    this.dis = this.innerw - this.wrapw + padding + marginLeft;
+    this.wrapw = window.innerWidth;
+    var dis = padding + margin;
+    if (window.innerWidth<1024) dis = this.wrapw - this.w;
+    this.innerw = (this.w - margin) * len + margin * (len - 1)
+    this.dis = this.innerw - (this.wrapw - marginLeft - dis);
 
     this.x = 0;
     this.tarx = 0;
@@ -57,41 +54,6 @@ export default class Controller extends Base {
     this.cnt = 0;
     this.isLock = false;
     this.isDrag = false;
-
-    // swipe
-    if (this.isDeviceSP()) this.s = new Swipe(this.$wrap);
-    else this.s = new MouseDrag(this.$wrap);
-
-
-    // swipe event
-    this.s.onStart = ()=>{
-
-      this.isDrag = true;
-
-    }
-    this.s.onMove = (sign, val)=>{
-
-
-      if (!this.isDrag) return;
-      if (val<30||this.isLock) return;
-      this.isLock = true;
-      if (sign>0) {
-        this.next();
-      } else {
-        this.prev();
-      }
-
-    }
-    this.s.onEnd = ()=>{
-
-      this.isDrag = false;
-
-    }
-    this.s.onSwipe = (sign)=>{
-
-
-    }
-
 
   }
 
@@ -152,7 +114,7 @@ export default class Controller extends Base {
         tarx: '+=' + - this.w,
         ease: Expo.easeOut,
         onComplete: ()=>{
-          this.isLock = false;
+          // this.isLock = false;
         }
       })
 
@@ -165,7 +127,7 @@ export default class Controller extends Base {
         tarx: '+=' + this.w,
         ease: Expo.easeOut,
         onComplete: ()=>{
-          this.isLock = false;
+          // this.isLock = false;
         }
       })
 
@@ -173,20 +135,17 @@ export default class Controller extends Base {
 
   onResize() {
 
-    var padding = 50;
+    var padding = parseInt(this.$inner.css('padding-left'));
     var margin = 5;
     var marginLeft = parseInt(this.$inner.css('margin-left'));
-    this.w = this.$item.width();
+    this.w = this.$item.width() + margin;
     var len = this.$item.length;
 
-    this.wrapw = window.innerWidth - 50;
-    if (window.innerWidth<=500&&!this.isDeviceSP()) {
-      this.wrapw = window.innerWidth;
-      padding = 0;
-      margin = 0;
-    }
-    this.innerw = this.w * len + margin * (len - 1)
-    this.dis = this.innerw - this.wrapw + padding + marginLeft;
+    this.wrapw = window.innerWidth;
+    var dis = padding + margin;
+    if (window.innerWidth<1024) dis = this.wrapw - this.w;
+    this.innerw = (this.w - margin) * len + margin * (len - 1)
+    this.dis = this.innerw - (this.wrapw - marginLeft - dis);
 
     if (window.innerWidth<=500&&!this.isDeviceSP()) this.tarx = 0;
 
@@ -214,6 +173,42 @@ export default class Controller extends Base {
     this.$wrap.on('mouseleave', this.hide.bind(this));
     this.$arrow.eq(0).on('click', this.prev.bind(this));
     this.$arrow.eq(1).on('click', this.next.bind(this));
+
+    // swipe
+    if (this.isDeviceSP()) this.s = new Swipe(this.$wrap);
+    else this.s = new MouseDrag(this.$wrap);
+
+    // swipe event
+    this.s.onStart = ()=>{
+
+      this.isDrag = true;
+
+    }
+    this.s.onMove = (sign, val)=>{
+
+
+      if (!this.isDrag) return;
+      if (val<120||this.isLock) return;
+      this.isLock = true;
+      if (sign>0) {
+        this.next();
+      } else {
+        this.prev();
+      }
+
+    }
+    this.s.onEnd = ()=>{
+
+      this.isDrag = false;
+
+      this.isLock = false;
+
+    }
+    this.s.onSwipe = (sign)=>{
+
+
+    }
+
 
   }
 
