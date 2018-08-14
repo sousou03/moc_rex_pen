@@ -4837,14 +4837,16 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      this.isShowResize = false;
 	
-	      log(this.imgLen, this.$wrap.find('.lazyloaded').length);
-	      log(this.dis);
+	      console.log(this.imgLen, this.$wrap.find('.lazyloaded').length);
+	      console.log(this.dis);
 	    }
 	  }, {
 	    key: 'update',
 	    value: function update() {
 	
-	      // log(this.imgLen,this.$wrap.find('.lazyloaded').length);
+	      console.log('test');
+	
+	      // console.log(this.imgLen,this.$wrap.find('.lazyloaded').length);
 	      if (!this.isShowResize && this.imgLen == this.$wrap.find('.lazyloaded').length) {
 	        this.isShowResize = true;
 	        this.onResize();
@@ -4936,8 +4938,8 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	
 	      if (window.innerWidth <= 500 && !this.isDeviceSP()) this.tarx = 0;
 	
-	      log(this.imgLen, this.$wrap.find('.lazyloaded').length);
-	      log(this.dis);
+	      console.log(this.imgLen, this.$wrap.find('.lazyloaded').length);
+	      console.log(this.dis);
 	    }
 	  }, {
 	    key: 'isDeviceSP',

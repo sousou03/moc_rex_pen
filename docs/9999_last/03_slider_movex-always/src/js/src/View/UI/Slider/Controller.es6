@@ -61,14 +61,16 @@ export default class Controller extends Base {
     
     this.isShowResize = false;
 
-    log(this.imgLen,this.$wrap.find('.lazyloaded').length);
-    log(this.dis);
+    console.log(this.imgLen,this.$wrap.find('.lazyloaded').length);
+    console.log(this.dis);
 
   }
 
   update() {
 
-    // log(this.imgLen,this.$wrap.find('.lazyloaded').length);
+    console.log('test');
+
+    // console.log(this.imgLen,this.$wrap.find('.lazyloaded').length);
     if (!this.isShowResize&&this.imgLen==this.$wrap.find('.lazyloaded').length) {
       this.isShowResize = true;
       this.onResize();
@@ -164,8 +166,8 @@ export default class Controller extends Base {
 
     if (window.innerWidth<=500&&!this.isDeviceSP()) this.tarx = 0;
 
-    log(this.imgLen,this.$wrap.find('.lazyloaded').length);
-    log(this.dis);
+    console.log(this.imgLen,this.$wrap.find('.lazyloaded').length);
+    console.log(this.dis);
 
   }
 
