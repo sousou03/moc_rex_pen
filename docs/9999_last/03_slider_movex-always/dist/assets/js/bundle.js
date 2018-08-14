@@ -4683,9 +4683,9 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	    key: 'setup',
 	    value: function setup() {
 	
-	      $('.slider').each(function (index, el) {
+	      $('.sliderSub').each(function (index, el) {
 	
-	        new _Controller2.default($(el));
+	        new _Controller2.default($(el), index);
 	      });
 	    }
 	  }, {
@@ -4782,7 +4782,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	var Controller = function (_Base) {
 	  _inherits(Controller, _Base);
 	
-	  function Controller($wrap) {
+	  function Controller($wrap, index) {
 	    _classCallCheck(this, Controller);
 	
 	    var _this = _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).call(this));
@@ -4814,7 +4814,8 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      var margin = 5;
 	      var marginLeft = parseInt(this.$inner.css('margin-left'));
 	      this.w = this.$item.width() + margin;
-	      var len = this.$item.length;
+	      var notCount = this.$inner.find('.notItem').length;
+	      var len = this.$item.length - notCount;
 	
 	      this.wrapw = window.innerWidth;
 	      var dis = padding + margin;
@@ -4831,26 +4832,11 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.isLock = false;
 	      this.isDrag = false;
 	
-	      this.$imgWrap = this.$wrap.find('.u-lazyImage');
-	      this.$img = this.$imgWrap.find('img');
-	      this.imgLen = this.$imgWrap.length;
-	
 	      this.isShowResize = false;
-	
-	      console.log(this.imgLen, this.$wrap.find('.lazyloaded').length);
-	      console.log(this.dis);
 	    }
 	  }, {
 	    key: 'update',
 	    value: function update() {
-	
-	      console.log('test');
-	
-	      // console.log(this.imgLen,this.$wrap.find('.lazyloaded').length);
-	      if (!this.isShowResize && this.imgLen == this.$wrap.find('.lazyloaded').length) {
-	        this.isShowResize = true;
-	        this.onResize();
-	      }
 	
 	      // max
 	      // min
@@ -4928,7 +4914,8 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      var margin = 5;
 	      var marginLeft = parseInt(this.$inner.css('margin-left'));
 	      this.w = this.$item.width() + margin;
-	      var len = this.$item.length;
+	      var notCount = this.$inner.find('.notItem').length;
+	      var len = this.$item.length - notCount;
 	
 	      this.wrapw = window.innerWidth;
 	      var dis = padding + margin;
@@ -4937,9 +4924,6 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.dis = this.innerw - (this.wrapw - marginLeft - dis);
 	
 	      if (window.innerWidth <= 500 && !this.isDeviceSP()) this.tarx = 0;
-	
-	      console.log(this.imgLen, this.$wrap.find('.lazyloaded').length);
-	      console.log(this.dis);
 	    }
 	  }, {
 	    key: 'isDeviceSP',

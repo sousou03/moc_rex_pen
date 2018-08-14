@@ -4522,7 +4522,7 @@
 	      // ------------------------------------------------------------
 	      //  ui
 	      // ------------------------------------------------------------
-	      var $wrap = $('.slider');
+	      var $wrap = $('.sliderMain');
 	      $wrap.each(function (index, el) {
 	
 	        new _Controller2.default($(el), index);

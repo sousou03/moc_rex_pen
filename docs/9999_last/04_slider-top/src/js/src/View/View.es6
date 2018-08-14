@@ -42,7 +42,7 @@ export default class ViewCommon extends Base {
     // ------------------------------------------------------------
     //  ui
     // ------------------------------------------------------------
-    var $wrap = $('.slider');
+    var $wrap = $('.sliderMain');
     $wrap.each((index, el)=>{
 
       new Slider($(el), index);

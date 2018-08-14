@@ -62,7 +62,7 @@ gulp.task('PENbundleJS', ['webpack'], ()=>{
 
     gulp.src(src)
         .pipe(plumber())
-        .pipe(concat('PENbundle.js'))
+        .pipe(concat('slider_x.js'))
         .pipe(uglify())
         .pipe(gulp.dest(PATH.dist.js))
 

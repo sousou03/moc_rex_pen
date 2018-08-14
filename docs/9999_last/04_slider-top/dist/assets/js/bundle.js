@@ -4576,7 +4576,7 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      // ------------------------------------------------------------
 	      //  ui
 	      // ------------------------------------------------------------
-	      var $wrap = $('.slider');
+	      var $wrap = $('.sliderMain');
 	      $wrap.each(function (index, el) {
 	
 	        new _Controller2.default($(el), index);
