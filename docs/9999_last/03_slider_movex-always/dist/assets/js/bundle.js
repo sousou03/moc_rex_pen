@@ -4830,10 +4830,25 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.cnt = 0;
 	      this.isLock = false;
 	      this.isDrag = false;
+	
+	      this.$imgWrap = this.$wrap.find('.u-lazyImage');
+	      this.$img = this.$imgWrap.find('img');
+	      this.imgLen = this.$imgWrap.length;
+	
+	      this.isShowResize = false;
+	
+	      log(this.imgLen, this.$wrap.find('.lazyloaded').length);
+	      log(this.dis);
 	    }
 	  }, {
 	    key: 'update',
 	    value: function update() {
+	
+	      // log(this.imgLen,this.$wrap.find('.lazyloaded').length);
+	      if (!this.isShowResize && this.imgLen == this.$wrap.find('.lazyloaded').length) {
+	        this.isShowResize = true;
+	        this.onResize();
+	      }
 	
 	      // max
 	      // min
@@ -4920,6 +4935,9 @@ var _gsScope="undefined"!=typeof module&&module.exports&&"undefined"!=typeof glo
 	      this.dis = this.innerw - (this.wrapw - marginLeft - dis);
 	
 	      if (window.innerWidth <= 500 && !this.isDeviceSP()) this.tarx = 0;
+	
+	      log(this.imgLen, this.$wrap.find('.lazyloaded').length);
+	      log(this.dis);
 	    }
 	  }, {
 	    key: 'isDeviceSP',
