@@ -1105,7 +1105,7 @@ html {
   background-color: #fff;
 }
 
-#wrapper.id_top .slider02 .area {
+#wrapper.id_top .sliderMain02 .area {
   position: absolute;
   left: 23.6vw !important;
   width: calc(100% - 23.6vw) !important;

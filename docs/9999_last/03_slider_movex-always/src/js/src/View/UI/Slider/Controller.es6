@@ -38,8 +38,7 @@ export default class Controller extends Base {
     var margin = 5;
     var marginLeft = parseInt(this.$inner.css('margin-left'));
     this.w = this.$item.width() + margin;
-    var notCount = this.$inner.find('.notItem').length;
-    var len = this.$item.length - notCount;
+    var len = this.$item.length;
 
     this.wrapw = window.innerWidth;
     var dis = padding + margin;
@@ -142,8 +141,7 @@ export default class Controller extends Base {
     var margin = 5;
     var marginLeft = parseInt(this.$inner.css('margin-left'));
     this.w = this.$item.width() + margin;
-    var notCount = this.$inner.find('.notItem').length;
-    var len = this.$item.length - notCount;
+    var len = this.$item.length;
 
     this.wrapw = window.innerWidth;
     var dis = padding + margin;
